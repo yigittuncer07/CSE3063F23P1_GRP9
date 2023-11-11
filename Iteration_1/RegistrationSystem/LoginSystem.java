@@ -9,13 +9,13 @@ public class LoginSystem {
 
         while (true) {
             System.out.println("Welcome to the LOGIN SYSTEM:");
-            System.out.println("    Press 1 if you are a Student.");
-            System.out.println("    Press 2 if you are a Lecturer.");
-            System.out.println("    Press 3 if you are an Advisor.");
-            System.out.println("    Press 4 if you are a Student Affairs Staff.");
-            System.out.println("    Press 5 exit.");
+            System.out.println("    Enter 1 if you are a Student.");
+            System.out.println("    Enter 2 if you are a Lecturer.");
+            System.out.println("    Enter 3 if you are an Advisor.");
+            System.out.println("    Enter 4 if you are a Student Affairs Staff.");
+            System.out.println("    Enter 5 exit.");
 
-            System.out.print("Press any button : ");
+            System.out.print("Enter action : ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -36,7 +36,7 @@ public class LoginSystem {
                 case 5:
                     System.exit(0);
                 default:
-                    System.out.println("ERROR");
+                    System.out.println("Invalid input!");
             }
 
             System.out.println("");
@@ -63,12 +63,15 @@ public class LoginSystem {
         boolean userFound = false;
         int indexInDatabase = -1;
         for (int i = 0; i < data.students.size(); i++) {
-            if (studentID.equals(data.students.get(i).getStudentId())) {
-                if (password.equals(data.students.get(i).getPassword())) {
+            if (studentID.compareTo(data.students.get(i).getStudentId()) == 0) {
+                System.out.println("TESTING!!!");
+                if (password.compareTo(data.students.get(i).getPassword()) == 0) {
+                    indexInDatabase = i;
                     validInformation = true;
+                    userFound = true;
+                    break;
                 } else {
                     System.out.println("Wrong Password!");
-                    userFound = true;
                     return;
                 }
             }
@@ -81,10 +84,29 @@ public class LoginSystem {
 
         if (validInformation) {
             while (true) {
-                System.out.println("Welcome " data.students.);
-                System.out.println("");
-                System.out.println("");
-                System.out.println("");
+                System.out.println("Welcome " + data.students.get(indexInDatabase).getName() + " "
+                        + data.students.get(indexInDatabase).getLastName());
+                System.out.println("Choose your action you will like to perform.");
+                System.out.println("    Enter 1 to see transcript.");
+                System.out.println("    Enter 2 to register to a course.");
+                System.out.println("    Enter 3 to logout.");
+                System.out.print("Enter action : ");
+
+                int choice = input.nextInt();
+                input.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("This is your transcript");
+                        break;
+                    case 2:
+                        System.out.println("Welcome to the registration");
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Invalid input!");
+                }
             }
         }
     }
@@ -123,26 +145,6 @@ public class LoginSystem {
         System.out.println("Enter your Password: ");
         String password = input.nextLine();
 
-    }
-
-    public static boolean verify(int choice, String id, String password) {
-
-        switch (choice) {
-            case 1:
-
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-        }
-
-        return true;
     }
 
 }
