@@ -8,14 +8,15 @@ public class Main {
         LoginSystem newLogin = new LoginSystem();
 
         while (true) {
-            System.out.println("1. Ders Ekle");
-            System.out.println("2. Ders Kaydı Yap");
-            System.out.println("3. Kayıtlı Dersleri Listele");
-            System.out.println("4. ş");
-            System.out.print("Seçiminizi yapın: ");
+            System.out.println("Press 1 for Student Login System.");
+            System.out.println("Press 2 for Advisor Login System.");
+            System.out.println("Press 3 for Lecturer Login System.");
+            System.out.println("Press 4 exit.");
+
+            System.out.print("Press any button : ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine();  // Boş satırı oku
+            scanner.nextLine();  
 
             switch (choice) {
                 case 1:
@@ -31,7 +32,7 @@ public class Main {
                     
                     System.exit(0);
                 default:
-                    System.out.println("ERORR");
+                    System.out.println("ERROr");
             }
         }
     }
