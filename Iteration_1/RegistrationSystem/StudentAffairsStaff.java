@@ -2,6 +2,22 @@ import java.util.Scanner;
 
 public class StudentAffairsStaff extends Staff {
     
-    public String workingField;
+    private String workingField;
+
+    public StudentAffairsStaff(){
+
+    }
+    public StudentAffairsStaff(String workingField){
+        this.workingField=workingField;
+
+    }
+
+    public String getWorkingField() {
+        return workingField;
+    }
+
+    public void setWorkingField(String workingField) {
+        this.workingField = workingField;
+    }
 
 }
