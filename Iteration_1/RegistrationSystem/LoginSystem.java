@@ -47,7 +47,7 @@ public class LoginSystem {
 
     }
 
-    public static void studentLogin(JSONFileManager data) {
+    public void studentLogin(JSONFileManager data) {
 
         Scanner input = new Scanner(System.in);
 
@@ -108,7 +108,7 @@ public class LoginSystem {
         }
     }
 
-    public static void lecturerLogin(JSONFileManager data) {
+    public void lecturerLogin(JSONFileManager data) {
 
         Scanner input = new Scanner(System.in);
 
@@ -163,10 +163,9 @@ public class LoginSystem {
                 }
             }
         }
-
     }
 
-    public static void advisorLogin(JSONFileManager data) {
+    public void advisorLogin(JSONFileManager data) {
 
         Scanner input = new Scanner(System.in);
 
@@ -225,10 +224,9 @@ public class LoginSystem {
                 }
             }
         }
-
     }
 
-    public static void studentAffairsStaffLogin(JSONFileManager data) {
+    public void studentAffairsStaffLogin(JSONFileManager data) {
 
         Scanner input = new Scanner(System.in);
 
