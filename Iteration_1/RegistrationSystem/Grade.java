@@ -55,6 +55,8 @@ public class Grade {
             throw new IllegalArgumentException("Grade must be between 0 and 100");
         }
 
+        hundred = convertHundredToGano(hundred);
+
         if (4.00 >= hundred && hundred > 3.50) {
             return "AA";
         } else if (3.50 >= hundred && hundred > 3.00) {
