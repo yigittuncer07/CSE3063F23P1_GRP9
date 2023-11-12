@@ -1,0 +1,39 @@
+{
+    "firstName": "Nur",
+    "lastName": "Batmaz",
+    "birthDate": "13:03:70.454+0530",
+    "address": "Izmir, Turkey",
+    "ssn": "22222222222",
+    "email": "nurbatmaz@gmail.com",
+    "password": "111111",
+    "advisorId": "160333",
+    "department": "Computer Science",
+  
+    "registrations": [
+        {
+          "courseName": "Mathematics",
+          "courseLecturer": "170888",
+          "courseCode": "MATH101",
+          "credits": 4,
+          "prerequisite": "MATH100",
+          "advisor": "160777",
+          "prerequisiteCompleted": false,
+          "advisorApproval": false
+
+    
+        },
+        {
+          "courseName": "Computer Science",
+          "courseLecturer": "170999",
+          "courseCode": "COMP202",
+          "credits": 6,
+          "prerequisite": "COMP102",
+          "advisor": "160777",
+          "prerequisiteCompleted": true,
+          "advisorApproval": false
+        }
+    ]
+  
+   
+  }
+  
