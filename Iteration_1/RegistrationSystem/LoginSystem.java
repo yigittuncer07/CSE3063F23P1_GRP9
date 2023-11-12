@@ -1,7 +1,8 @@
 import java.util.Scanner;
 
 public class LoginSystem {
-    public static void LoginSystem() {
+
+    public static void startSystem() {
 
         JSONFileManager data = new JSONFileManager();
 
@@ -34,6 +35,7 @@ public class LoginSystem {
                     studentAffairsStaffLogin(data);
                     break;
                 case 5:
+                    System.out.println("\nSystem closed succesfully.\n");
                     System.exit(0);
                 default:
                     System.out.println("Invalid input!");
@@ -42,10 +44,10 @@ public class LoginSystem {
             System.out.println("");
 
         }
+
     }
 
     public static void studentLogin(JSONFileManager data) {
-        System.out.println("Student");
 
         Scanner input = new Scanner(System.in);
 
@@ -54,38 +56,32 @@ public class LoginSystem {
         System.out.println("Enter your Password: ");
         String password = input.nextLine();
 
-        Student student1 = new Student();
-        data.students.add(student1);
-        data.students.get(0).setStudentId("150121991");
-        data.students.get(0).setPassword("123");
-
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
         for (int i = 0; i < data.students.size(); i++) {
             if (studentID.compareTo(data.students.get(i).getStudentId()) == 0) {
-                System.out.println("TESTING!!!");
                 if (password.compareTo(data.students.get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
                     break;
                 } else {
-                    System.out.println("Wrong Password!");
+                    System.out.println("\nWrong Password!");
                     return;
                 }
             }
         }
 
         if (!userFound) {
-            System.out.println("Student with StudentID " + studentID + " is not found!");
+            System.out.println("\nStudent with StudentID " + studentID + " is not found!");
             return;
         }
 
         if (validInformation) {
+            System.out.println("\nWelcome " + data.students.get(indexInDatabase).getName() + " "
+                    + data.students.get(indexInDatabase).getLastName());
             while (true) {
-                System.out.println("Welcome " + data.students.get(indexInDatabase).getName() + " "
-                        + data.students.get(indexInDatabase).getLastName());
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see transcript.");
                 System.out.println("    Enter 2 to register to a course.");
@@ -97,54 +93,196 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("This is your transcript");
+                        System.out.println("\nThis is your transcript.\n");
                         break;
                     case 2:
-                        System.out.println("Welcome to the registration");
+                        System.out.println("\nWelcome to the registration.\n");
                         break;
                     case 3:
+                        System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
-                        System.out.println("Invalid input!");
+                        System.out.println("\nInvalid input!\n");
                 }
             }
         }
     }
 
     public static void lecturerLogin(JSONFileManager data) {
-        System.out.println("Lecturer");
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("\nEnter your LecturerID: ");
-        String studentID = input.nextLine();
+        System.out.println("\nEnter your StaffID: ");
+        String staffID = input.nextLine();
         System.out.println("Enter your Password: ");
         String password = input.nextLine();
+
+        boolean validInformation = false;
+        boolean userFound = false;
+        int indexInDatabase = -1;
+        for (int i = 0; i < data.lecturer.size(); i++) {
+            if (staffID.compareTo(data.lecturer.get(i).getStaffID()) == 0) {
+                if (password.compareTo(data.lecturer.get(i).getPassword()) == 0) {
+                    indexInDatabase = i;
+                    validInformation = true;
+                    userFound = true;
+                    break;
+                } else {
+                    System.out.println("\nWrong Password!");
+                    return;
+                }
+            }
+        }
+
+        if (!userFound) {
+            System.out.println("\nLecturer with StaffID " + staffID + " is not found!");
+            return;
+        }
+
+        if (validInformation) {
+            System.out.println("\nWelcome " + data.lecturer.get(indexInDatabase).getName() + " "
+                    + data.lecturer.get(indexInDatabase).getLastName());
+            while (true) {
+                System.out.println("Choose your action you will like to perform.");
+                System.out.println("    Enter 1 to see your proffesion.");
+                System.out.println("    Enter 2 to logout.");
+                System.out.print("Enter action : ");
+
+                int choice = input.nextInt();
+                input.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("\nThis is your proffesion.\n");
+                        break;
+                    case 2:
+                        System.out.println("\nYou have logged out succesfully.");
+                        return;
+                    default:
+                        System.out.println("\nInvalid input!\n");
+                }
+            }
+        }
 
     }
 
     public static void advisorLogin(JSONFileManager data) {
-        System.out.println("Advisor");
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("\nEnter your AdvisorID: ");
-        String studentID = input.nextLine();
+        System.out.println("\nEnter your StaffID: ");
+        String staffID = input.nextLine();
         System.out.println("Enter your Password: ");
         String password = input.nextLine();
+
+        boolean validInformation = false;
+        boolean userFound = false;
+        int indexInDatabase = -1;
+        for (int i = 0; i < data.advisors.size(); i++) {
+            if (staffID.compareTo(data.advisors.get(i).getStaffID()) == 0) {
+                if (password.compareTo(data.advisors.get(i).getPassword()) == 0) {
+                    indexInDatabase = i;
+                    validInformation = true;
+                    userFound = true;
+                    break;
+                } else {
+                    System.out.println("\nWrong Password!");
+                    return;
+                }
+            }
+        }
+
+        if (!userFound) {
+            System.out.println("\nAdvisor with StaffID " + staffID + " is not found!");
+            return;
+        }
+
+        if (validInformation) {
+            System.out.println("\nWelcome " + data.advisors.get(indexInDatabase).getName() + " "
+                    + data.advisors.get(indexInDatabase).getLastName());
+            while (true) {
+                System.out.println("Choose your action you will like to perform.");
+                System.out.println("    Enter 1 to see your proffesion.");
+                System.out.println("    Enter 2 to approve student registrations.");
+                System.out.println("    Enter 3 to logout.");
+                System.out.print("Enter action : ");
+
+                int choice = input.nextInt();
+                input.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("\nThis is your proffesion.\n");
+                        break;
+                    case 2:
+                        System.out.println("\nThese are the student registrations.\n");
+                        break;
+                    case 3:
+                        System.out.println("\nYou have logged out succesfully.");
+                        return;
+                    default:
+                        System.out.println("\nInvalid input!\n");
+                }
+            }
+        }
 
     }
 
     public static void studentAffairsStaffLogin(JSONFileManager data) {
-        System.out.println("Student Affairs Staff");
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("\nEnter your StudentAffairsStaffID: ");
-        String studentID = input.nextLine();
+        System.out.println("\nEnter your StaffID: ");
+        String staffID = input.nextLine();
         System.out.println("Enter your Password: ");
         String password = input.nextLine();
 
+        boolean validInformation = false;
+        boolean userFound = false;
+        int indexInDatabase = -1;
+        for (int i = 0; i < data.studentAffairsStaffs.size(); i++) {
+            if (staffID.compareTo(data.studentAffairsStaffs.get(i).getStaffID()) == 0) {
+                if (password.compareTo(data.studentAffairsStaffs.get(i).getPassword()) == 0) {
+                    indexInDatabase = i;
+                    validInformation = true;
+                    userFound = true;
+                    break;
+                } else {
+                    System.out.println("\nWrong Password!");
+                    return;
+                }
+            }
+        }
+
+        if (!userFound) {
+            System.out.println("\nStudent affairs staff with StaffID " + staffID + " is not found!");
+            return;
+        }
+
+        if (validInformation) {
+            System.out.println("\nWelcome " + data.studentAffairsStaffs.get(indexInDatabase).getName() + " "
+                    + data.studentAffairsStaffs.get(indexInDatabase).getLastName());
+            while (true) {
+                System.out.println("Choose your action you will like to perform.");
+                System.out.println("    Enter 1 to see your working field.");
+                System.out.println("    Enter 2 to logout.");
+                System.out.print("Enter action : ");
+
+                int choice = input.nextInt();
+                input.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("\nThis is your working field.\n");
+                        break;
+                    case 2:
+                        System.out.println("\nYou have logged out succesfully.");
+                        return;
+                    default:
+                        System.out.println("\nInvalid input!\n");
+                }
+            }
+        }
     }
 
 }
