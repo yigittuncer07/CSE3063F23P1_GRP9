@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class LoginSystem {
 
-    public static void startSystem() {
+    public void startSystem() {
 
         JSONFileManager data = new JSONFileManager();
 
