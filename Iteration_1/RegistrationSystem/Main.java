@@ -5,7 +5,7 @@ public class Main {
 
         LoginSystem newLogin = new LoginSystem();
 
-        newLogin.LoginSystem();
+        newLogin.startSystem();
 
         
     }
