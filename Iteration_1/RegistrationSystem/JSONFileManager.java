@@ -23,10 +23,8 @@ public class JSONFileManager {
 
         if (files != null) {
             for (File file : files) {
-                // Sadece JSON dosyalarını işle
                 if (file.isFile() && file.getName().endsWith(".json")) {
                     try {
-                        // JSON dosyasını oku
                         FileReader fileReader = new FileReader(file);
                         JSONParser jsonParser = new JSONParser();
                         Object obj = jsonParser.parse(fileReader);
@@ -109,10 +107,8 @@ public class JSONFileManager {
                         
 
 
-                        // Student objesini ArrayList'e ekle
                         students.add(student);
 
-                        // Dosyayı kapat
                         fileReader.close();
                     } catch (IOException | ParseException e) {
                         e.printStackTrace();
