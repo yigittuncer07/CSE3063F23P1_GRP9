@@ -11,6 +11,8 @@
   
     "registrations": [
         {
+          "studentId": "150111",
+          "studentName": "Hasan Pekedis",
           "courseName": "Mathematics",
           "courseLecturer": "170888",
           "courseCode": "MATH101",
@@ -23,6 +25,8 @@
     
         },
         {
+          "studentId": "150222",
+          "studentName": "Ahmet Deniz",
           "courseName": "Computer Science",
           "courseLecturer": "170999",
           "courseCode": "COMP202",
