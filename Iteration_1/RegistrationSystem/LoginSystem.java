@@ -238,9 +238,9 @@ public class LoginSystem {
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
-        for (int i = 0; i < data.studentAffairsStaffs.size(); i++) {
-            if (staffID.compareTo(data.studentAffairsStaffs.get(i).getStaffID()) == 0) {
-                if (password.compareTo(data.studentAffairsStaffs.get(i).getPassword()) == 0) {
+        for (int i = 0; i < data.getStudentAffairsStaffs().size(); i++) {
+            if (staffID.compareTo(data.getStudentAffairsStaffs().get(i).getStaffID()) == 0) {
+                if (password.compareTo(data.getStudentAffairsStaffs().get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
