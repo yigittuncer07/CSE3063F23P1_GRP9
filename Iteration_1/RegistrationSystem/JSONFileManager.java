@@ -15,6 +15,132 @@ public class JSONFileManager {
     // ArrayList<Lecturer> lecturers = new ArrayList<>();
     ArrayList<Advisor> advisors = new ArrayList<>();
 
+     public void getAllAdvisorData() {
+        String folderPath = "database/advisors";
+
+        File folder = new File(folderPath);
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith(".json")) {
+                    try {
+                        FileReader fileReader = new FileReader(file);
+                        JSONParser jsonParser = new JSONParser();
+                        Object obj = jsonParser.parse(fileReader);
+                        JSONObject jsonObject = (JSONObject) obj;
+
+                        Advisor advisor = new Advisor();
+                        advisor.setName((String) jsonObject.get("firstName"));
+                        advisor.setLastName((String) jsonObject.get("lastName"));
+                        advisor.setBirthDate((String) jsonObject.get("birthDate"));
+                        advisor.setAddress((String) jsonObject.get("address"));
+                        advisor.setSsn((String) jsonObject.get("ssn"));
+                        advisor.setEmail((String) jsonObject.get("email"));
+                        advisor.setPassword((String) jsonObject.get("password"));
+                        advisor.setStaffID((String) jsonObject.get("advisorId"));
+
+                        ArrayList<Course> registrations = new ArrayList<>();
+
+                        JSONArray registrationsJSON = (JSONArray) jsonObject.get("registrations");
+                        System.out.println("Registrations :");
+
+
+
+
+
+                        for (Object courseObj : registrationsJSON) {
+                            System.out.println("--------------------------------------------");
+
+                            JSONObject courseJSON = (JSONObject) courseObj;
+
+                            Course registration = new Course();
+
+                            registration.setCourseName((String) courseJSON.get("courseName"));
+                            registration.setCourseCode((String) courseJSON.get("courseCode"));
+
+                            Lecturer lecturer = new Lecturer();
+                            lecturer.setStaffID((String) courseJSON.get("courseLecturer"));
+                            registration.setCourseLecturer(lecturer);
+
+                            Student student = new Student();
+                            student.setStudentId((String) courseJSON.get("studentId"));
+                            student.setStudentId((String) courseJSON.get("studentName"));
+                            registration.setStudent(student);
+
+                            registration.setCredits((long) courseJSON.get("credits"));
+
+                            Advisor courseAdvisor = new Advisor();
+                            courseAdvisor.setStaffID((String) courseJSON.get("advisor"));
+
+
+
+
+                            registration.setPrequisiteCompleted(false);
+                            
+                            registrations.add(registration);
+
+                            System.out.println("--------------------------------------------");
+                        }
+
+                        advisor.setRegistrations(registrations);
+
+
+                        /*
+                        for (Course registration : advisor.getRegistrations()) {
+                            System.out.println("Name: " + registration.getCourseName() +
+                                    ", Code: " + registration.getCourseCode() +
+                                    ", Credits: " + registration.getCredits() 
+                                   );
+                        }  */
+                        
+
+
+                        
+
+                        
+
+
+                        advisors.add(advisor);
+
+                        fileReader.close();
+                    } catch (IOException | ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            for (Advisor advisor : advisors) {
+                System.out.println("Name: " + advisor.getName() +
+                        ", Last Name: " + advisor.getLastName() +
+                        ", Birth Date: " + advisor.getBirthDate() +
+                        ", Address: " + advisor.getAddress() +
+                        ", SSN: " + advisor.getSsn() +
+                        ", Email: " + advisor.getEmail() +
+                        ", Password: " + advisor.getPassword() +
+                        ", Student ID: " + advisor.getStaffID());
+
+                for (Course registration : advisor.getRegistrations()) {
+                            System.out.println("Name: " + registration.getCourseName() +
+                                    ", Code: " + registration.getCourseCode() +
+                                    ", Credits: " + registration.getCredits() 
+                                   );
+                }
+            }
+
+        } else {
+            System.out.println("No file in database.");
+        }
+
+    }
+
+
+
+
+
+
+
+
     public void getAllStudentsData() {
         String folderPath = "database/students";
 
