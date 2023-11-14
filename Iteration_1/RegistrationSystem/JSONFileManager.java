@@ -15,12 +15,15 @@ public class JSONFileManager {
     private ArrayList<StudentAffairsStaff> studentAffairsStaffs = new ArrayList<>();
     private ArrayList<Lecturer> lecturers = new ArrayList<>();
     private ArrayList<Advisor> advisors = new ArrayList<>();
+    private ArrayList<Course> courses = new ArrayList<>();
+
 
     public JSONFileManager() {
         getAllAdvisorsData();
         getAllLecturersData();
         getAllStudentAffairsStaffsData();
         getAllStudentsData();
+        getAllCourseData();
     }
 
     public ArrayList<Student> getStudents() {
@@ -61,6 +64,47 @@ public class JSONFileManager {
         writeAllLecturersData();
         writeAllStudentAffairsStaffsData();
 
+
+    }
+
+    
+
+    private void getAllCourseData() {
+        String folderPath = "database/courses";
+
+        File folder = new File(folderPath);
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith(".json")) {
+                    try {
+                        FileReader fileReader = new FileReader(file);
+                        JSONParser jsonParser = new JSONParser();
+                        Object obj = jsonParser.parse(fileReader);
+                        JSONObject jsonObject = (JSONObject) obj;
+
+                        Course course = new Course();
+                        course.setCourseName((String) jsonObject.get("courseName"));
+                        course.setCourseCode((String) jsonObject.get("courseCode"));
+                        course.setCredits((long) jsonObject.get("credits"));
+                        Lecturer lecturer = new Lecturer();
+                        lecturer.setStaffID((String) jsonObject.get("courseLecturer"));
+                        
+                        course.setCourseLecturer(lecturer);
+                        
+                        courses.add(course);
+
+                        fileReader.close();
+                    } catch (IOException | ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        } else {
+            System.out.println("No file in database.");
+        }
 
     }
 
@@ -393,7 +437,7 @@ public class JSONFileManager {
             studentAffairsStaffJSON.put("department", studentAffairsStaff.getDepartment());
             studentAffairsStaffJSON.put("department", studentAffairsStaff.getDepartment());
 
-            try (FileWriter fileWriter = new FileWriter("database/lecturers/" + studentAffairsStaff.getStaffID() + ".json")) {
+            try (FileWriter fileWriter = new FileWriter("database/studentAffairsStaffs/" + studentAffairsStaff.getStaffID() + ".json")) {
                 fileWriter.write(studentAffairsStaffJSON.toJSONString());
             } catch (IOException e) {
                 e.printStackTrace();
