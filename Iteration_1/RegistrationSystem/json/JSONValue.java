@@ -1,5 +1,5 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
-package lib;
+package json;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -7,8 +7,9 @@ import java.io.StringReader;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
+import json.parser.JSONParser;
+import json.parser.ParseException;
 
 public class JSONValue {
    public JSONValue() {

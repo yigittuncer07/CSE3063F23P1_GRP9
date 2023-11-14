@@ -1,7 +1,4 @@
 public class Course {
-	
-	
-	
 	  Student student = new Student();
 	  Advisor advisor = new Advisor();
 	  private  String courseName; 

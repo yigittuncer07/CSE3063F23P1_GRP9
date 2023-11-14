@@ -1,5 +1,5 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
-package lib.parser;
+package json.parser;
 
 public class ParseException extends Exception {
    private static final long serialVersionUID = -7880698968187728548L;

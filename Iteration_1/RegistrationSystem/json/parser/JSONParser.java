@@ -1,5 +1,5 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
-package lib.parser;
+package json.parser;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -7,8 +7,9 @@ import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import lib.JSONArray;
-import lib.JSONObject;
+
+import json.JSONArray;
+import json.JSONObject;
 
 public class JSONParser {
    public static final int S_INIT = 0;

@@ -1,5 +1,5 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
-package lib;
+package json;
 
 import java.util.ArrayList;
 import java.util.List;

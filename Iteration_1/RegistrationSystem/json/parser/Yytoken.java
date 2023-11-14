@@ -1,5 +1,5 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
-package lib.parser;
+package json.parser;
 
 public class Yytoken {
    public static final int TYPE_VALUE = 0;

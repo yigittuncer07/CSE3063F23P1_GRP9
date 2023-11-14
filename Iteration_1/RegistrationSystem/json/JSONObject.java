@@ -1,5 +1,5 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
-package org.json.simple;
+package json;
 
 import java.io.IOException;
 import java.io.Writer;

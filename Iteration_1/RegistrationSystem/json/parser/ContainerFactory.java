@@ -1,5 +1,5 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
-package lib.parser;
+package json.parser;
 
 import java.util.List;
 import java.util.Map;
