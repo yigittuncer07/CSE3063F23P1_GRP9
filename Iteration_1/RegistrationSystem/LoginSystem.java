@@ -1,12 +1,11 @@
 import java.util.Scanner;
 
 public class LoginSystem {
+    Scanner scanner = new Scanner(System.in);
 
     public void startSystem() {
 
         JSONFileManager data = new JSONFileManager();
-
-        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("Welcome to the LOGIN SYSTEM:");
@@ -97,6 +96,8 @@ public class LoginSystem {
                         break;
                     case 2:
                         System.out.println("\nWelcome to the registration.\n");
+
+                        registrationProcess(data.getStudents().get(indexInDatabase));
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
@@ -105,6 +106,51 @@ public class LoginSystem {
                         System.out.println("\nInvalid input!\n");
                 }
             }
+        }
+    }
+
+    // TODO:
+    // NEED TO ADD COURSE ARRAYLIST AND PULL DATA FROM THERE
+    private void registrationProcess(Student student) {
+        boolean registrationDone = false;
+        boolean courseAdded = false;
+        System.out.println("Select a course to register to:");
+        // Need a way to print all courses
+
+        while (!registrationDone) {
+            System.out.println("1:MATH\\n" + //
+                    " 2:CALC\\n" + //
+                    " 3:CATS\\n" + //
+                    " 4:LUV\\n" + //
+                    " 5:Send for approval");
+            switch (scanner.nextLine()) {
+                case "1":
+                    courseAdded = student.addToDraft(new Course());
+                    break;
+                case "2":
+                    courseAdded = student.addToDraft(new Course());
+                    break;
+                case "3":
+                    courseAdded = student.addToDraft(new Course());
+                    break;
+                case "4":
+                    courseAdded = student.addToDraft(new Course());
+                    break;
+                case "5":
+                    if (student.sendDraftForAdvisorApproval()) {
+                        System.out.println("Succesfully registered to courses!");
+                    } else {
+                        System.out.println("Advisor rejected the draft!");
+                    }
+                    registrationDone = true;
+                    break;
+            }
+            if (courseAdded) {
+                    System.out.println("Course added succesfully!");
+            } else {
+                System.out.println("Course couldnt be added");
+            }
+            System.out.println("Current draft: " + student.getDraftForCoursess());
         }
     }
 

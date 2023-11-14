@@ -4,18 +4,36 @@ class Student extends User {
     private Transcript transcript;
     private String studentId;
     private Advisor advisor;
-    private ArrayList<Course> registeredCourses;
+    private ArrayList<Course> registeredCourses = new ArrayList<>();
+    private ArrayList<Course> draftForCourses = new ArrayList<>();
 
     public String getTranscriptInformation(Transcript transcript) {
         return transcript.toString();
     }
 
-    public boolean registerToCourse(Course course) {
-        if (registeredCourses.contains(course) || registeredCourses.size() >= 5 || !course.isPrequisiteCompleted()){
+    public boolean addToDraft(Course course) {
+        if (draftForCourses.size() != 0){
+            if (draftForCourses.contains(course) ) {
+                return false;
+            }
+        }
+        if (draftForCourses.size() >= 5 || !course.isPrequisiteCompleted()) {
             return false;
         }
-        registeredCourses.add(course);
+        draftForCourses.add(course);
         return true;
+    }
+
+    public boolean sendDraftForAdvisorApproval() {
+        if (advisor.registrationApproval(draftForCourses)) {
+            registeredCourses.addAll(draftForCourses);
+            draftForCourses.clear();
+        }
+        return false;
+    }
+
+    public void clearDraft() {
+        draftForCourses.clear();
     }
 
     public Transcript getTranscript() {
@@ -32,6 +50,10 @@ class Student extends User {
 
     public ArrayList<Course> getRegisteredCourses() {
         return registeredCourses;
+    }
+
+    public ArrayList<Course> getDraftForCoursess() {
+        return draftForCourses;
     }
 
     public void setTranscript(Transcript transcript) {

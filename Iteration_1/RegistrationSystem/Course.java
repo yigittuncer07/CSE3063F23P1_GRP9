@@ -1,15 +1,15 @@
 public class Course {
-	  Student student = new Student();
-	  Advisor advisor = new Advisor();
-	  private  String courseName; 
-	  private String courseCode;
-	  Lecturer courseLecturer = new Lecturer();
-	  long credits;
-	  boolean prequisiteCompleted;
-	  Grade grade = new Grade();
-	  boolean completed;
-	  
-   	  public Student getStudent() {
+	Student student = new Student();
+	Advisor advisor = new Advisor();
+	private String courseName;
+	private String courseCode;
+	Lecturer courseLecturer = new Lecturer();
+	long credits;
+	boolean prequisiteCompleted;
+	Grade grade = new Grade();
+	boolean completed;
+
+	public Student getStudent() {
 		return student;
 	}
 
@@ -58,7 +58,7 @@ public class Course {
 	}
 
 	public boolean isPrequisiteCompleted() {
-		return prequisiteCompleted;
+		return true; //FOR TESTING PURPOSES
 	}
 
 	public void setPrequisiteCompleted(boolean prequisiteCompleted) {
@@ -82,8 +82,7 @@ public class Course {
 	}
 
 	public Course() {
-		  
-	   }
-		
+
+	}
 
 }
