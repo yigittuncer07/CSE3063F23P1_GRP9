@@ -63,7 +63,7 @@ public class JSONFileManager {
         writeAllAdvisorsData();
         writeAllLecturersData();
         writeAllStudentAffairsStaffsData();
-
+        writeAllCoursesData();
 
     }
 
