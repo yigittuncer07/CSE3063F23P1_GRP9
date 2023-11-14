@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Transcript extends Course {
+public class Transcript {
     private ArrayList<Course> courses;
     private double GPA;
 
