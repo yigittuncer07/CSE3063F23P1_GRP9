@@ -23,7 +23,7 @@ public class JSONFileManager {
         getAllLecturersData();
         getAllStudentAffairsStaffsData();
         getAllStudentsData();
-        getAllCourseData();
+        getAllCoursesData();
     }
 
     public ArrayList<Student> getStudents() {
@@ -67,9 +67,31 @@ public class JSONFileManager {
 
     }
 
+    private void writeAllCoursesData() {
+
+        for (Course course : courses) {
+            JSONObject courseJSON = new JSONObject();
+
+            courseJSON.put("courseName", course.getCourseName());
+            courseJSON.put("credits", course.getCredits());
+            courseJSON.put("courseCode", course.getCourseCode());
+            courseJSON.put("prerequisite", "TODO");
+            courseJSON.put("courseLecturer", course.getCourseLecturer().getStaffID());
+
+            
+            try (FileWriter fileWriter = new FileWriter("database/courses/" + course.getCourseCode() + ".json")) {
+                fileWriter.write(courseJSON.toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
     
 
-    private void getAllCourseData() {
+    private void getAllCoursesData() {
         String folderPath = "database/courses";
 
         File folder = new File(folderPath);
