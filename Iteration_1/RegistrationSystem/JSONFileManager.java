@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class JSONFileManager {
     ArrayList<Student> students = new ArrayList<>();
     // ArrayList<StudentAffairsStaff> studentAffairsStaffs = new ArrayList<>();
-    // ArrayList<Lecturer> lecturers = new ArrayList<>();
+    ArrayList<Lecturer> lecturers = new ArrayList<>();
     ArrayList<Advisor> advisors = new ArrayList<>();
 
-     public void getAllAdvisorData() {
+    public void getAllAdvisorData() {
         String folderPath = "database/advisors";
 
         File folder = new File(folderPath);
@@ -45,10 +45,6 @@ public class JSONFileManager {
                         JSONArray registrationsJSON = (JSONArray) jsonObject.get("registrations");
                         System.out.println("Registrations :");
 
-
-
-
-
                         for (Object courseObj : registrationsJSON) {
                             System.out.println("--------------------------------------------");
 
@@ -73,11 +69,8 @@ public class JSONFileManager {
                             Advisor courseAdvisor = new Advisor();
                             courseAdvisor.setStaffID((String) courseJSON.get("advisor"));
 
-
-
-
                             registration.setPrequisiteCompleted(false);
-                            
+
                             registrations.add(registration);
 
                             System.out.println("--------------------------------------------");
@@ -85,21 +78,14 @@ public class JSONFileManager {
 
                         advisor.setRegistrations(registrations);
 
-
                         /*
-                        for (Course registration : advisor.getRegistrations()) {
-                            System.out.println("Name: " + registration.getCourseName() +
-                                    ", Code: " + registration.getCourseCode() +
-                                    ", Credits: " + registration.getCredits() 
-                                   );
-                        }  */
-                        
-
-
-                        
-
-                        
-
+                         * for (Course registration : advisor.getRegistrations()) {
+                         * System.out.println("Name: " + registration.getCourseName() +
+                         * ", Code: " + registration.getCourseCode() +
+                         * ", Credits: " + registration.getCredits()
+                         * );
+                         * }
+                         */
 
                         advisors.add(advisor);
 
@@ -121,10 +107,9 @@ public class JSONFileManager {
                         ", Student ID: " + advisor.getStaffID());
 
                 for (Course registration : advisor.getRegistrations()) {
-                            System.out.println("Name: " + registration.getCourseName() +
-                                    ", Code: " + registration.getCourseCode() +
-                                    ", Credits: " + registration.getCredits() 
-                                   );
+                    System.out.println("Name: " + registration.getCourseName() +
+                            ", Code: " + registration.getCourseCode() +
+                            ", Credits: " + registration.getCredits());
                 }
             }
 
@@ -133,13 +118,6 @@ public class JSONFileManager {
         }
 
     }
-
-
-
-
-
-
-
 
     public void getAllStudentsData() {
         String folderPath = "database/students";
@@ -171,10 +149,6 @@ public class JSONFileManager {
                         JSONArray registeredCoursesJSON = (JSONArray) jsonObject.get("registeredCourses");
                         System.out.println("Registered Courses:");
 
-
-
-
-
                         for (Object courseObj : registeredCoursesJSON) {
                             System.out.println("--------------------------------------------");
 
@@ -205,7 +179,6 @@ public class JSONFileManager {
                             System.out.println("--------------------------------------------");
                         }
 
-
                         Transcript transcript = new Transcript();
 
                         transcript.setCourses(registeredCoursesList);
@@ -215,7 +188,7 @@ public class JSONFileManager {
                         student.setRegisteredCourses(registeredCoursesList);
 
                         Advisor advisor = new Advisor();
-                        
+
                         advisor.setStaffID((String) jsonObject.get("advisorId"));
 
                         student.setAdvisor(advisor);
@@ -223,15 +196,8 @@ public class JSONFileManager {
                         for (Course registeredCourse : student.getRegisteredCourses()) {
                             System.out.println("Name: " + registeredCourse.getCourseName() +
                                     ", Code: " + registeredCourse.getCourseCode() +
-                                    ", Credits: " + registeredCourse.getCredits() 
-                                   );
+                                    ", Credits: " + registeredCourse.getCredits());
                         }
-
-
-                        
-
-                        
-
 
                         students.add(student);
 
@@ -258,5 +224,63 @@ public class JSONFileManager {
         }
 
     }
+
+
+
+    public void getAllLecturerData() {
+        String folderPath = "database/lecturers";
+
+        File folder = new File(folderPath);
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith(".json")) {
+                    try {
+                        FileReader fileReader = new FileReader(file);
+                        JSONParser jsonParser = new JSONParser();
+                        Object obj = jsonParser.parse(fileReader);
+                        JSONObject jsonObject = (JSONObject) obj;
+
+                        Lecturer lecturer = new Advisor();
+                        lecturer.setName((String) jsonObject.get("firstName"));
+                        lecturer.setLastName((String) jsonObject.get("lastName"));
+                        lecturer.setBirthDate((String) jsonObject.get("birthDate"));
+                        lecturer.setAddress((String) jsonObject.get("address"));
+                        lecturer.setSsn((String) jsonObject.get("ssn"));
+                        lecturer.setEmail((String) jsonObject.get("email"));
+                        lecturer.setPassword((String) jsonObject.get("password"));
+                        lecturer.setStaffID((String) jsonObject.get("lecturerId"));
+                        lecturer.setDepartment((String) jsonObject.get("lecturerId"));
+                        lecturer.setProffesion((String) jsonObject.get("profession"));
+                        
+
+                        lecturers.add(lecturer);
+
+                        fileReader.close();
+                    } catch (IOException | ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            for (Lecturer lecturer : lecturers) {
+                System.out.println("Name: " + lecturer.getName() +
+                        ", Last Name: " + lecturer.getLastName() +
+                        ", Birth Date: " + lecturer.getBirthDate() +
+                        ", Address: " + lecturer.getAddress() +
+                        ", SSN: " + lecturer.getSsn() +
+                        ", Email: " + lecturer.getEmail() +
+                        ", Password: " + lecturer.getPassword() +
+                        ", Student ID: " + lecturer.getStaffID());
+
+            }
+
+        } else {
+            System.out.println("No file in database.");
+        }
+
+    }
+
 
 }
