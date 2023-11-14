@@ -1,5 +1,3 @@
-package deneme;
-
 public class Course {
 	
 	
