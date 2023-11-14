@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class JSONFileManager {
     ArrayList<Student> students = new ArrayList<>();
-    // ArrayList<StudentAffairsStaff> studentAffairsStaffs = new ArrayList<>();
+    ArrayList<StudentAffairsStaff> studentAffairsStaffs = new ArrayList<>();
     ArrayList<Lecturer> lecturers = new ArrayList<>();
     ArrayList<Advisor> advisors = new ArrayList<>();
 
@@ -227,7 +227,7 @@ public class JSONFileManager {
 
 
 
-    public void getAllLecturerData() {
+    public void getAllLecturersData() {
         String folderPath = "database/lecturers";
 
         File folder = new File(folderPath);
@@ -282,5 +282,59 @@ public class JSONFileManager {
 
     }
 
+    public void getAllStudentAffairsStaffsData() {
+        String folderPath = "database/studentAffairsStaffs";
+
+        File folder = new File(folderPath);
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith(".json")) {
+                    try {
+                        FileReader fileReader = new FileReader(file);
+                        JSONParser jsonParser = new JSONParser();
+                        Object obj = jsonParser.parse(fileReader);
+                        JSONObject jsonObject = (JSONObject) obj;
+
+                        StudentAffairsStaff studentAffairsStaff = new StudentAffairsStaff();
+                        studentAffairsStaff.setName((String) jsonObject.get("firstName"));
+                        studentAffairsStaff.setLastName((String) jsonObject.get("lastName"));
+                        studentAffairsStaff.setBirthDate((String) jsonObject.get("birthDate"));
+                        studentAffairsStaff.setAddress((String) jsonObject.get("address"));
+                        studentAffairsStaff.setSsn((String) jsonObject.get("ssn"));
+                        studentAffairsStaff.setEmail((String) jsonObject.get("email"));
+                        studentAffairsStaff.setPassword((String) jsonObject.get("password"));
+                        studentAffairsStaff.setStaffID((String) jsonObject.get("lecturerId"));
+                        studentAffairsStaff.setDepartment((String) jsonObject.get("lecturerId"));
+                        studentAffairsStaff.setWorkingField((String) jsonObject.get("workingField"));
+                        
+
+                        studentAffairsStaffs.add(studentAffairsStaff);
+
+                        fileReader.close();
+                    } catch (IOException | ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            for (StudentAffairsStaff studentAffairsStaff : studentAffairsStaffs) {
+                System.out.println("Name: " + studentAffairsStaff.getName() +
+                        ", Last Name: " + studentAffairsStaff.getLastName() +
+                        ", Birth Date: " + studentAffairsStaff.getBirthDate() +
+                        ", Address: " + studentAffairsStaff.getAddress() +
+                        ", SSN: " + studentAffairsStaff.getSsn() +
+                        ", Email: " + studentAffairsStaff.getEmail() +
+                        ", Password: " + studentAffairsStaff.getPassword() +
+                        ", Student ID: " + studentAffairsStaff.getStaffID());
+
+            }
+
+        } else {
+            System.out.println("No file in database.");
+        }
+
+    }
 
 }
