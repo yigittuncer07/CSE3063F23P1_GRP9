@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import json.JSONArray;
 import json.JSONObject;
@@ -15,8 +16,8 @@ public class JSONFileManager {
     private ArrayList<Lecturer> lecturers = new ArrayList<>();
     private ArrayList<Advisor> advisors = new ArrayList<>();
 
-    public JSONFileManager(){
-        getAllAdvisorData();
+    public JSONFileManager() {
+        getAllAdvisorsData();
         getAllLecturersData();
         getAllStudentAffairsStaffsData();
         getAllStudentsData();
@@ -38,7 +39,6 @@ public class JSONFileManager {
         this.studentAffairsStaffs = studentAffairsStaffs;
     }
 
-    
     public ArrayList<Lecturer> getLecturers() {
         return lecturers;
     }
@@ -47,7 +47,6 @@ public class JSONFileManager {
         this.lecturers = lecturers;
     }
 
-    
     public ArrayList<Advisor> getAdvisors() {
         return advisors;
     }
@@ -57,8 +56,89 @@ public class JSONFileManager {
     }
 
 
+    public void writeAllStudentsData() {
+        for (Student student : students) {
+            JSONObject studentJson = new JSONObject();
 
-    private void getAllAdvisorData() {
+            studentJson.put("firstName", student.getName());
+            studentJson.put("lastName", student.getLastName());
+            studentJson.put("birthDate", student.getBirthDate());
+            studentJson.put("address", student.getAddress());
+            studentJson.put("ssn", student.getSsn());
+            studentJson.put("email", student.getEmail());
+            studentJson.put("password", student.getPassword());
+            studentJson.put("studentId", student.getStudentId());
+
+            JSONArray registeredCoursesArray = new JSONArray();
+            for (Course course : student.getRegisteredCourses()) {
+                JSONObject courseJson = new JSONObject();
+
+                courseJson.put("courseName", course.getCourseName());
+                courseJson.put("courseCode", course.getCourseCode());
+                courseJson.put("courseCode", course.getCourseCode());
+                courseJson.put("courseLecturer", course.getCourseLecturer().getStaffID());
+                courseJson.put("credits", course.getCredits());
+                courseJson.put("grade", course.getGrade().getOutOfHundred());
+
+                registeredCoursesArray.add(courseJson);
+            }
+
+            studentJson.put("registeredCourses", registeredCoursesArray);
+
+            studentJson.put("advisorId", student.getAdvisor().getStaffID());
+
+            try (FileWriter fileWriter = new FileWriter("database/students/" + student.getStudentId() + ".json")) {
+                fileWriter.write(studentJson.toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void writeAllAdvisorsData() {
+        for (Advisor advisor : advisors) {
+            JSONObject advisorJson = new JSONObject();
+
+            advisorJson.put("firstName", advisor.getName());
+            advisorJson.put("lastName", advisor.getLastName());
+            advisorJson.put("birthDate", advisor.getBirthDate());
+            advisorJson.put("address", advisor.getAddress());
+            advisorJson.put("ssn", advisor.getSsn());
+            advisorJson.put("email", advisor.getEmail());
+            advisorJson.put("password", advisor.getPassword());
+            advisorJson.put("advisorId", advisor.getStaffID());
+
+            // Creating JSONArray for registrations
+            JSONArray registrationsArray = new JSONArray();
+            for (Course registration : advisor.getRegistrations()) {
+                JSONObject registrationJson = new JSONObject();
+
+                registrationJson.put("courseName", registration.getCourseName());
+                registrationJson.put("courseCode", registration.getCourseCode());
+                registrationJson.put("courseLecturer", registration.getCourseLecturer().getStaffID());
+                registrationJson.put("studentId", registration.getStudent().getStudentId());
+                registrationJson.put("studentName", registration.getStudent().getName());
+                registrationJson.put("credits", registration.getCredits());
+                registrationJson.put("advisor", registration.getAdvisor().getStaffID());
+
+                registrationsArray.add(registrationJson);
+            }
+
+            advisorJson.put("registrations", registrationsArray);
+
+            // Writing to JSON file
+            try (FileWriter fileWriter = new FileWriter("database/advisors/" + advisor.getStaffID() + ".json")) {
+                fileWriter.write(advisorJson.toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+    }
+
+    private void getAllAdvisorsData() {
         String folderPath = "database/advisors";
 
         File folder = new File(folderPath);
@@ -136,8 +216,6 @@ public class JSONFileManager {
                 }
             }
 
-            
-
         } else {
             System.out.println("No file in database.");
         }
@@ -190,7 +268,8 @@ public class JSONFileManager {
 
                             // ADD GRADE
                             Grade grade = new Grade();
-                            grade.setOutOfHundred((long) courseJSON.get("grade"));
+                            Double gradeValue = ((Number) courseJSON.get("grade")).doubleValue();
+                            grade.setOutOfHundred(gradeValue);
 
                             registeredCourse.setGrade(grade);
 
@@ -215,8 +294,6 @@ public class JSONFileManager {
 
                         student.setAdvisor(advisor);
 
-                        
-
                         students.add(student);
 
                         fileReader.close();
@@ -226,14 +303,11 @@ public class JSONFileManager {
                 }
             }
 
-            
         } else {
             System.out.println("No file in database.");
         }
 
     }
-
-
 
     private void getAllLecturersData() {
         String folderPath = "database/lecturers";
@@ -261,7 +335,6 @@ public class JSONFileManager {
                         lecturer.setStaffID((String) jsonObject.get("lecturerId"));
                         lecturer.setDepartment((String) jsonObject.get("lecturerId"));
                         lecturer.setProffesion((String) jsonObject.get("profession"));
-                        
 
                         lecturers.add(lecturer);
 
@@ -271,8 +344,6 @@ public class JSONFileManager {
                     }
                 }
             }
-
-            
 
         } else {
             System.out.println("No file in database.");
@@ -306,7 +377,6 @@ public class JSONFileManager {
                         studentAffairsStaff.setStaffID((String) jsonObject.get("lecturerId"));
                         studentAffairsStaff.setDepartment((String) jsonObject.get("lecturerId"));
                         studentAffairsStaff.setWorkingField((String) jsonObject.get("workingField"));
-                        
 
                         studentAffairsStaffs.add(studentAffairsStaff);
 
@@ -316,8 +386,6 @@ public class JSONFileManager {
                     }
                 }
             }
-
-            
 
         } else {
             System.out.println("No file in database.");
