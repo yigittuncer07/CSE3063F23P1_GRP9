@@ -1,15 +1,13 @@
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import json.JSONArray;
+import json.JSONObject;
+import json.parser.JSONParser;
+import json.parser.ParseException;
 
 public class JSONFileManager {
     private ArrayList<Student> students = new ArrayList<>();

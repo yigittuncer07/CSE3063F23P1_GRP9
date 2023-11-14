@@ -7,6 +7,10 @@ abstract class User {
     private String email;
     private String password;
 
+    public String getInfo(){
+        return "Name: " + name + "\nLastname: " + lastName + "\nBirthdate: " + birthDate + "\nAddress: " + address + "\nSSN: " + ssn + "\nEmail: " + email;
+    }
+    
     // Getter methods
     public String getName() {
         return name;
