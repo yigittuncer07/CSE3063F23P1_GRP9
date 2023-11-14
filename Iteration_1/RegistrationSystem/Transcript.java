@@ -17,6 +17,7 @@ public class Transcript {
     public ArrayList<Course> getCourses() {
         return courses;
     }
+
     public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
     }
@@ -31,7 +32,7 @@ public class Transcript {
 
         for (Course course : courses) {
             totalCredits += course.getCredits();
-            weightedSum += course.getCredits() * convertHundredToGano(course.getOutOfHundred);
+            //weightedSum += course.getCredits() * convertHundredToGano(course.getOutOfHundred);
         }
 
         if (totalCredits > 0) {
