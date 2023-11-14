@@ -55,8 +55,17 @@ public class JSONFileManager {
         this.advisors = advisors;
     }
 
+    public void writeAllDataToJSON() {
+        writeAllStudentsData();
+        writeAllAdvisorsData();
+        writeAllLecturersData();
+        writeAllStudentAffairsStaffsData();
 
-    public void writeAllStudentsData() {
+
+    }
+
+
+    private void writeAllStudentsData() {
         for (Student student : students) {
             JSONObject studentJson = new JSONObject();
 
@@ -95,7 +104,7 @@ public class JSONFileManager {
         }
     }
 
-    public void writeAllAdvisorsData() {
+    private void writeAllAdvisorsData() {
         for (Advisor advisor : advisors) {
             JSONObject advisorJson = new JSONObject();
 
@@ -198,15 +207,7 @@ public class JSONFileManager {
 
                         advisor.setRegistrations(registrations);
 
-                        /*
-                         * for (Course registration : advisor.getRegistrations()) {
-                         * System.out.println("Name: " + registration.getCourseName() +
-                         * ", Code: " + registration.getCourseCode() +
-                         * ", Credits: " + registration.getCredits()
-                         * );
-                         * }
-                         */
-
+                       
                         advisors.add(advisor);
 
                         fileReader.close();
@@ -348,6 +349,57 @@ public class JSONFileManager {
         } else {
             System.out.println("No file in database.");
         }
+
+    }
+
+    private void writeAllLecturersData() {
+
+        for (Lecturer lecturer : lecturers) {
+            JSONObject lecturerJSON = new JSONObject();
+
+            lecturerJSON.put("firstName", lecturer.getName());
+            lecturerJSON.put("lastName", lecturer.getLastName());
+            lecturerJSON.put("birthDate", lecturer.getBirthDate());
+            lecturerJSON.put("address", lecturer.getAddress());
+            lecturerJSON.put("ssn", lecturer.getSsn());
+            lecturerJSON.put("email", lecturer.getEmail());
+            lecturerJSON.put("password", lecturer.getPassword());
+            lecturerJSON.put("lecturerId", lecturer.getStaffID());
+            lecturerJSON.put("department", lecturer.getDepartment());
+            lecturerJSON.put("profession", lecturer.getProffesion());
+
+            try (FileWriter fileWriter = new FileWriter("database/lecturers/" + lecturer.getStaffID() + ".json")) {
+                fileWriter.write(lecturerJSON.toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+    private void writeAllStudentAffairsStaffsData() {
+
+        for (StudentAffairsStaff studentAffairsStaff : studentAffairsStaffs) {
+            JSONObject studentAffairsStaffJSON = new JSONObject();
+
+            studentAffairsStaffJSON.put("firstName", studentAffairsStaff.getName());
+            studentAffairsStaffJSON.put("lastName", studentAffairsStaff.getLastName());
+            studentAffairsStaffJSON.put("birthDate", studentAffairsStaff.getBirthDate());
+            studentAffairsStaffJSON.put("address", studentAffairsStaff.getAddress());
+            studentAffairsStaffJSON.put("ssn", studentAffairsStaff.getSsn());
+            studentAffairsStaffJSON.put("email", studentAffairsStaff.getEmail());
+            studentAffairsStaffJSON.put("password", studentAffairsStaff.getPassword());
+            studentAffairsStaffJSON.put("lecturerId", studentAffairsStaff.getStaffID());
+            studentAffairsStaffJSON.put("department", studentAffairsStaff.getDepartment());
+            studentAffairsStaffJSON.put("department", studentAffairsStaff.getDepartment());
+
+            try (FileWriter fileWriter = new FileWriter("database/lecturers/" + studentAffairsStaff.getStaffID() + ".json")) {
+                fileWriter.write(studentAffairsStaffJSON.toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
 
