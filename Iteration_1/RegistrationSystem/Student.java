@@ -6,8 +6,8 @@ class Student extends User {
     private Advisor advisor;
     private ArrayList<Course> registeredCourses;
 
-    public void printTranscriptInformation(Transcript transcript) {
-        transcript.toString();
+    public String getTranscriptInformation(Transcript transcript) {
+        return transcript.toString();
     }
 
     public boolean registerToCourse(Course course) {
