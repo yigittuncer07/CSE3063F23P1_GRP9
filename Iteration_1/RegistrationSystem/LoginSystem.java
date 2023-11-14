@@ -59,9 +59,9 @@ public class LoginSystem {
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
-        for (int i = 0; i < data.students.size(); i++) {
-            if (studentID.compareTo(data.students.get(i).getStudentId()) == 0) {
-                if (password.compareTo(data.students.get(i).getPassword()) == 0) {
+        for (int i = 0; i < data.getStudents().size(); i++) {
+            if (studentID.compareTo(data.getStudents().get(i).getStudentId()) == 0) {
+                if (password.compareTo(data.getStudents().get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
@@ -79,8 +79,8 @@ public class LoginSystem {
         }
 
         if (validInformation) {
-            System.out.println("\nWelcome " + data.students.get(indexInDatabase).getName() + " "
-                    + data.students.get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + data.getStudents().get(indexInDatabase).getName() + " "
+                    + data.getStudents().get(indexInDatabase).getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see transcript.");
@@ -120,9 +120,9 @@ public class LoginSystem {
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
-        for (int i = 0; i < data.lecturer.size(); i++) {
-            if (staffID.compareTo(data.lecturer.get(i).getStaffID()) == 0) {
-                if (password.compareTo(data.lecturer.get(i).getPassword()) == 0) {
+        for (int i = 0; i < data.getLecturers().size(); i++) {
+            if (staffID.compareTo(data.getLecturers().get(i).getStaffID()) == 0) {
+                if (password.compareTo(data.getLecturers().get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
@@ -140,8 +140,8 @@ public class LoginSystem {
         }
 
         if (validInformation) {
-            System.out.println("\nWelcome " + data.lecturer.get(indexInDatabase).getName() + " "
-                    + data.lecturer.get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + data.getLecturers().get(indexInDatabase).getName() + " "
+                    + data.getLecturers().get(indexInDatabase).getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
@@ -177,9 +177,9 @@ public class LoginSystem {
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
-        for (int i = 0; i < data.advisors.size(); i++) {
-            if (staffID.compareTo(data.advisors.get(i).getStaffID()) == 0) {
-                if (password.compareTo(data.advisors.get(i).getPassword()) == 0) {
+        for (int i = 0; i < data.getAdvisors().size(); i++) {
+            if (staffID.compareTo(data.getAdvisors().get(i).getStaffID()) == 0) {
+                if (password.compareTo(data.getAdvisors().get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
@@ -197,8 +197,8 @@ public class LoginSystem {
         }
 
         if (validInformation) {
-            System.out.println("\nWelcome " + data.advisors.get(indexInDatabase).getName() + " "
-                    + data.advisors.get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + data.getAdvisors().get(indexInDatabase).getName() + " "
+                    + data.getAdvisors().get(indexInDatabase).getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
@@ -258,8 +258,8 @@ public class LoginSystem {
         }
 
         if (validInformation) {
-            System.out.println("\nWelcome " + data.studentAffairsStaffs.get(indexInDatabase).getName() + " "
-                    + data.studentAffairsStaffs.get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + data.getStudentAffairsStaffs().get(indexInDatabase).getName() + " "
+                    + data.getStudentAffairsStaffs().get(indexInDatabase).getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your working field.");
