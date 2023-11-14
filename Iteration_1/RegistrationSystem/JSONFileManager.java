@@ -3,6 +3,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -58,7 +60,7 @@ public class JSONFileManager {
 
 
 
-    public void getAllAdvisorData() {
+    private void getAllAdvisorData() {
         String folderPath = "database/advisors";
 
         File folder = new File(folderPath);
@@ -162,7 +164,7 @@ public class JSONFileManager {
 
     }
 
-    public void getAllStudentsData() {
+    private void getAllStudentsData() {
         String folderPath = "database/students";
 
         File folder = new File(folderPath);
@@ -270,7 +272,7 @@ public class JSONFileManager {
 
 
 
-    public void getAllLecturersData() {
+    private void getAllLecturersData() {
         String folderPath = "database/lecturers";
 
         File folder = new File(folderPath);
@@ -325,7 +327,7 @@ public class JSONFileManager {
 
     }
 
-    public void getAllStudentAffairsStaffsData() {
+    private void getAllStudentAffairsStaffsData() {
         String folderPath = "database/studentAffairsStaffs";
 
         File folder = new File(folderPath);
