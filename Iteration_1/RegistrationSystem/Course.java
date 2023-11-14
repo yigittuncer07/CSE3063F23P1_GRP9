@@ -9,7 +9,7 @@ public class Course {
 	  private  String courseName; 
 	  private String courseCode;
 	  Lecturer courseLecturer = new Lecturer();
-	  int credits;
+	  long credits;
 	  boolean prequisiteCompleted;
 	  Grade grade = new Grade();
 	  boolean completed;
@@ -54,11 +54,11 @@ public class Course {
 		this.courseLecturer = courseLecturer;
 	}
 
-	public int getCredits() {
+	public long getCredits() {
 		return credits;
 	}
 
-	public void setCredits(int credits) {
+	public void setCredits(long credits) {
 		this.credits = credits;
 	}
 
