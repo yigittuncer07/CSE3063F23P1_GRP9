@@ -10,10 +10,53 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class JSONFileManager {
-    ArrayList<Student> students = new ArrayList<>();
-    ArrayList<StudentAffairsStaff> studentAffairsStaffs = new ArrayList<>();
-    ArrayList<Lecturer> lecturers = new ArrayList<>();
-    ArrayList<Advisor> advisors = new ArrayList<>();
+    private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<StudentAffairsStaff> studentAffairsStaffs = new ArrayList<>();
+    private ArrayList<Lecturer> lecturers = new ArrayList<>();
+    private ArrayList<Advisor> advisors = new ArrayList<>();
+
+    public JSONFileManager(){
+        getAllAdvisorData();
+        getAllLecturersData();
+        getAllStudentAffairsStaffsData();
+        getAllStudentsData();
+    }
+
+    public ArrayList<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(ArrayList<Student> students) {
+        this.students = students;
+    }
+
+    public ArrayList<StudentAffairsStaff> getStudentAffairsStaffs() {
+        return studentAffairsStaffs;
+    }
+
+    public void setStudentAffairsStaffs(ArrayList<StudentAffairsStaff> studentAffairsStaffs) {
+        this.studentAffairsStaffs = studentAffairsStaffs;
+    }
+
+    
+    public ArrayList<Lecturer> getLecturers() {
+        return lecturers;
+    }
+
+    public void setLecturers(ArrayList<Lecturer> lecturers) {
+        this.lecturers = lecturers;
+    }
+
+    
+    public ArrayList<Advisor> getAdvisors() {
+        return advisors;
+    }
+
+    public void setAdvisors(ArrayList<Advisor> advisors) {
+        this.advisors = advisors;
+    }
+
+
 
     public void getAllAdvisorData() {
         String folderPath = "database/advisors";
