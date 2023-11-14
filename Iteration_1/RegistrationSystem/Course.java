@@ -58,7 +58,7 @@ public class Course {
 	}
 
 	public boolean isPrequisiteCompleted() {
-		return true; //FOR TESTING PURPOSES
+		return prequisiteCompleted;
 	}
 
 	public void setPrequisiteCompleted(boolean prequisiteCompleted) {
