@@ -58,6 +58,10 @@ public class JSONFileManager {
         this.advisors = advisors;
     }
 
+    public ArrayList<Course> getCourses(){
+        return this.courses;
+    }
+
     public void writeAllDataToJSON() {
         writeAllStudentsData();
         writeAllAdvisorsData();
@@ -510,5 +514,4 @@ public class JSONFileManager {
         }
 
     }
-
 }
