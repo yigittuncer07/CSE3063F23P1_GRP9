@@ -52,7 +52,7 @@ class Student extends User {
         return registeredCourses;
     }
 
-    public ArrayList<Course> getDraftForCoursess() {
+    public ArrayList<Course> getDraftForCourses() {
         return draftForCourses;
     }
 
