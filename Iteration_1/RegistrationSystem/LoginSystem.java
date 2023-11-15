@@ -1,11 +1,12 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LoginSystem {
-    Scanner scanner = new Scanner(System.in);
+
+    private Scanner scanner = new Scanner(System.in);
+    private JSONFileManager data = new JSONFileManager();
 
     public void startSystem() {
-
-        JSONFileManager data = new JSONFileManager();
 
         while (true) {
             System.out.println("Welcome to the LOGIN SYSTEM:");
@@ -96,9 +97,8 @@ public class LoginSystem {
                         break;
                     case 2:
                         System.out.println("\nWelcome to the registration.\n");
-
                         registrationProcess(data.getStudents().get(indexInDatabase));
-                        break;
+                        System.exit(0);//If this is removed we get an error with the scanner
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
@@ -109,48 +109,45 @@ public class LoginSystem {
         }
     }
 
-    // TODO:
-    // NEED TO ADD COURSE ARRAYLIST AND PULL DATA FROM THERE
     private void registrationProcess(Student student) {
-        boolean registrationDone = false;
-        boolean courseAdded = false;
-        System.out.println("Select a course to register to:");
-        // Need a way to print all courses
-
-        while (!registrationDone) {
-            System.out.println("1:MATH\\n" + //
-                    " 2:CALC\\n" + //
-                    " 3:CATS\\n" + //
-                    " 4:LUV\\n" + //
-                    " 5:Send for approval");
-            switch (scanner.nextLine()) {
-                case "1":
-                    courseAdded = student.addToDraft(new Course());
-                    break;
-                case "2":
-                    courseAdded = student.addToDraft(new Course());
-                    break;
-                case "3":
-                    courseAdded = student.addToDraft(new Course());
-                    break;
-                case "4":
-                    courseAdded = student.addToDraft(new Course());
-                    break;
-                case "5":
-                    if (student.sendDraftForAdvisorApproval()) {
-                        System.out.println("Succesfully registered to courses!");
-                    } else {
-                        System.out.println("Advisor rejected the draft!");
-                    }
-                    registrationDone = true;
-                    break;
+        ArrayList<Course> courses = data.getCourses();
+        while (true) {
+            System.out.println(
+                    "Enter a course code to register to said course, or enter \"submit\" to submit for approval:");
+            for (Course course : courses) {
+                System.out.println(course.getCourseCode() + " : " + course.getCourseName());
             }
-            if (courseAdded) {
-                    System.out.println("Course added succesfully!");
+            String input = scanner.nextLine();
+            if (input.equals("submit")) {
+                System.out.println("Sent for approval");
+                if (student.sendDraftForAdvisorApproval()) {
+                } else {
+                    student.clearDraft();
+                }
+                return;
             } else {
-                System.out.println("Course couldnt be added");
+                boolean courseFound = false;
+                for (Course course : courses) {
+                    if (input.equals(course.getCourseCode())) {
+                        courseFound = true;
+                        if (student.addToDraft(course)) {
+                            System.out.println("Course added succesfully!");
+                        } else {
+                            System.out.println("Course couldnt be added!");
+                        }
+                        continue;
+                    }
+                }
+                if (!courseFound) {
+                    System.out.println("no such course!");
+                }
+                courseFound = false;
             }
-            System.out.println("Current draft: " + student.getDraftForCoursess());
+            System.out.print("Current draft: ");
+            for (Course course : student.getDraftForCourses()) {
+                System.out.print(course.getCourseCode() + " ");
+            }
+            System.out.println("\n ");
         }
     }
 
