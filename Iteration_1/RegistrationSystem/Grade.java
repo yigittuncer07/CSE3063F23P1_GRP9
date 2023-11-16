@@ -47,8 +47,11 @@ public class Grade {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String formattedResult = decimalFormat.format(result);
 
+        formattedResult = formattedResult.replace(",", "."); // Virgülü nokta ile değiştir
+        double numericValue = Double.parseDouble(formattedResult);
+
         this.gano = Double.parseDouble(formattedResult);
-        return Double.parseDouble(formattedResult);
+        return numericValue;
     }
 
     public void convertHundredToLetterGrade(double hundred) {
