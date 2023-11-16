@@ -12,9 +12,6 @@ public class Student extends User {
     }
 
     public boolean addToDraft(Course course) {
-        for (Course course1 : registeredCourses) {
-            System.out.println(course1.getCourseCode());
-        }
         if (draftForCourses.size() != 0) {
             if (draftForCourses.contains(course)) {
                 return false;
