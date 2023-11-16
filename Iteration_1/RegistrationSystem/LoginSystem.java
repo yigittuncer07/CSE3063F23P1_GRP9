@@ -122,9 +122,13 @@ public class LoginSystem {
             }
             String input = scanner.nextLine();
             if (input.equals("submit")) {
-                student.sendDraftToAdvisor();
-                System.out.println("Sent for approval");
-                return;
+                if (student.getDraftForCourses().isEmpty()) {
+                    System.out.println("Cannot submit empty draft");
+                } else {
+                    student.sendDraftToAdvisor();
+                    System.out.println("Sent for approval");
+                    return;
+                }
             } else {
                 boolean courseFound = false;
                 for (Course course : courses) {
@@ -257,9 +261,6 @@ public class LoginSystem {
                         System.out.println(data.getAdvisors().get(indexInDatabase).getProffesion());
                         break;
                     case 2:
-                        System.out.println("\nThese are the student registrations.\n");
-                        System.out.println(data.getAdvisors().get(indexInDatabase).getDrafts());
-                        
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
