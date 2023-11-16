@@ -8,6 +8,7 @@ public class Course {
 	boolean prequisiteCompleted;
 	Grade grade = new Grade();
 	boolean completed;
+	String prequisite;
 
 	public Student getStudent() {
 		return student;
@@ -15,6 +16,13 @@ public class Course {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+	public String getPrequisite() {
+		return prequisite;
+	}
+
+	public void setPrequisite(String prequisite) {
+		this.prequisite = prequisite;
 	}
 
 	public Advisor getAdvisor() {
