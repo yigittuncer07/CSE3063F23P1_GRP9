@@ -122,13 +122,9 @@ public class LoginSystem {
             }
             String input = scanner.nextLine();
             if (input.equals("submit")) {
-                if (student.getDraftForCourses().isEmpty()) {
-                    System.out.println("Cannot submit empty draft");
-                } else {
-                    student.sendDraftToAdvisor();
-                    System.out.println("Sent for approval");
-                    return;
-                }
+                student.sendDraftToAdvisor();
+                System.out.println("Sent for approval");
+                return;
             } else {
                 boolean courseFound = false;
                 for (Course course : courses) {
@@ -261,20 +257,20 @@ public class LoginSystem {
                         System.out.println(data.getAdvisors().get(indexInDatabase).getProffesion());
                         break;
                     case 2:
-                    System.out.println("\nPlease proceed with this draft:.\n");
-                    for (ArrayList<Course> draft : data.getAdvisors().get(indexInDatabase).getDrafts()) {
-                        for (Course course : draft){
-                            System.out.println(course.getCourseName() + " " + course.getCourseCode());
+                        System.out.println("\nPlease proceed with this draft:.\n");
+                        for (ArrayList<Course> draft : data.getAdvisors().get(indexInDatabase).getDrafts()) {
+                            for (Course course : draft) {
+                                System.out.println(course.getCourseName() + " " + course.getCourseCode());
+                            }
+                            System.out.println("Do you approve this draft? yes/no");
+                            String advisorInput = scanner.nextLine();
+                            if (advisorInput.equals("yes")) {
+                                draft.get(0).getStudent().approveDraft();
+                            } else if (advisorInput.equals("no")) {
+                                draft.get(0).getStudent().clearDraft();
+                            }
                         }
-                        System.out.println("Do you approve this draft? yes/no");
-                        String advisorInput = scanner.nextLine();
-                        if (advisorInput.equals("yes")) {
-                            draft.get(0).getStudent().approveDraft();
-                        } else if (advisorInput.equals("no")) {
-                            draft.get(0).getStudent().clearDraft();
-                        }
-                    }
-                    break;
+                        break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
