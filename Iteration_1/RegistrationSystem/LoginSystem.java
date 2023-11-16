@@ -263,7 +263,9 @@ public class LoginSystem {
                     case 2:
                     System.out.println("\nPlease proceed with this draft:.\n");
                     for (ArrayList<Course> draft : data.getAdvisors().get(indexInDatabase).getDrafts()) {
-                        System.out.println(draft);
+                        for (Course course : draft){
+                            System.out.println(course.getCourseName() + " " + course.getCourseCode());
+                        }
                         System.out.println("Do you approve this draft? yes/no");
                         String advisorInput = scanner.nextLine();
                         if (advisorInput.equals("yes")) {

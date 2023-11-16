@@ -1,7 +1,1 @@
-{
-    "courseName": "Data Structures",
-    "credits": 6,
-    "courseCode": "CSE102",
-    "prerequisite": "CSE101",
-    "courseLecturer": "160222"
-}
+{"courseName":"Data Structures","credits":6,"courseCode":"CSE102","prerequisite":"CSE101","courseLecturer":"160222"}

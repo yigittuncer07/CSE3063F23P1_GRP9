@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
-class Advisor extends Lecturer {
+public class Advisor extends Lecturer {
 
-    private ArrayList<ArrayList<Course>> drafts;
+    private ArrayList<ArrayList<Course>> drafts = new ArrayList<>();
 
     public Advisor() {
     }    
