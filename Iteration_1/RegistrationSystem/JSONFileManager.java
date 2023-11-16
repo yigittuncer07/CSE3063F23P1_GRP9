@@ -367,12 +367,13 @@ public class JSONFileManager {
                             registeredCourse.setCredits((long) courseJSON.get("credits"));
 
                             // ADD GRADE
-                            //Grade grade = new Grade();
-                            //Double gradeValue = ((Number) courseJSON.get("grade")).doubleValue();
-                            //grade.setOutOfHundred(gradeValue);
-                            //grade.convertHundredToGano(gradeValue);
-                            //grade.convertHundredToLetterGrade(gradeValue);
-                            //registeredCourse.setGrade(grade);
+                            Grade grade = new Grade();
+                            Double gradeValue = ((Number) courseJSON.get("grade")).doubleValue();
+
+                            grade.setOutOfHundred(gradeValue);
+                            grade.convertHundredToGano(gradeValue);
+                            grade.convertHundredToLetterGrade(gradeValue);
+                            registeredCourse.setGrade(grade);
 
                             // ADD prerequisite
 
