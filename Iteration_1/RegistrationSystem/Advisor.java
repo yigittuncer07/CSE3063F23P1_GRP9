@@ -5,10 +5,21 @@ public class Advisor extends Lecturer {
     private ArrayList<ArrayList<Course>> drafts = new ArrayList<>();
 
     public Advisor() {
-    }    
+    }
 
-    public void addDraft(ArrayList<Course> draft){
+    public void addDraft(ArrayList<Course> draft) {
+        for (ArrayList<Course> list : drafts) {
+            for (Course course : list) {
+                course.getCourseCode();
+            }
+        }
         this.drafts.add(draft);
+        System.out.println(" _ __ _ _ ");
+        for (ArrayList<Course> list : drafts) {
+            for (Course course : list) {
+                course.getCourseCode();
+            }
+        }
     }
 
     public ArrayList<ArrayList<Course>> getDrafts() {

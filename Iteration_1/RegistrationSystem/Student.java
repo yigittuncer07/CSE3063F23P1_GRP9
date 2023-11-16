@@ -17,23 +17,23 @@ public class Student extends User {
                 return false;
             }
         }
-        for (Course course1: registeredCourses){
-            if (course1.getCourseCode().equals(course.getCourseCode())){
+        for (Course course1 : registeredCourses) {
+            if (course1.getCourseCode().equals(course.getCourseCode())) {
                 return false;
             }
         }
         if (draftForCourses.size() >= 5 || !course.isPrequisiteCompleted()) {
             return false;
         }
-        draftForCourses.add(course);
+        this.draftForCourses.add(course);
         return true;
     }
 
-    public void sendDraftToAdvisor(){
-        advisor.addDraft(draftForCourses);
+    public void sendDraftToAdvisor(Advisor studentAdvisor) {
+        studentAdvisor.addDraft(draftForCourses);
     }
 
-    public void approveDraft(){
+    public void approveDraft() {
         registeredCourses.addAll(draftForCourses);
         clearDraft();
     }

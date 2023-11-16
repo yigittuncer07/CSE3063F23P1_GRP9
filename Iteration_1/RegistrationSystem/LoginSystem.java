@@ -122,7 +122,12 @@ public class LoginSystem {
             }
             String input = scanner.nextLine();
             if (input.equals("submit")) {
-                student.sendDraftToAdvisor();
+                for (Advisor advisor : jsonFileManager.getAdvisors()) {
+                    if (advisor.getStaffID() == student.getAdvisor().getStaffID()) {
+                        System.out.println("FOUND ADVISOR");
+                        student.sendDraftToAdvisor(advisor);
+                    }
+                }
                 System.out.println("Sent for approval");
                 return;
             } else {
