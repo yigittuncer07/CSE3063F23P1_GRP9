@@ -47,35 +47,37 @@ public class Grade {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String formattedResult = decimalFormat.format(result);
 
+        this.gano = Double.parseDouble(formattedResult);
         return Double.parseDouble(formattedResult);
     }
 
-    public String convertHundredToLetterGrade(double hundred) {
+    public void convertHundredToLetterGrade(double hundred) {
         if (hundred < 0 || hundred > 100) {
             throw new IllegalArgumentException("Grade must be between 0 and 100");
         }
 
         hundred = convertHundredToGano(hundred);
-
+        String letterGrade;
         if (4.00 >= hundred && hundred > 3.50) {
-            return "AA";
+            letterGrade = "AA";
         } else if (3.50 >= hundred && hundred > 3.00) {
-            return "BA";
+            letterGrade =  "BA";
         } else if (3.00 >= hundred && hundred > 2.50) {
-            return "BB";
+            letterGrade =  "BB";
         } else if (2.50 >= hundred && hundred > 2.00) {
-            return "CB";
+            letterGrade =  "CB";
         } else if (2.00 >= hundred && hundred > 1.50) {
-            return "CC";
+            letterGrade =  "CC";
         } else if (1.50 >= hundred && hundred > 1.00) {
-            return "DC";
+            letterGrade =  "DC";
         } else if (1.00 >= hundred && hundred > 0.50) {
-            return "DD";
+            letterGrade =  "DD";
         } else if (0.50 >= hundred && hundred > 0.00) {
-            return "FD";
+            letterGrade =  "FD";
         } else {
-            return "FF";
+            letterGrade =  "FF";
         }
+        this.letterGrade = letterGrade;
     }
 
 }

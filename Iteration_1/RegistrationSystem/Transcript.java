@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Transcript {
     private ArrayList<Course> courses;
+    private Grade grade;
     private double GPA;
 
     public Transcript() {
@@ -11,7 +12,6 @@ public class Transcript {
 
     public void addCourse(Course course) {
         courses.add(course);
-        updateGPA();
     }
 
     public ArrayList<Course> getCourses() {
@@ -20,6 +20,7 @@ public class Transcript {
 
     public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
+        updateGPA();
     }
 
     public double getGPA() {
@@ -32,7 +33,7 @@ public class Transcript {
 
         for (Course course : courses) {
             totalCredits += course.getCredits();
-            //weightedSum += course.getCredits() * convertHundredToGano(course.getOutOfHundred);
+            weightedSum += course.getCredits() * course.getGrade().getOutOfHundred();
         }
 
         if (totalCredits > 0) {
