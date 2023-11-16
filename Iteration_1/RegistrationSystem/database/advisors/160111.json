@@ -10,8 +10,9 @@
     "department": "Computer Science",
     "profession": "Blockchain",
 
-  
-    "registrations": [
+    "drafts": [
+
+       [
         {
           "studentId": "150111",
           "studentName": "Hasan Pekedis",
@@ -27,8 +28,8 @@
     
         },
         {
-          "studentId": "150222",
-          "studentName": "Ahmet Deniz",
+          "studentId": "150111",
+          "studentName": "Hasan Pekedis",
           "courseName": "Computer Science",
           "courseLecturer": "170999",
           "courseCode": "COMP202",
@@ -38,8 +39,37 @@
           "prerequisiteCompleted": true,
           "advisorApproval": false
         }
-    ]
+    ],
+    [
+      {
+        "studentId": "150222",
+        "studentName": "Ahmet Deniz",
+        "courseName": "Mathematics",
+        "courseLecturer": "170888",
+        "courseCode": "MATH101",
+        "credits": 4,
+        "prerequisite": "MATH100",
+        "advisor": "160777",
+        "prerequisiteCompleted": false,
+        "advisorApproval": false
+
   
+      },
+      {
+        "studentId": "150222",
+        "studentName": "Ahmet Deniz",
+        "courseName": "Computer Science",
+        "courseLecturer": "170999",
+        "courseCode": "COMP202",
+        "credits": 6,
+        "prerequisite": "COMP102",
+        "advisor": "160777",
+        "prerequisiteCompleted": true,
+        "advisorApproval": false
+      }
+  ]
+    ]
+
    
   }
   
