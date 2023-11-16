@@ -64,7 +64,7 @@ public class JSONFileManager {
 
     public void writeAllDataToJSON() {
         writeAllStudentsData();
-        //writeAllAdvisorsData();
+        writeAllAdvisorsData();
         writeAllLecturersData();
         writeAllStudentAffairsStaffsData();
         writeAllCoursesData();
@@ -192,11 +192,10 @@ public class JSONFileManager {
             }
         }
     }
-/* 
+
     private void writeAllAdvisorsData() {
         for (Advisor advisor : advisors) {
             JSONObject advisorJson = new JSONObject();
-
             advisorJson.put("firstName", advisor.getName());
             advisorJson.put("lastName", advisor.getLastName());
             advisorJson.put("birthDate", advisor.getBirthDate());
@@ -207,26 +206,25 @@ public class JSONFileManager {
             advisorJson.put("advisorId", advisor.getStaffID());
             advisorJson.put("profession", advisor.getProffesion());
 
+            JSONArray draftsArray = new JSONArray();
+            for (ArrayList<Course> innerList : advisor.getDrafts()) {
+                JSONArray innerArray = new JSONArray();
+                for (Course course : innerList) {
+                    JSONObject courseJson = new JSONObject();
+                    courseJson.put("courseName", course.getCourseName());
+                    courseJson.put("courseCode", course.getCourseCode());
+                    courseJson.put("courseLecturer", course.getCourseLecturer().getStaffID());
+                    courseJson.put("studentId", course.getStudent().getStudentId());
+                    courseJson.put("studentName", course.getStudent().getName());
+                    courseJson.put("credits", course.getCredits());
+                    courseJson.put("advisor", course.getAdvisor().getStaffID());
 
-            // Creating JSONArray for registrations
-            JSONArray registrationsArray = new JSONArray();
-            for (Course registration : advisor.getRegistrations()) {
-                JSONObject registrationJson = new JSONObject();
-
-                registrationJson.put("courseName", registration.getCourseName());
-                registrationJson.put("courseCode", registration.getCourseCode());
-                registrationJson.put("courseLecturer", registration.getCourseLecturer().getStaffID());
-                registrationJson.put("studentId", registration.getStudent().getStudentId());
-                registrationJson.put("studentName", registration.getStudent().getName());
-                registrationJson.put("credits", registration.getCredits());
-                registrationJson.put("advisor", registration.getAdvisor().getStaffID());
-
-                registrationsArray.add(registrationJson);
+                    innerArray.add(courseJson);
+                }
+                draftsArray.add(innerArray);
             }
+            advisorJson.put("drafts", draftsArray);
 
-            advisorJson.put("registrations", registrationsArray);
-
-            // Writing to JSON file
             try (FileWriter fileWriter = new FileWriter("database/advisors/" + advisor.getStaffID() + ".json")) {
                 fileWriter.write(advisorJson.toJSONString());
             } catch (IOException e) {
@@ -237,7 +235,7 @@ public class JSONFileManager {
 
 
     }
-*/
+
     private void getAllAdvisorsData() {
         String folderPath = "database/advisors";
 
@@ -295,6 +293,7 @@ public class JSONFileManager {
 
                                 Advisor courseAdvisor = new Advisor();
                                 courseAdvisor.setStaffID((String) courseJSON.get("advisor"));
+                                course.setAdvisor(courseAdvisor);
 
                                 course.setPrequisiteCompleted(false);
 
@@ -305,38 +304,6 @@ public class JSONFileManager {
                         }
 
 
-                        /*
-                        for (Object courseObj : registrationsJSON) {
-
-                            JSONObject courseJSON = (JSONObject) courseObj;
-
-                            Course registration = new Course();
-
-                            registration.setCourseName((String) courseJSON.get("courseName"));
-                            registration.setCourseCode((String) courseJSON.get("courseCode"));
-
-                            Lecturer lecturer = new Lecturer();
-                            lecturer.setStaffID((String) courseJSON.get("courseLecturer"));
-                            registration.setCourseLecturer(lecturer);
-
-                            Student student = new Student();
-                            student.setStudentId((String) courseJSON.get("studentId"));
-                            student.setStudentId((String) courseJSON.get("studentName"));
-                            registration.setStudent(student);
-
-                            registration.setCredits((long) courseJSON.get("credits"));
-
-                            Advisor courseAdvisor = new Advisor();
-                            courseAdvisor.setStaffID((String) courseJSON.get("advisor"));
-
-                            registration.setPrequisiteCompleted(false);
-
-                            registrations.add(registration);
-
-                        }
-
-                        advisor.setRegistrations(registrations);
-                        */
                        
                         advisors.add(advisor);
 

@@ -1,14 +1,1 @@
-{
-    "firstName": "Ayşe",
-    "lastName": "Deniz",
-    "birthDate": "13:03:96.454+0530",
-    "address": "Ankara, Turkey",
-    "ssn": "33333333333",
-    "email": "aysedeniz@gmail.com",
-    "password": "111111",
-    "lecturerId": "160555",
-    "profession": "Data Science",
-    "department": "Computer Science"
-
-}
-  
+{"lecturerId":"160555","profession":"Data Science","firstName":"Ayşe","lastName":"Deniz","password":"111111","address":"Ankara, Turkey","department":"160555","birthDate":"13:03:96.454+0530","email":"aysedeniz@gmail.com","ssn":"33333333333"}
