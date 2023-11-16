@@ -79,7 +79,7 @@ public class JSONFileManager {
             courseJSON.put("courseName", course.getCourseName());
             courseJSON.put("credits", course.getCredits());
             courseJSON.put("courseCode", course.getCourseCode());
-            courseJSON.put("prerequisite", "course");
+            courseJSON.put("prerequisite",course.getPrequisite() );
             courseJSON.put("courseLecturer", course.getCourseLecturer().getStaffID());
 
             
@@ -113,6 +113,8 @@ public class JSONFileManager {
                         Course course = new Course();
                         course.setCourseName((String) jsonObject.get("courseName"));
                         course.setCourseCode((String) jsonObject.get("courseCode"));
+                        course.setPrequisite((String) jsonObject.get("prerequisite"));
+
                         course.setCredits((long) jsonObject.get("credits"));
                         Lecturer lecturer = new Lecturer();
                         lecturer.setStaffID((String) jsonObject.get("courseLecturer"));
@@ -203,6 +205,8 @@ public class JSONFileManager {
             advisorJson.put("email", advisor.getEmail());
             advisorJson.put("password", advisor.getPassword());
             advisorJson.put("advisorId", advisor.getStaffID());
+            advisorJson.put("profession", advisor.getProffesion());
+
 
             // Creating JSONArray for registrations
             JSONArray registrationsArray = new JSONArray();
@@ -258,6 +262,8 @@ public class JSONFileManager {
                         advisor.setEmail((String) jsonObject.get("email"));
                         advisor.setPassword((String) jsonObject.get("password"));
                         advisor.setStaffID((String) jsonObject.get("advisorId"));
+                        advisor.setProffesion((String) jsonObject.get("profession"));
+
 
                         ArrayList<Course> registrations = new ArrayList<>();
 
