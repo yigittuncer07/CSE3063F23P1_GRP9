@@ -168,7 +168,7 @@ public class JSONFileManager {
                 draftJSON.put("courseCode", course.getCourseCode());
                 draftJSON.put("courseLecturer", course.getCourseLecturer().getStaffID());
                 draftJSON.put("credits", course.getCredits());
-                draftJSON.put("advisor", course.getStudent().getAdvisor().getStaffID());
+                draftJSON.put("advisor", student.getAdvisor().getStaffID());
 
                 coursesWaitingForApprovalArray.add(draftJSON);
             }
