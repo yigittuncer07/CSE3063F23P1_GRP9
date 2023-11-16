@@ -12,14 +12,14 @@
             "credits": 3,
             "courseCode": "MUSIC101",
             "grade": 95.0,
-            "courseLecturer": "170777"
+            "courseLecturer": "160333"
         },
         {
             "courseName": "Drama",
             "credits": 4,
             "courseCode": "DRAMA202",
             "grade": 78.0,
-            "courseLecturer": "170888"
+            "courseLecturer": "160222"
         }
     ],
     "birthDate": "18:04:09.567+0300",

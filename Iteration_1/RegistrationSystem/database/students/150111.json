@@ -11,15 +11,15 @@
             "courseName": "Mathematics",
             "credits": 4,
             "courseCode": "MATH101",
-            "grade": 34.0,
-            "courseLecturer": "170888"
+            "grade": 37.0,
+            "courseLecturer": "160222"
         },
         {
             "courseName": "Computer Science",
             "credits": 6,
             "courseCode": "COMP202",
             "grade": 47.0,
-            "courseLecturer": "170999"
+            "courseLecturer": "160111"
         }
     ],
     "birthDate": "13:03:01.454+0530",

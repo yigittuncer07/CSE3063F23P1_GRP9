@@ -12,14 +12,14 @@
             "credits": 3,
             "courseCode": "HIST101",
             "grade": 72.0,
-            "courseLecturer": "170555"
+            "courseLecturer": "160111"
         },
         {
             "courseName": "Psychology",
             "credits": 5,
             "courseCode": "PSYCH202",
             "grade": 64.0,
-            "courseLecturer": "170666"
+            "courseLecturer": "160111"
         }
     ],
     "birthDate": "21:11:04.789+0300",

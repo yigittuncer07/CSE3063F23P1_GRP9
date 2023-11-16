@@ -12,14 +12,14 @@
             "credits": 4,
             "courseCode": "ECON101",
             "grade": 75.0,
-            "courseLecturer": "170888"
+            "courseLecturer": "160222"
         },
         {
             "courseName": "Political Science",
             "credits": 5,
             "courseCode": "POLSC202",
             "grade": 62.0,
-            "courseLecturer": "170999"
+            "courseLecturer": "160333"
         }
     ],
     "birthDate": "17:09:06.234+0300",

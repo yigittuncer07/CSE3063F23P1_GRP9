@@ -10,16 +10,16 @@
         {
             "courseName": "Sociology",
             "credits": 3,
-            "courseCode": "SOC101",
+            "courseCode": "SOC100",
             "grade": 90.0,
-            "courseLecturer": "170777"
+            "courseLecturer": "160222"
         },
         {
             "courseName": "Environmental Science",
             "credits": 4,
             "courseCode": "ENVSCI202",
             "grade": 68.0,
-            "courseLecturer": "170888"
+            "courseLecturer": "160555"
         }
     ],
     "birthDate": "29:03:07.345+0300",

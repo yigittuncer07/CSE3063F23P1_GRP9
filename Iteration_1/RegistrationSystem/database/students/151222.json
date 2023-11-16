@@ -12,14 +12,14 @@
             "credits": 3,
             "courseCode": "GEOG101",
             "grade": 85.0,
-            "courseLecturer": "170555"
+            "courseLecturer": "160111"
         },
         {
             "courseName": "Sustainable Development",
             "credits": 4,
             "courseCode": "SUSDEV202",
             "grade": 70.0,
-            "courseLecturer": "170666"
+            "courseLecturer": "160333"
         }
     ],
     "birthDate": "25:01:10.678+0300",

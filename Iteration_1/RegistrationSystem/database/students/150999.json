@@ -12,14 +12,14 @@
             "credits": 3,
             "courseCode": "PHIL101",
             "grade": 80.0,
-            "courseLecturer": "170555"
+            "courseLecturer": "160222"
         },
         {
             "courseName": "Anthropology",
             "credits": 4,
             "courseCode": "ANTH202",
             "grade": 73.0,
-            "courseLecturer": "170666"
+            "courseLecturer": "160333"
         }
     ],
     "birthDate": "02:05:08.456+0300",

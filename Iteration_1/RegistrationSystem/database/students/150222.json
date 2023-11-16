@@ -10,16 +10,16 @@
         {
             "courseName": "Mathematics",
             "credits": 4,
-            "courseCode": "MATH101",
-            "grade": 0.0,
-            "courseLecturer": "170888"
+            "courseCode": "MATH100",
+            "grade": 47.0,
+            "courseLecturer": "160222"
         },
         {
-            "courseName": "Computer Science",
-            "credits": 6,
-            "courseCode": "COMP202",
-            "grade": 0.0,
-            "courseLecturer": "170999"
+            "courseName": "Literature",
+            "credits": 3,
+            "courseCode": "LIT100",
+            "grade": 55.0,
+            "courseLecturer": "160111"
         }
     ],
     "birthDate": "13:03:01.454+0530",
