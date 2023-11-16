@@ -364,7 +364,8 @@ public class JSONFileManager {
                             Grade grade = new Grade();
                             Double gradeValue = ((Number) courseJSON.get("grade")).doubleValue();
                             grade.setOutOfHundred(gradeValue);
-
+                            grade.convertHundredToGano(gradeValue);
+                            grade.convertHundredToLetterGrade(gradeValue);
                             registeredCourse.setGrade(grade);
 
                             // ADD prerequisite
