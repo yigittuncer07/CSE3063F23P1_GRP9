@@ -79,7 +79,7 @@ public class JSONFileManager {
             courseJSON.put("courseName", course.getCourseName());
             courseJSON.put("credits", course.getCredits());
             courseJSON.put("courseCode", course.getCourseCode());
-            courseJSON.put("prerequisite", "TODO");
+            courseJSON.put("prerequisite", "course");
             courseJSON.put("courseLecturer", course.getCourseLecturer().getStaffID());
 
             
@@ -163,6 +163,23 @@ public class JSONFileManager {
             }
 
             studentJson.put("registeredCourses", registeredCoursesArray);
+
+            JSONArray coursesWaitingForApprovalArray = new JSONArray();
+            for (Course course : student.getDraftForCourses()) {
+                JSONObject draftJSON = new JSONObject();
+
+                draftJSON.put("courseName", course.getCourseName());
+                draftJSON.put("courseCode", course.getCourseCode());
+                draftJSON.put("courseCode", course.getCourseCode());
+                draftJSON.put("courseLecturer", course.getCourseLecturer().getStaffID());
+                draftJSON.put("credits", course.getCredits());
+                draftJSON.put("advisor", course.getAdvisor().getStaffID());
+
+
+                registeredCoursesArray.add(draftJSON);
+            }
+
+            studentJson.put("coursesWaitingForApproval", coursesWaitingForApprovalArray);
 
             studentJson.put("advisorId", student.getAdvisor().getStaffID());
 
