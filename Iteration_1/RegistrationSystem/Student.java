@@ -36,6 +36,11 @@ class Student extends User {
         advisor.addDraft(draftForCourses);
     }
 
+    public void approveDraft(){
+        registeredCourses.addAll(draftForCourses);
+        clearDraft();
+    }
+
     public void clearDraft() {
         draftForCourses.clear();
     }
