@@ -1,1 +1,28 @@
-{"studentId":"150333","firstName":"Ayse","lastName":"Demir","password":"ayse123","coursesWaitingForApproval":[],"address":"Istanbul, Turkey","advisorId":"160777","registeredCourses":[{"courseName":"Mathematics","credits":4,"courseCode":"MATH101","grade":0.0,"courseLecturer":"170888"},{"courseName":"Computer Science","credits":6,"courseCode":"COMP202","grade":0.0,"courseLecturer":"170999"}],"birthDate":"13:03:01.454+0530","email":"aysedemir@gmail.com","ssn":"33333333333"}
+{
+    "studentId": "150333",
+    "firstName": "Ayse",
+    "lastName": "Demir",
+    "password": "ayse123",
+    "coursesWaitingForApproval": [],
+    "address": "Istanbul, Turkey",
+    "advisorId": "160111",
+    "registeredCourses": [
+        {
+            "courseName": "Mathematics",
+            "credits": 4,
+            "courseCode": "MATH101",
+            "grade": 0.0,
+            "courseLecturer": "170888"
+        },
+        {
+            "courseName": "Computer Science",
+            "credits": 6,
+            "courseCode": "COMP202",
+            "grade": 0.0,
+            "courseLecturer": "170999"
+        }
+    ],
+    "birthDate": "13:03:01.454+0530",
+    "email": "aysedemir@gmail.com",
+    "ssn": "33333333333"
+}

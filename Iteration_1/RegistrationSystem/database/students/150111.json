@@ -1,49 +1,28 @@
 {
-  "studentId": "150111",
-  "firstName": "Hasan",
-  "lastName": "Pekedis",
-  "password": "123456",
-  "coursesWaitingForApproval": [
-    {
-      "advisor": "160777",
-      "courseName": "Mathematics",
-      "credits": 4,
-      "courseCode": "MATH101",
-      "prerequisite": "MATH100",
-      "prerequisiteCompleted": false,
-      "courseLecturer": "170888"
-    },
-    {
-      "advisor": "160777",
-      "courseName": "Computer Science",
-      "credits": 6,
-      "courseCode": "COMP202",
-      "prerequisite": "COMP102",
-      "prerequisiteCompleted": true,
-      "courseLecturer": "170999"
-    }
-  ],
-  "address": "Istanbul, Turkey",
-  "advisorId": "160777",
-  "registeredCourses": [
-    {
-      "courseName": "Mathematics",
-      "credits": 4,
-      "courseCode": "MATH101",
-      "grade": 34,
-      "prerequisite": "MATH100",
-      "courseLecturer": "170888"
-    },
-    {
-      "courseName": "Computer Science",
-      "credits": 6,
-      "courseCode": "COMP202",
-      "grade": 47,
-      "prerequisite": "COMP102",
-      "courseLecturer": "170999"
-    }
-  ],
-  "birthDate": "13:03:01.454+0530",
-  "email": "hasanpekedis@gmail.com",
-  "ssn": "11111111111"
+    "studentId": "150111",
+    "firstName": "Hasan",
+    "lastName": "Pekedis",
+    "password": "123456",
+    "coursesWaitingForApproval": [],
+    "address": "Istanbul, Turkey",
+    "advisorId": "160111",
+    "registeredCourses": [
+        {
+            "courseName": "Mathematics",
+            "credits": 4,
+            "courseCode": "MATH101",
+            "grade": 34.0,
+            "courseLecturer": "170888"
+        },
+        {
+            "courseName": "Computer Science",
+            "credits": 6,
+            "courseCode": "COMP202",
+            "grade": 47.0,
+            "courseLecturer": "170999"
+        }
+    ],
+    "birthDate": "13:03:01.454+0530",
+    "email": "hasanpekedis@gmail.com",
+    "ssn": "11111111111"
 }
