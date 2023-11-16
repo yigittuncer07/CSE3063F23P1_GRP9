@@ -9,7 +9,7 @@
         "courseName": "Geography",
         "credits": 3,
         "courseCode": "GEOG101",
-        "prerequisite": "GEOG100",
+        "prerequisite": "",
         "prerequisiteCompleted": true,
         "courseLecturer": "170555"
       },

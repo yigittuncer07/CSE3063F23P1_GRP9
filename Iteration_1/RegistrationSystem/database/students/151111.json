@@ -9,7 +9,7 @@
         "courseName": "Music",
         "credits": 3,
         "courseCode": "MUSIC101",
-        "prerequisite": "MUSIC100",
+        "prerequisite": "",
         "prerequisiteCompleted": true,
         "courseLecturer": "170777"
       },

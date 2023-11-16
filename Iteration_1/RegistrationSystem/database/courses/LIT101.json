@@ -1,0 +1,7 @@
+{
+  "courseName": "Literature",
+  "credits": 3,
+  "courseCode": "LIT101",
+  "prerequisite": "LIT100",
+  "courseLecturer": "160111"
+}

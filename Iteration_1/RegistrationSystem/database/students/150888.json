@@ -18,7 +18,7 @@
         "courseName": "Environmental Science",
         "credits": 4,
         "courseCode": "ENVSCI202",
-        "prerequisite": "ENVSCI101",
+        "prerequisite": "",
         "prerequisiteCompleted": false,
         "courseLecturer": "170888"
       }
