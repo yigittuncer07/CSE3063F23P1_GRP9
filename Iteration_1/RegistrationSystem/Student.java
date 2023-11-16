@@ -32,12 +32,13 @@ class Student extends User {
         return true;
     }
 
-    public boolean sendDraftForAdvisorApproval() {
-        if (advisor.registrationApproval(draftForCourses)) {
-            registeredCourses.addAll(draftForCourses);
-            draftForCourses.clear();
-        }
-        return false;
+    public void sendDraftToAdvisor(){
+        advisor.addDraft(draftForCourses);
+    }
+
+    public void approveDraft(){
+        registeredCourses.addAll(draftForCourses);
+        clearDraft();
     }
 
     public void clearDraft() {

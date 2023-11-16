@@ -122,12 +122,13 @@ public class LoginSystem {
             }
             String input = scanner.nextLine();
             if (input.equals("submit")) {
-                System.out.println("Sent for approval");
-                if (student.sendDraftForAdvisorApproval()) {
+                if (student.getDraftForCourses().isEmpty()) {
+                    System.out.println("Cannot submit empty draft");
                 } else {
-                    student.clearDraft();
+                    student.sendDraftToAdvisor();
+                    System.out.println("Sent for approval");
+                    return;
                 }
-                return;
             } else {
                 boolean courseFound = false;
                 for (Course course : courses) {
@@ -260,8 +261,18 @@ public class LoginSystem {
                         System.out.println(data.getAdvisors().get(indexInDatabase).getProffesion());
                         break;
                     case 2:
-                        System.out.println("\nThese are the student registrations.\n");
-                        break;
+                    System.out.println("\nPlease proceed with this draft:.\n");
+                    for (ArrayList<Course> draft : data.getAdvisors().get(indexInDatabase).getDrafts()) {
+                        System.out.println(draft);
+                        System.out.println("Do you approve this draft? yes/no");
+                        String advisorInput = scanner.nextLine();
+                        if (advisorInput.equals("yes")) {
+                            draft.get(0).getStudent().approveDraft();
+                        } else if (advisorInput.equals("no")) {
+                            draft.get(0).getStudent().clearDraft();
+                        }
+                    }
+                    break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
