@@ -205,6 +205,8 @@ public class JSONFileManager {
             advisorJson.put("email", advisor.getEmail());
             advisorJson.put("password", advisor.getPassword());
             advisorJson.put("advisorId", advisor.getStaffID());
+            advisorJson.put("profession", advisor.getProffesion());
+
 
             // Creating JSONArray for registrations
             JSONArray registrationsArray = new JSONArray();
@@ -260,6 +262,8 @@ public class JSONFileManager {
                         advisor.setEmail((String) jsonObject.get("email"));
                         advisor.setPassword((String) jsonObject.get("password"));
                         advisor.setStaffID((String) jsonObject.get("advisorId"));
+                        advisor.setProffesion((String) jsonObject.get("profession"));
+
 
                         ArrayList<Course> registrations = new ArrayList<>();
 
