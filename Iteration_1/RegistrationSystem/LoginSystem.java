@@ -122,11 +122,8 @@ public class LoginSystem {
             }
             String input = scanner.nextLine();
             if (input.equals("submit")) {
+                student.sendDraftToAdvisor();
                 System.out.println("Sent for approval");
-                if (student.sendDraftForAdvisorApproval()) {
-                } else {
-                    student.clearDraft();
-                }
                 return;
             } else {
                 boolean courseFound = false;
@@ -261,6 +258,8 @@ public class LoginSystem {
                         break;
                     case 2:
                         System.out.println("\nThese are the student registrations.\n");
+                        System.out.println(data.getAdvisors().get(indexInDatabase).getDrafts());
+                        
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
