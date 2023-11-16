@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 class Advisor extends Lecturer {
 
-    private ArrayList<Course> registrations;
+    private ArrayList<ArrayList<Course>> drafts;
 
     public Advisor() {
     }
@@ -26,11 +26,18 @@ class Advisor extends Lecturer {
         return false;
     }
 
-    public ArrayList<Course> getRegistrations() {
-        return registrations;
+    
+
+    public void addDraft(ArrayList<Course> draft){
+        this.drafts.add(draft);
     }
 
-    public void setRegistrations(ArrayList<Course> registrations) {
-        this.registrations = registrations;
+    public ArrayList<ArrayList<Course>> getDrafts() {
+        return drafts;
     }
+
+    public void setDrafts(ArrayList<ArrayList<Course>> drafts) {
+        this.drafts = drafts;
+    }
+
 }
