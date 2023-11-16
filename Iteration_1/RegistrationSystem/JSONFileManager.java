@@ -64,7 +64,7 @@ public class JSONFileManager {
 
     public void writeAllDataToJSON() {
         writeAllStudentsData();
-        writeAllAdvisorsData();
+        //writeAllAdvisorsData();
         writeAllLecturersData();
         writeAllStudentAffairsStaffsData();
         writeAllCoursesData();
@@ -192,7 +192,7 @@ public class JSONFileManager {
             }
         }
     }
-
+/* 
     private void writeAllAdvisorsData() {
         for (Advisor advisor : advisors) {
             JSONObject advisorJson = new JSONObject();
@@ -237,7 +237,7 @@ public class JSONFileManager {
 
 
     }
-
+*/
     private void getAllAdvisorsData() {
         String folderPath = "database/advisors";
 
@@ -253,6 +253,8 @@ public class JSONFileManager {
                         Object obj = jsonParser.parse(fileReader);
                         JSONObject jsonObject = (JSONObject) obj;
 
+
+
                         Advisor advisor = new Advisor();
                         advisor.setName((String) jsonObject.get("firstName"));
                         advisor.setLastName((String) jsonObject.get("lastName"));
@@ -265,10 +267,45 @@ public class JSONFileManager {
                         advisor.setProffesion((String) jsonObject.get("profession"));
 
 
-                        ArrayList<Course> registrations = new ArrayList<>();
+                        ArrayList<ArrayList<Course>> draftsList  = new ArrayList<>();
 
-                        JSONArray registrationsJSON = (JSONArray) jsonObject.get("registrations");
+                        JSONArray draftsArray = (JSONArray) jsonObject.get("drafts");
 
+                        for (Object innerArrayObj : draftsArray) {
+                            JSONArray innerArray = (JSONArray) innerArrayObj;
+                            ArrayList<Course> innerList  = new ArrayList<>();
+            
+                            for (Object innerObj : innerArray) {
+                                Course course = new Course();
+                                JSONObject courseJSON = (JSONObject) innerObj;
+
+                                course.setCourseName((String) courseJSON.get("courseName"));
+                                course.setCourseCode((String) courseJSON.get("courseCode"));
+
+                                Lecturer lecturer = new Lecturer();
+                                lecturer.setStaffID((String) courseJSON.get("courseLecturer"));
+                                course.setCourseLecturer(lecturer);
+
+                                Student student = new Student();
+                                student.setStudentId((String) courseJSON.get("studentId"));
+                                student.setName((String) courseJSON.get("studentName"));
+                                course.setStudent(student);
+
+                                course.setCredits((long) courseJSON.get("credits"));
+
+                                Advisor courseAdvisor = new Advisor();
+                                courseAdvisor.setStaffID((String) courseJSON.get("advisor"));
+
+                                course.setPrequisiteCompleted(false);
+
+                                innerList.add(course);
+                            }
+            
+                            draftsList.add(innerList);
+                        }
+
+
+                        /*
                         for (Object courseObj : registrationsJSON) {
 
                             JSONObject courseJSON = (JSONObject) courseObj;
@@ -299,9 +336,11 @@ public class JSONFileManager {
                         }
 
                         advisor.setRegistrations(registrations);
-
+                        */
                        
                         advisors.add(advisor);
+
+                        advisor.setDrafts(draftsList);
 
                         fileReader.close();
                     } catch (IOException | ParseException e) {
@@ -361,12 +400,12 @@ public class JSONFileManager {
                             registeredCourse.setCredits((long) courseJSON.get("credits"));
 
                             // ADD GRADE
-                            Grade grade = new Grade();
-                            Double gradeValue = ((Number) courseJSON.get("grade")).doubleValue();
-                            grade.setOutOfHundred(gradeValue);
-                            grade.convertHundredToGano(gradeValue);
-                            grade.convertHundredToLetterGrade(gradeValue);
-                            registeredCourse.setGrade(grade);
+                            //Grade grade = new Grade();
+                            //Double gradeValue = ((Number) courseJSON.get("grade")).doubleValue();
+                            //grade.setOutOfHundred(gradeValue);
+                            //grade.convertHundredToGano(gradeValue);
+                            //grade.convertHundredToLetterGrade(gradeValue);
+                            //registeredCourse.setGrade(grade);
 
                             // ADD prerequisite
 
