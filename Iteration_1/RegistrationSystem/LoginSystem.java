@@ -123,8 +123,7 @@ public class LoginSystem {
             String input = scanner.nextLine();
             if (input.equals("submit")) {
                 for (Advisor advisor : jsonFileManager.getAdvisors()) {
-                    if (advisor.getStaffID() == student.getAdvisor().getStaffID()) {
-                        System.out.println("FOUND ADVISOR");
+                    if (advisor.getStaffID().equals(student.getAdvisor().getStaffID())) {
                         student.sendDraftToAdvisor(advisor);
                     }
                 }
