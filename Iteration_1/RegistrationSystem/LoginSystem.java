@@ -199,7 +199,7 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("\nThis is your proffesion.\n");
+                        System.out.println(data.getLecturers().get(indexInDatabase).getProffesion());
                         break;
                     case 2:
                         System.out.println("\nYou have logged out succesfully.");
@@ -257,7 +257,7 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("\nThis is your proffesion.\n");
+                        System.out.println(data.getAdvisors().get(indexInDatabase).getProffesion());
                         break;
                     case 2:
                         System.out.println("\nThese are the student registrations.\n");
