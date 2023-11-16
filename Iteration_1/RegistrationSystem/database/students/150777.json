@@ -1,0 +1,49 @@
+{
+    "studentId": "150777",
+    "firstName": "Okan",
+    "lastName": "Aydın",
+    "password": "okan789",
+    "coursesWaitingForApproval": [
+      {
+        "advisor": "160779",
+        "courseName": "Economics",
+        "credits": 4,
+        "courseCode": "ECON101",
+        "prerequisite": "ECON100",
+        "prerequisiteCompleted": true,
+        "courseLecturer": "170888"
+      },
+      {
+        "advisor": "160779",
+        "courseName": "Political Science",
+        "credits": 5,
+        "courseCode": "POLSC202",
+        "prerequisite": "POLSC101",
+        "prerequisiteCompleted": false,
+        "courseLecturer": "170999"
+      }
+    ],
+    "address": "Antalya, Turkey",
+    "advisorId": "160782",
+    "registeredCourses": [
+      {
+        "courseName": "Economics",
+        "credits": 4,
+        "courseCode": "ECON101",
+        "grade": 75,
+        "prerequisite": "ECON100",
+        "courseLecturer": "170888"
+      },
+      {
+        "courseName": "Political Science",
+        "credits": 5,
+        "courseCode": "POLSC202",
+        "grade": 62,
+        "prerequisite": "POLSC101",
+        "courseLecturer": "170999"
+      }
+    ],
+    "birthDate": "17:09:06.234+0300",
+    "email": "okanaydin@gmail.com",
+    "ssn": "66666666666"
+  }

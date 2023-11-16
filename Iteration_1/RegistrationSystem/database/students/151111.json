@@ -1,0 +1,49 @@
+{
+    "studentId": "151111",
+    "firstName": "Yusuf",
+    "lastName": "Arslan",
+    "password": "yusuf789",
+    "coursesWaitingForApproval": [
+      {
+        "advisor": "160781",
+        "courseName": "Music",
+        "credits": 3,
+        "courseCode": "MUSIC101",
+        "prerequisite": "MUSIC100",
+        "prerequisiteCompleted": true,
+        "courseLecturer": "170777"
+      },
+      {
+        "advisor": "160781",
+        "courseName": "Drama",
+        "credits": 4,
+        "courseCode": "DRAMA202",
+        "prerequisite": "DRAMA101",
+        "prerequisiteCompleted": false,
+        "courseLecturer": "170888"
+      }
+    ],
+    "address": "Trabzon, Turkey",
+    "advisorId": "160785",
+    "registeredCourses": [
+      {
+        "courseName": "Music",
+        "credits": 3,
+        "courseCode": "MUSIC101",
+        "grade": 95,
+        "prerequisite": "MUSIC100",
+        "courseLecturer": "170777"
+      },
+      {
+        "courseName": "Drama",
+        "credits": 4,
+        "courseCode": "DRAMA202",
+        "grade": 78,
+        "prerequisite": "DRAMA101",
+        "courseLecturer": "170888"
+      }
+    ],
+    "birthDate": "18:04:09.567+0300",
+    "email": "yusufarslan@gmail.com",
+    "ssn": "99999999999"
+  }

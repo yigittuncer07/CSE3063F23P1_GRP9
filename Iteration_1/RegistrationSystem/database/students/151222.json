@@ -1,0 +1,49 @@
+{
+    "studentId": "151222",
+    "firstName": "Zehra",
+    "lastName": "Çetin",
+    "password": "zehra123",
+    "coursesWaitingForApproval": [
+      {
+        "advisor": "160782",
+        "courseName": "Geography",
+        "credits": 3,
+        "courseCode": "GEOG101",
+        "prerequisite": "GEOG100",
+        "prerequisiteCompleted": true,
+        "courseLecturer": "170555"
+      },
+      {
+        "advisor": "160782",
+        "courseName": "Sustainable Development",
+        "credits": 4,
+        "courseCode": "SUSDEV202",
+        "prerequisite": "SUSDEV101",
+        "prerequisiteCompleted": false,
+        "courseLecturer": "170666"
+      }
+    ],
+    "address": "Samsun, Turkey",
+    "advisorId": "160786",
+    "registeredCourses": [
+      {
+        "courseName": "Geography",
+        "credits": 3,
+        "courseCode": "GEOG101",
+        "grade": 85,
+        "prerequisite": "GEOG100",
+        "courseLecturer": "170555"
+      },
+      {
+        "courseName": "Sustainable Development",
+        "credits": 4,
+        "courseCode": "SUSDEV202",
+        "grade": 70,
+        "prerequisite": "SUSDEV101",
+        "courseLecturer": "170666"
+      }
+    ],
+    "birthDate": "25:01:10.678+0300",
+    "email": "zehracetin@gmail.com",
+    "ssn": "10101010101"
+  }

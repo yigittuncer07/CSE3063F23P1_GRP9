@@ -1,0 +1,48 @@
+{
+    "studentId": "150888",
+    "firstName": "Emre",
+    "lastName": "Kaya",
+    "password": "emre123",
+    "coursesWaitingForApproval": [
+      {
+        "advisor": "160779",
+        "courseName": "Sociology",
+        "credits": 3,
+        "courseCode": "SOC101",
+        "prerequisite": "SOC100",
+        "prerequisiteCompleted": true,
+        "courseLecturer": "170777"
+      },
+      {
+        "advisor": "160779",
+        "courseName": "Environmental Science",
+        "credits": 4,
+        "courseCode": "ENVSCI202",
+        "prerequisite": "ENVSCI101",
+        "prerequisiteCompleted": false,
+        "courseLecturer": "170888"
+      }
+    ],
+    "address": "Konya, Turkey",
+    "advisorId": "160783",
+    "registeredCourses": [
+      {
+        "courseName": "Sociology",
+        "credits": 3,
+        "courseCode": "SOC101",
+        "grade": 90,
+        "prerequisite": "SOC100",
+        "courseLecturer": "170777"
+      },
+      {
+        "courseName": "Environmental Science",
+        "credits": 4,
+        "courseCode": "ENVSCI202",
+        "grade": 68,
+        "prerequisite": "ENVSCI101",
+        "courseLecturer": "170888"
+      }  ],
+      "birthDate": "29:03:07.345+0300",
+      "email": "emrekaya@gmail.com",
+      "ssn": "77777777777"
+    }

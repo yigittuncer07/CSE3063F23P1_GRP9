@@ -1,0 +1,49 @@
+{
+    "studentId": "150444",
+    "firstName": "Mehmet",
+    "lastName": "Demir",
+    "password": "xyz123",
+    "coursesWaitingForApproval": [
+      {
+        "advisor": "160777",
+        "courseName": "Biology",
+        "credits": 3,
+        "courseCode": "BIO101",
+        "prerequisite": "BIO100",
+        "prerequisiteCompleted": false,
+        "courseLecturer": "170666"
+      },
+      {
+        "advisor": "160777",
+        "courseName": "Statistics",
+        "credits": 4,
+        "courseCode": "STAT202",
+        "prerequisite": "STAT101",
+        "prerequisiteCompleted": true,
+        "courseLecturer": "170777"
+      }
+    ],
+    "address": "İzmir, Turkey",
+    "advisorId": "160779",
+    "registeredCourses": [
+      {
+        "courseName": "Biology",
+        "credits": 3,
+        "courseCode": "BIO101",
+        "grade": 55,
+        "prerequisite": "BIO100",
+        "courseLecturer": "170666"
+      },
+      {
+        "courseName": "Statistics",
+        "credits": 4,
+        "courseCode": "STAT202",
+        "grade": 82,
+        "prerequisite": "STAT101",
+        "courseLecturer": "170777"
+      }
+    ],
+    "birthDate": "12:08:03.567+0300",
+    "email": "mehmetdemir@gmail.com",
+    "ssn": "33333333333"
+  }

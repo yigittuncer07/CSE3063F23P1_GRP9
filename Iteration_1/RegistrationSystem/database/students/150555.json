@@ -1,0 +1,49 @@
+{
+    "studentId": "150555",
+    "firstName": "Zeynep",
+    "lastName": "Yıldız",
+    "password": "zeynep123",
+    "coursesWaitingForApproval": [
+      {
+        "advisor": "160778",
+        "courseName": "History",
+        "credits": 3,
+        "courseCode": "HIST101",
+        "prerequisite": "HIST100",
+        "prerequisiteCompleted": true,
+        "courseLecturer": "170555"
+      },
+      {
+        "advisor": "160778",
+        "courseName": "Psychology",
+        "credits": 5,
+        "courseCode": "PSYCH202",
+        "prerequisite": "PSYCH101",
+        "prerequisiteCompleted": false,
+        "courseLecturer": "170666"
+      }
+    ],
+    "address": "Adana, Turkey",
+    "advisorId": "160780",
+    "registeredCourses": [
+      {
+        "courseName": "History",
+        "credits": 3,
+        "courseCode": "HIST101",
+        "grade": 72,
+        "prerequisite": "HIST100",
+        "courseLecturer": "170555"
+      },
+      {
+        "courseName": "Psychology",
+        "credits": 5,
+        "courseCode": "PSYCH202",
+        "grade": 64,
+        "prerequisite": "PSYCH101",
+        "courseLecturer": "170666"
+      }
+    ],
+    "birthDate": "21:11:04.789+0300",
+    "email": "zeynepyildiz@gmail.com",
+    "ssn": "44444444444"
+  }

@@ -1,1 +1,49 @@
-{"studentId":"150666","firstName":"Hasan","lastName":"Pekedis","password":"123456","coursesWaitingForApproval":[],"address":"Istanbul, Turkey","advisorId":"160777","registeredCourses":[{"courseName":"Mathematics","credits":4,"courseCode":"MATH101","grade":0.0,"courseLecturer":"170888"},{"courseName":"Computer Science","credits":6,"courseCode":"COMP202","grade":0.0,"courseLecturer":"170999"}],"birthDate":"13:03:01.454+0530","email":"hasanpekedis@gmail.com","ssn":"11111111111"}
+{
+    "studentId": "150666",
+    "firstName": "Elif",
+    "lastName": "Yılmaz",
+    "password": "elif456",
+    "coursesWaitingForApproval": [
+      {
+        "advisor": "160778",
+        "courseName": "Literature",
+        "credits": 3,
+        "courseCode": "LIT101",
+        "prerequisite": "LIT100",
+        "prerequisiteCompleted": true,
+        "courseLecturer": "170555"
+      },
+      {
+        "advisor": "160778",
+        "courseName": "Art History",
+        "credits": 4,
+        "courseCode": "ARTH202",
+        "prerequisite": "ARTH101",
+        "prerequisiteCompleted": false,
+        "courseLecturer": "170666"
+      }
+    ],
+    "address": "Bursa, Turkey",
+    "advisorId": "160781",
+    "registeredCourses": [
+      {
+        "courseName": "Literature",
+        "credits": 3,
+        "courseCode": "LIT101",
+        "grade": 88,
+        "prerequisite": "LIT100",
+        "courseLecturer": "170555"
+      },
+      {
+        "courseName": "Art History",
+        "credits": 4,
+        "courseCode": "ARTH202",
+        "grade": 70,
+        "prerequisite": "ARTH101",
+        "courseLecturer": "170666"
+      }
+    ],
+    "birthDate": "04:02:05.932+0300",
+    "email": "elifyilmaz@gmail.com",
+    "ssn": "55555555555"
+  }
