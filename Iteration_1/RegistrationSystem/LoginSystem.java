@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class LoginSystem {
 
     private Scanner scanner = new Scanner(System.in);
-    private JSONFileManager data = new JSONFileManager();
+    private JSONFileManager jsonFileManager = new JSONFileManager();
 
     public void startSystem() {
 
@@ -23,19 +23,20 @@ public class LoginSystem {
 
             switch (choice) {
                 case 1:
-                    studentLogin(data);
+                    studentLogin(jsonFileManager);
                     break;
                 case 2:
-                    lecturerLogin(data);
+                    lecturerLogin(jsonFileManager);
                     break;
                 case 3:
-                    advisorLogin(data);
+                    advisorLogin(jsonFileManager);
                     break;
                 case 4:
-                    studentAffairsStaffLogin(data);
+                    studentAffairsStaffLogin(jsonFileManager);
                     break;
                 case 5:
                     System.out.println("\nSystem closed succesfully.\n");
+                    jsonFileManager.writeAllDataToJSON();
                     System.exit(0);
                 default:
                     System.out.println("Invalid input!");
@@ -94,11 +95,13 @@ public class LoginSystem {
                 switch (choice) {
                     case 1:
                         System.out.println("\nThis is your transcript.\n");
+                        System.out.println(data.getStudents().get(indexInDatabase).getTranscript());
                         break;
                     case 2:
                         System.out.println("\nWelcome to the registration.\n");
                         registrationProcess(data.getStudents().get(indexInDatabase));
-                        System.exit(0);//If this is removed we get an error with the scanner
+                        jsonFileManager.writeAllDataToJSON();
+                        System.exit(0);// If this is removed we get an error with the scanner
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
@@ -110,7 +113,7 @@ public class LoginSystem {
     }
 
     private void registrationProcess(Student student) {
-        ArrayList<Course> courses = data.getCourses();
+        ArrayList<Course> courses = jsonFileManager.getCourses();
         while (true) {
             System.out.println(
                     "Enter a course code to register to said course, or enter \"submit\" to submit for approval:");
