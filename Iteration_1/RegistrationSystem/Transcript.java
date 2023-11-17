@@ -11,6 +11,7 @@ public class Transcript {
 
     public void addCourse(Course course) {
         courses.add(course);
+        updateGPA();
     }
 
     public ArrayList<Course> getCourses() {
