@@ -277,6 +277,7 @@ public class LoginSystem {
                                 draft.get(0).getStudent().clearDraft();
                             }
                         }
+                        data.getAdvisors().get(indexInDatabase).clearDrafts();
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");

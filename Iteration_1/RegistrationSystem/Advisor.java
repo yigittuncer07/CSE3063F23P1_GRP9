@@ -15,6 +15,10 @@ public class Advisor extends Lecturer {
         return drafts;
     }
 
+    public void clearDrafts(){
+        drafts.clear();
+    }
+
     public void setDrafts(ArrayList<ArrayList<Course>> drafts) {
         this.drafts = drafts;
     }
