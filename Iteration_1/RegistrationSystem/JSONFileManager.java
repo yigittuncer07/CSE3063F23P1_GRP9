@@ -209,7 +209,7 @@ public class JSONFileManager {
                     courseJson.put("studentId", course.getStudent().getStudentId());
                     courseJson.put("studentName", course.getStudent().getName());
                     courseJson.put("credits", course.getCredits());
-                    courseJson.put("advisor", course.getAdvisor().getStaffID());
+                    courseJson.put("advisor", course.getStudent().getAdvisor().getStaffID());
 
                     innerArray.add(courseJson);
                 }
