@@ -9,14 +9,12 @@ public class StudentTest {
         Student student = createTestStudent();
         Course validCourse = new Course();
 
-        // Test adding a valid course to draft
         if (student.addToDraft(validCourse)) {
             System.out.println("Test passed: Adding a valid course to draft");
         } else {
             System.out.println("Test failed: Adding a valid course to draft");
         }
 
-        // Test adding the same course to draft again
         if (!student.canAddToDraft(validCourse)) {
             System.out.println("Test passed: Adding the same course to draft again correctly returns false");
         } else {
@@ -40,7 +38,6 @@ public class StudentTest {
         student.addToDraft(validCourse);
         student.sendDraftToAdvisor(advisor);
 
-        // Test advisor's draft size after sending the draft
         if (advisor.getDrafts().size() == 1) {
             System.out.println("Test passed: Advisor received one draft");
         } else {

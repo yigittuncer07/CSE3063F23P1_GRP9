@@ -11,7 +11,6 @@ abstract class User {
         return "Name: " + name + "\nLastname: " + lastName + "\nBirthdate: " + birthDate + "\nAddress: " + address + "\nSSN: " + ssn + "\nEmail: " + email;
     }
     
-    // Getter methods
     public String getName() {
         return name;
     }
@@ -40,7 +39,6 @@ abstract class User {
         return password;
     }
 
-    // Setter methods
     public void setName(String name) {
         this.name = name;
     }

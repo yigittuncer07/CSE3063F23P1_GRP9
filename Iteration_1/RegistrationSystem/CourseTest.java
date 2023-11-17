@@ -1,5 +1,3 @@
-package deneme;
-
 public class CourseTest {
 
 	public static void main(String[] args) {

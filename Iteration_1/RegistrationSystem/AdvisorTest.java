@@ -9,7 +9,6 @@ public class AdvisorTest {
         Student student = createTestStudent();
         Course validCourse = new Course();
 
-        // Test adding a valid course to draft
         if (student.addToDraft(validCourse)) {
             System.out.println("Test passed: Adding a valid course to draft");
         } else {
@@ -21,13 +20,10 @@ public class AdvisorTest {
         Student student = createTestStudent();
         Course validCourse = new Course();
 
-        // Add a course to the student's draft
         student.addToDraft(validCourse);
 
-        // Test clearing drafts
         student.clearDraft();
 
-        // Check if drafts are empty after clearing
         if (student.getDraftForCourses().size() == 0) {
             System.out.println("Test passed: Clearing drafts");
         } else {
