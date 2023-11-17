@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Staff extends User{
     private String staffID;
     private String department;

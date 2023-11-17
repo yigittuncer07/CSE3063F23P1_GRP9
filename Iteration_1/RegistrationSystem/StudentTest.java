@@ -38,7 +38,7 @@ public class StudentTest {
         Course validCourse = new Course();
 
         student.addToDraft(validCourse);
-        // student.sendDraftToAdvisor();
+        student.sendDraftToAdvisor(advisor);
 
         // Test advisor's draft size after sending the draft
         if (advisor.getDrafts().size() == 1) {

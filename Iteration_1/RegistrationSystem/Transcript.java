@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class Transcript {
     private ArrayList<Course> courses;
-    private Grade grade;
     private double GPA;
 
     public Transcript() {

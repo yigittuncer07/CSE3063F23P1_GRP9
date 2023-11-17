@@ -55,30 +55,30 @@ public class Grade {
     }
 
     public void convertHundredToLetterGrade(double hundred) {
+
         if (hundred < 0 || hundred > 100) {
             throw new IllegalArgumentException("Grade must be between 0 and 100");
         }
-
         hundred = convertHundredToGano(hundred);
         String letterGrade;
         if (4.00 >= hundred && hundred > 3.50) {
             letterGrade = "AA";
         } else if (3.50 >= hundred && hundred > 3.00) {
-            letterGrade =  "BA";
+            letterGrade = "BA";
         } else if (3.00 >= hundred && hundred > 2.50) {
-            letterGrade =  "BB";
+            letterGrade = "BB";
         } else if (2.50 >= hundred && hundred > 2.00) {
-            letterGrade =  "CB";
+            letterGrade = "CB";
         } else if (2.00 >= hundred && hundred > 1.50) {
-            letterGrade =  "CC";
+            letterGrade = "CC";
         } else if (1.50 >= hundred && hundred > 1.00) {
-            letterGrade =  "DC";
+            letterGrade = "DC";
         } else if (1.00 >= hundred && hundred > 0.50) {
-            letterGrade =  "DD";
+            letterGrade = "DD";
         } else if (0.50 >= hundred && hundred > 0.00) {
-            letterGrade =  "FD";
+            letterGrade = "FD";
         } else {
-            letterGrade =  "FF";
+            letterGrade = "FF";
         }
         this.letterGrade = letterGrade;
     }

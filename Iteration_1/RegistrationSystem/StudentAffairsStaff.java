@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class StudentAffairsStaff extends Staff {
     
     private String workingField;

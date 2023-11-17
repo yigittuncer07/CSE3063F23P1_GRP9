@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Lecturer extends Staff {
     
     private String Proffesion;
@@ -12,13 +10,12 @@ public class Lecturer extends Staff {
         this.Proffesion=Proffesion;
 
     }
+
 	public String getProffesion() {
 		return Proffesion;
 	}
+    
 	public void setProffesion(String proffesion) {
 		Proffesion = proffesion;
 	}
-
-
-
 }
