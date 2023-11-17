@@ -122,7 +122,11 @@ public class LoginSystem {
             }
             String input = scanner.nextLine();
             if (input.equals("submit")) {
-                student.sendDraftToAdvisor();
+                for (Advisor advisor : jsonFileManager.getAdvisors()) {
+                    if (advisor.getStaffID().equals(student.getAdvisor().getStaffID())) {
+                        student.sendDraftToAdvisor(advisor);
+                    }
+                }
                 System.out.println("Sent for approval");
                 return;
             } else {
@@ -130,7 +134,10 @@ public class LoginSystem {
                 for (Course course : courses) {
                     if (input.equals(course.getCourseCode())) {
                         courseFound = true;
-                        if (student.addToDraft(course)) {
+                        boolean canAddToDraft = student.canAddToDraft(course);
+                        if (canAddToDraft) {
+                            course.setStudent(student);
+                            student.addToDraft(course);
                             System.out.println("Course added succesfully!");
                         } else {
                             System.out.println("Course couldnt be added!");

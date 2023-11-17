@@ -5,9 +5,9 @@ public class Advisor extends Lecturer {
     private ArrayList<ArrayList<Course>> drafts = new ArrayList<>();
 
     public Advisor() {
-    }    
+    }
 
-    public void addDraft(ArrayList<Course> draft){
+    public void addDraft(ArrayList<Course> draft) {
         this.drafts.add(draft);
     }
 
