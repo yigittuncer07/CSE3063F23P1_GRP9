@@ -15,8 +15,8 @@ public class GradeTest {
 
     private static void testConvertHundredToLetterGrade() {
         Grade grade = createTestGrade();
-
-        if (grade.getLetterGrade() == grade.convertHundredToLetterGrade(grade.getOutOfHundred())) {
+        grade.convertHundredToLetterGrade(grade.getOutOfHundred());
+        if (grade.getLetterGrade().equals(grade.getLetterGrade())) {
             System.out.println("convertHundredToLetterGrade() works properly");
         } else {
             System.out.println("convertHundredToLetterGrade() malfunctions");
