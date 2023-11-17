@@ -1,6 +1,6 @@
 public class StaffTest {
     public static void main(String[] args) {
-        Staff staff = createTestStaff();
+        createTestStaff();
     }
     private static Staff createTestStaff() {
         Staff staff = new Staff();
