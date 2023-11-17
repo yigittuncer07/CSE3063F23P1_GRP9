@@ -37,8 +37,16 @@ public class Student extends User {
         studentAdvisor.addDraft(draftForCourses);
     }
 
-    public void approveDraft() {
-        registeredCourses.addAll(draftForCourses);
+    public void approveDraft(ArrayList<Course> draft) {
+        System.out.println("DRAfT APPROVED!!!");
+        for (Course course : draft) {
+            System.out.println(course.getCourseCode());
+        }
+        registeredCourses.addAll(draft);
+        System.out.println("NEW COURSES: !!!");
+        for (Course course : draft) {
+            System.out.println(course.getCourseCode());
+        }
         clearDraft();
     }
 

@@ -271,10 +271,19 @@ public class LoginSystem {
                             }
                             System.out.println("Do you approve this draft? yes/no");
                             String advisorInput = scanner.nextLine();
+
                             if (advisorInput.equals("yes")) {
-                                draft.get(0).getStudent().approveDraft();
+                                for (Student student : data.getStudents()) {
+                                    if (student.getStudentId().equals(draft.get(0).getStudent().getStudentId())) {
+                                        student.approveDraft(draft);
+                                    }
+                                }
                             } else if (advisorInput.equals("no")) {
-                                draft.get(0).getStudent().clearDraft();
+                                for (Student student : data.getStudents()) {
+                                    if (student.getStudentId().equals(draft.get(0).getStudent().getStudentId())) {
+                                        student.clearDraft();
+                                    }
+                                }
                             }
                         }
                         data.getAdvisors().get(indexInDatabase).clearDrafts();
