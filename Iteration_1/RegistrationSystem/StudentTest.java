@@ -17,7 +17,7 @@ public class StudentTest {
         }
 
         // Test adding the same course to draft again
-        if (!student.addToDraft(validCourse)) {
+        if (!student.canAddToDraft(validCourse)) {
             System.out.println("Test passed: Adding the same course to draft again correctly returns false");
         } else {
             System.out.println("Test failed: Adding the same course to draft again incorrectly returns true");
