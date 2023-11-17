@@ -134,7 +134,10 @@ public class LoginSystem {
                 for (Course course : courses) {
                     if (input.equals(course.getCourseCode())) {
                         courseFound = true;
-                        if (student.addToDraft(course)) {
+                        boolean canAddToDraft = student.canAddToDraft(course);
+                        if (canAddToDraft) {
+                            course.setStudent(student);
+                            student.addToDraft(course);
                             System.out.println("Course added succesfully!");
                         } else {
                             System.out.println("Course couldnt be added!");

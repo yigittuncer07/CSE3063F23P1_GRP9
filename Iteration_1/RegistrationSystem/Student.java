@@ -11,7 +11,7 @@ public class Student extends User {
         return transcript.toString();
     }
 
-    public boolean addToDraft(Course course) {
+    public boolean canAddToDraft(Course course) {
         if (draftForCourses.size() != 0) {
             if (draftForCourses.contains(course)) {
                 return false;
@@ -25,6 +25,10 @@ public class Student extends User {
         if (draftForCourses.size() >= 5 || !course.isPrequisiteCompleted()) {
             return false;
         }
+        return true;
+    }
+
+    public boolean addToDraft(Course course) {
         this.draftForCourses.add(course);
         return true;
     }
