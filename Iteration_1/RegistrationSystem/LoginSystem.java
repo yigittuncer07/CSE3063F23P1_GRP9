@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class LoginSystem {
 
-    private Scanner scanner = new Scanner(System.in);
-    private JSONFileManager jsonFileManager = new JSONFileManager();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final JSONFileManager jsonFileManager = new JSONFileManager();
 
     public void startSystem() {
 
@@ -23,16 +23,16 @@ public class LoginSystem {
 
             switch (choice) {
                 case 1:
-                    studentLogin(jsonFileManager);
+                    studentLogin();
                     break;
                 case 2:
-                    lecturerLogin(jsonFileManager);
+                    lecturerLogin();
                     break;
                 case 3:
-                    advisorLogin(jsonFileManager);
+                    advisorLogin();
                     break;
                 case 4:
-                    studentAffairsStaffLogin(jsonFileManager);
+                    studentAffairsStaffLogin();
                     break;
                 case 5:
                     System.out.println("\nSystem closed succesfully.\n");
@@ -48,21 +48,18 @@ public class LoginSystem {
 
     }
 
-    private void studentLogin(JSONFileManager data) {
-
-        Scanner input = new Scanner(System.in);
-
+    private void studentLogin() {
         System.out.println("\nEnter your StudentID: ");
-        String studentID = input.nextLine();
+        String studentID = scanner.nextLine();
         System.out.println("Enter your Password: ");
-        String password = input.nextLine();
+        String password = scanner.nextLine();
 
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
-        for (int i = 0; i < data.getStudents().size(); i++) {
-            if (studentID.compareTo(data.getStudents().get(i).getStudentId()) == 0) {
-                if (password.compareTo(data.getStudents().get(i).getPassword()) == 0) {
+        for (int i = 0; i < jsonFileManager.getStudents().size(); i++) {
+            if (studentID.compareTo(jsonFileManager.getStudents().get(i).getStudentId()) == 0) {
+                if (password.compareTo(jsonFileManager.getStudents().get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
@@ -80,8 +77,8 @@ public class LoginSystem {
         }
 
         if (validInformation) {
-            System.out.println("\nWelcome " + data.getStudents().get(indexInDatabase).getName() + " "
-                    + data.getStudents().get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + jsonFileManager.getStudents().get(indexInDatabase).getName() + " "
+                    + jsonFileManager.getStudents().get(indexInDatabase).getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see transcript.");
@@ -89,17 +86,17 @@ public class LoginSystem {
                 System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = input.nextInt();
-                input.nextLine();
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
                         System.out.println("\nThis is your transcript.\n");
-                        System.out.println(data.getStudents().get(indexInDatabase).getTranscript());
+                        System.out.println(jsonFileManager.getStudents().get(indexInDatabase).getTranscript());
                         break;
                     case 2:
                         System.out.println("\nWelcome to the registration.\n");
-                        registrationProcess(data.getStudents().get(indexInDatabase));
+                        registrationProcess(jsonFileManager.getStudents().get(indexInDatabase));
                         jsonFileManager.writeAllDataToJSON();
                         System.exit(0);// If this is removed we get an error with the scanner
                     case 3:
@@ -158,21 +155,19 @@ public class LoginSystem {
         }
     }
 
-    private void lecturerLogin(JSONFileManager data) {
-
-        Scanner input = new Scanner(System.in);
+    private void lecturerLogin() {
 
         System.out.println("\nEnter your StaffID: ");
-        String staffID = input.nextLine();
+        String staffID = scanner.nextLine();
         System.out.println("Enter your Password: ");
-        String password = input.nextLine();
+        String password = scanner.nextLine();
 
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
-        for (int i = 0; i < data.getLecturers().size(); i++) {
-            if (staffID.compareTo(data.getLecturers().get(i).getStaffID()) == 0) {
-                if (password.compareTo(data.getLecturers().get(i).getPassword()) == 0) {
+        for (int i = 0; i < jsonFileManager.getLecturers().size(); i++) {
+            if (staffID.compareTo(jsonFileManager.getLecturers().get(i).getStaffID()) == 0) {
+                if (password.compareTo(jsonFileManager.getLecturers().get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
@@ -190,20 +185,20 @@ public class LoginSystem {
         }
 
         if (validInformation) {
-            System.out.println("\nWelcome " + data.getLecturers().get(indexInDatabase).getName() + " "
-                    + data.getLecturers().get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + jsonFileManager.getLecturers().get(indexInDatabase).getName() + " "
+                    + jsonFileManager.getLecturers().get(indexInDatabase).getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = input.nextInt();
-                input.nextLine();
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
-                        System.out.println(data.getLecturers().get(indexInDatabase).getProffesion());
+                        System.out.println(jsonFileManager.getLecturers().get(indexInDatabase).getProffesion());
                         break;
                     case 2:
                         System.out.println("\nYou have logged out succesfully.");
@@ -215,21 +210,19 @@ public class LoginSystem {
         }
     }
 
-    private void advisorLogin(JSONFileManager data) {
-
-        Scanner input = new Scanner(System.in);
+    private void advisorLogin() {
 
         System.out.println("\nEnter your StaffID: ");
-        String staffID = input.nextLine();
+        String staffID = scanner.nextLine();
         System.out.println("Enter your Password: ");
-        String password = input.nextLine();
+        String password = scanner.nextLine();
 
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
-        for (int i = 0; i < data.getAdvisors().size(); i++) {
-            if (staffID.compareTo(data.getAdvisors().get(i).getStaffID()) == 0) {
-                if (password.compareTo(data.getAdvisors().get(i).getPassword()) == 0) {
+        for (int i = 0; i < jsonFileManager.getAdvisors().size(); i++) {
+            if (staffID.compareTo(jsonFileManager.getAdvisors().get(i).getStaffID()) == 0) {
+                if (password.compareTo(jsonFileManager.getAdvisors().get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
@@ -247,8 +240,8 @@ public class LoginSystem {
         }
 
         if (validInformation) {
-            System.out.println("\nWelcome " + data.getAdvisors().get(indexInDatabase).getName() + " "
-                    + data.getAdvisors().get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + jsonFileManager.getAdvisors().get(indexInDatabase).getName() + " "
+                    + jsonFileManager.getAdvisors().get(indexInDatabase).getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
@@ -256,16 +249,16 @@ public class LoginSystem {
                 System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = input.nextInt();
-                input.nextLine();
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
-                        System.out.println(data.getAdvisors().get(indexInDatabase).getProffesion());
+                        System.out.println(jsonFileManager.getAdvisors().get(indexInDatabase).getProffesion());
                         break;
                     case 2:
                         System.out.println("\nPlease proceed with this draft:.\n");
-                        for (ArrayList<Course> draft : data.getAdvisors().get(indexInDatabase).getDrafts()) {
+                        for (ArrayList<Course> draft : jsonFileManager.getAdvisors().get(indexInDatabase).getDrafts()) {
                             for (Course course : draft) {
                                 System.out.println(course.getCourseName() + " " + course.getCourseCode());
                             }
@@ -273,20 +266,20 @@ public class LoginSystem {
                             String advisorInput = scanner.nextLine();
 
                             if (advisorInput.equals("yes")) {
-                                for (Student student : data.getStudents()) {
+                                for (Student student : jsonFileManager.getStudents()) {
                                     if (student.getStudentId().equals(draft.get(0).getStudent().getStudentId())) {
                                         student.approveDraft(draft);
                                     }
                                 }
                             } else if (advisorInput.equals("no")) {
-                                for (Student student : data.getStudents()) {
+                                for (Student student : jsonFileManager.getStudents()) {
                                     if (student.getStudentId().equals(draft.get(0).getStudent().getStudentId())) {
                                         student.clearDraft();
                                     }
                                 }
                             }
                         }
-                        data.getAdvisors().get(indexInDatabase).clearDrafts();
+                        jsonFileManager.getAdvisors().get(indexInDatabase).clearDrafts();
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
@@ -298,21 +291,19 @@ public class LoginSystem {
         }
     }
 
-    private void studentAffairsStaffLogin(JSONFileManager data) {
-
-        Scanner input = new Scanner(System.in);
+    private void studentAffairsStaffLogin() {
 
         System.out.println("\nEnter your StaffID: ");
-        String staffID = input.nextLine();
+        String staffID = scanner.nextLine();
         System.out.println("Enter your Password: ");
-        String password = input.nextLine();
+        String password = scanner.nextLine();
 
         boolean validInformation = false;
         boolean userFound = false;
         int indexInDatabase = -1;
-        for (int i = 0; i < data.getStudentAffairsStaffs().size(); i++) {
-            if (staffID.compareTo(data.getStudentAffairsStaffs().get(i).getStaffID()) == 0) {
-                if (password.compareTo(data.getStudentAffairsStaffs().get(i).getPassword()) == 0) {
+        for (int i = 0; i < jsonFileManager.getStudentAffairsStaffs().size(); i++) {
+            if (staffID.compareTo(jsonFileManager.getStudentAffairsStaffs().get(i).getStaffID()) == 0) {
+                if (password.compareTo(jsonFileManager.getStudentAffairsStaffs().get(i).getPassword()) == 0) {
                     indexInDatabase = i;
                     validInformation = true;
                     userFound = true;
@@ -330,16 +321,17 @@ public class LoginSystem {
         }
 
         if (validInformation) {
-            System.out.println("\nWelcome " + data.getStudentAffairsStaffs().get(indexInDatabase).getName() + " "
-                    + data.getStudentAffairsStaffs().get(indexInDatabase).getLastName());
+            System.out.println(
+                    "\nWelcome " + jsonFileManager.getStudentAffairsStaffs().get(indexInDatabase).getName() + " "
+                            + jsonFileManager.getStudentAffairsStaffs().get(indexInDatabase).getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your working field.");
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = input.nextInt();
-                input.nextLine();
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
