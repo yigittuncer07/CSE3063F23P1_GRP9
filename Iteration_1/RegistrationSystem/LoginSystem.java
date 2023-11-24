@@ -95,6 +95,7 @@ public class LoginSystem {
                     case 2:
                         System.out.println("\nWelcome to the registration.\n");
                         registrationProcess(student);
+                        break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
@@ -113,15 +114,19 @@ public class LoginSystem {
             for (Course course : courses) {
                 System.out.println(course.getCourseCode() + " : " + course.getCourseName());
             }
+
+
             String input = scanner.nextLine();
+            
             if (input.equals("submit")) {
                 for (Advisor advisor : jsonFileManager.getAdvisors()) {
                     if (advisor.getStaffID().equals(student.getAdvisor().getStaffID())) {
                         student.sendDraftToAdvisor(advisor);
                     }
                 }
-                System.out.println("Sent for approval");
+                System.out.println("Sent for approval\n");
                 return;
+
             } else {
                 boolean courseFound = false;
                 for (Course course : courses) {
@@ -180,21 +185,25 @@ public class LoginSystem {
             return;
         }
 
+        Lecturer lecturer = jsonFileManager.getLecturers().get(indexInDatabase);
+
         if (validInformation) {
-            System.out.println("\nWelcome " + jsonFileManager.getLecturers().get(indexInDatabase).getName() + " "
-                    + jsonFileManager.getLecturers().get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + lecturer.getName() + " " + lecturer.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = scanner.nextInt();
-                scanner.nextLine();
+                int choice = -1;// switch will go to default if integer cannot be parsed
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (Exception ignore) {
+                }
 
                 switch (choice) {
                     case 1:
-                        System.out.println(jsonFileManager.getLecturers().get(indexInDatabase).getProffesion());
+                        System.out.println(lecturer.getProffesion());
                         break;
                     case 2:
                         System.out.println("\nYou have logged out succesfully.");
@@ -235,9 +244,10 @@ public class LoginSystem {
             return;
         }
 
+        Advisor advisor = jsonFileManager.getAdvisors().get(indexInDatabase);
+
         if (validInformation) {
-            System.out.println("\nWelcome " + jsonFileManager.getAdvisors().get(indexInDatabase).getName() + " "
-                    + jsonFileManager.getAdvisors().get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
@@ -253,32 +263,37 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
-                        System.out.println(jsonFileManager.getAdvisors().get(indexInDatabase).getProffesion());
+                        System.out.println(advisor.getProffesion());
                         break;
                     case 2:
+
                         System.out.println("\nPlease proceed with this draft:.\n");
-                        for (ArrayList<Course> draft : jsonFileManager.getAdvisors().get(indexInDatabase).getDrafts()) {
+                        Student draftStudent;
+                        for (ArrayList<Course> draft : advisor.getDrafts()) {
+                            draftStudent = draft.get(0).getStudent();
                             for (Course course : draft) {
                                 System.out.println(course.getCourseName() + " " + course.getCourseCode());
                             }
+                            System.out.println(draft.isEmpty());
                             System.out.println("Do you approve this draft? yes/no");
                             String advisorInput = scanner.nextLine();
 
                             if (advisorInput.equals("yes")) {
                                 for (Student student : jsonFileManager.getStudents()) {
-                                    if (student.getStudentId().equals(draft.get(0).getStudent().getStudentId())) {
+                                    if (student.getStudentId().equals(draftStudent.getStudentId())) {
                                         student.approveDraft(draft);
                                     }
                                 }
                             } else if (advisorInput.equals("no")) {
                                 for (Student student : jsonFileManager.getStudents()) {
-                                    if (student.getStudentId().equals(draft.get(0).getStudent().getStudentId())) {
+                                    if (student.getStudentId().equals(draftStudent.getStudentId())) {
                                         student.clearDraft();
                                     }
                                 }
                             }
                         }
-                        jsonFileManager.getAdvisors().get(indexInDatabase).clearDrafts();
+
+                        advisor.clearDrafts();
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
@@ -319,10 +334,10 @@ public class LoginSystem {
             return;
         }
 
+        StudentAffairsStaff studentAffairsStaff = jsonFileManager.getStudentAffairsStaffs().get(indexInDatabase);
+
         if (validInformation) {
-            System.out.println(
-                    "\nWelcome " + jsonFileManager.getStudentAffairsStaffs().get(indexInDatabase).getName() + " "
-                            + jsonFileManager.getStudentAffairsStaffs().get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your working field.");
