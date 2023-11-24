@@ -9,17 +9,14 @@ public class LoginSystem {
     public void startSystem() {
 
         while (true) {
-            System.out.println("Welcome to the LOGIN SYSTEM:");
-            System.out.println("    Enter 1 if you are a Student.");
-            System.out.println("    Enter 2 if you are a Lecturer.");
-            System.out.println("    Enter 3 if you are an Advisor.");
-            System.out.println("    Enter 4 if you are a Student Affairs Staff.");
-            System.out.println("    Enter 5 exit.");
+            System.out.println(
+                    "Welcome to the LOGIN SYSTEM:\n\tEnter 1 if you are a Student.\n\tEnter 2 if you are a Lecturer.\n\tEnter 3 if you are an Advisor.\n\tEnter 4 if you are a Student Affairs Staff.\n\tEnter 5 exit.\nEnter action : ");
 
-            System.out.print("Enter action : ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = -1;// This will go to the default value if it is not writen in the try catch block
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception ignore) {
+            }
 
             switch (choice) {
                 case 1:
@@ -41,11 +38,8 @@ public class LoginSystem {
                 default:
                     System.out.println("Invalid input!");
             }
-
             System.out.println("");
-
         }
-
     }
 
     private void studentLogin() {
@@ -76,9 +70,10 @@ public class LoginSystem {
             return;
         }
 
+        Student student = jsonFileManager.getStudents().get(indexInDatabase);
+
         if (validInformation) {
-            System.out.println("\nWelcome " + jsonFileManager.getStudents().get(indexInDatabase).getName() + " "
-                    + jsonFileManager.getStudents().get(indexInDatabase).getLastName());
+            System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see transcript.");
@@ -86,19 +81,20 @@ public class LoginSystem {
                 System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = scanner.nextInt();
-                scanner.nextLine();
+                int choice = -1;// switch will go to default if integer cannot be parsed
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (Exception ignore) {
+                }
 
                 switch (choice) {
                     case 1:
                         System.out.println("\nThis is your transcript.\n");
-                        System.out.println(jsonFileManager.getStudents().get(indexInDatabase).getTranscript());
+                        System.out.println(student.getTranscript());
                         break;
                     case 2:
                         System.out.println("\nWelcome to the registration.\n");
-                        registrationProcess(jsonFileManager.getStudents().get(indexInDatabase));
-                        jsonFileManager.writeAllDataToJSON();
-                        System.exit(0);// If this is removed we get an error with the scanner
+                        registrationProcess(student);
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
@@ -249,8 +245,11 @@ public class LoginSystem {
                 System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = scanner.nextInt();
-                scanner.nextLine();
+                int choice = -1;// switch will go to default if integer cannot be parsed
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (Exception ignore) {
+                }
 
                 switch (choice) {
                     case 1:
@@ -330,8 +329,11 @@ public class LoginSystem {
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = scanner.nextInt();
-                scanner.nextLine();
+                int choice = -1;// switch will go to default if integer cannot be parsed
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (Exception ignore) {
+                }
 
                 switch (choice) {
                     case 1:

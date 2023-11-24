@@ -9,10 +9,10 @@ import json.parser.JSONParser;
 import json.parser.ParseException;
 
 public class JSONFileManager {
-    private ArrayList<Student> students = new ArrayList<>();
-    private ArrayList<StudentAffairsStaff> studentAffairsStaffs = new ArrayList<>();
-    private ArrayList<Lecturer> lecturers = new ArrayList<>();
     private ArrayList<Advisor> advisors = new ArrayList<>();
+    private ArrayList<Lecturer> lecturers = new ArrayList<>();
+    private ArrayList<StudentAffairsStaff> studentAffairsStaffs = new ArrayList<>();
+    private ArrayList<Student> students = new ArrayList<>();
     private ArrayList<Course> courses = new ArrayList<>();
 
     public JSONFileManager() {
