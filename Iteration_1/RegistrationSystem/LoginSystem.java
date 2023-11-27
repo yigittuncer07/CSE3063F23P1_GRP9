@@ -42,7 +42,49 @@ public class LoginSystem {
         }
     }
 
+    private User getUserWithId(String ID, String className) {
+        switch (className) {
+            case "Student":
+                for (Student student : jsonFileManager.getStudents()) {
+                    if (student.getStudentId().equals(ID)) {
+                        return student;
+                    }
+                }
+                break;
+            case "Lecturer":
+                for (Lecturer lecturer : jsonFileManager.getLecturers()) {
+                    if (lecturer.getStaffID().equals(ID)) {
+                        return lecturer;
+                    }
+                }
+                break;
+            case "Advisor":
+                for (Advisor advisor : jsonFileManager.getAdvisors()) {
+                    if (advisor.getStaffID().equals(ID)) {
+                        return advisor;
+                    }
+                }
+                break;
+            case "StudentAffairs":
+                for (StudentAffairsStaff studentAffairsStaff : jsonFileManager.getStudentAffairsStaffs()) {
+                    if (studentAffairsStaff.getStaffID().equals(ID)) {
+                        return studentAffairsStaff;
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+        return null;
+    }
+
+    private boolean isPasswordCorrect(User user, String password) {
+        return user.getPassword().equals(password);
+    }
+
     private void studentLogin() {
+
         System.out.println("\nEnter your StudentID: ");
         String studentID = scanner.nextLine();
         System.out.println("Enter your Password: ");
@@ -50,27 +92,21 @@ public class LoginSystem {
 
         boolean validInformation = false;
         boolean userFound = false;
-        int indexInDatabase = -1;
-        for (int i = 0; i < jsonFileManager.getStudents().size(); i++) {
-            if (studentID.compareTo(jsonFileManager.getStudents().get(i).getStudentId()) == 0) {
-                if (password.compareTo(jsonFileManager.getStudents().get(i).getPassword()) == 0) {
-                    indexInDatabase = i;
-                    validInformation = true;
-                    userFound = true;
-                    break;
-                } else {
-                    System.out.println("\nWrong Password!");
-                    return;
-                }
-            }
+
+        Student student = (Student) getUserWithId(studentID, "Student");
+
+        if (isPasswordCorrect(student, password)) {
+            validInformation = true;
+            userFound = true;
+        } else {
+            System.out.println("\nWrong Password!");
+            return;
         }
 
         if (!userFound) {
             System.out.println("\nStudent with StudentID " + studentID + " is not found!");
             return;
         }
-
-        Student student = jsonFileManager.getStudents().get(indexInDatabase);
 
         if (validInformation) {
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
@@ -115,9 +151,8 @@ public class LoginSystem {
                 System.out.println(course.getCourseCode() + " : " + course.getCourseName());
             }
 
-
             String input = scanner.nextLine();
-            
+
             if (input.equals("submit")) {
                 for (Advisor advisor : jsonFileManager.getAdvisors()) {
                     if (advisor.getStaffID().equals(student.getAdvisor().getStaffID())) {
