@@ -173,34 +173,7 @@ public class LoginSystem {
                         System.out.println(advisor.getProffesion());
                         break;
                     case 2:
-
-                        System.out.println("\nPlease proceed with this draft:.\n");
-                        Student draftStudent;
-                        for (ArrayList<Course> draft : advisor.getDrafts()) {
-                            draftStudent = draft.get(0).getStudent();
-                            for (Course course : draft) {
-                                System.out.println(course.getCourseName() + " " + course.getCourseCode());
-                            }
-                            System.out.println(draft.isEmpty());
-                            System.out.println("Do you approve this draft? yes/no");
-                            String advisorInput = scanner.nextLine();
-
-                            if (advisorInput.equals("yes")) {
-                                for (Student student : jsonFileManager.getStudents()) {
-                                    if (student.getStudentId().equals(draftStudent.getStudentId())) {
-                                        student.approveDraft(draft);
-                                    }
-                                }
-                            } else if (advisorInput.equals("no")) {
-                                for (Student student : jsonFileManager.getStudents()) {
-                                    if (student.getStudentId().equals(draftStudent.getStudentId())) {
-                                        student.clearDraft();
-                                    }
-                                }
-                            }
-                        }
-
-                        advisor.clearDrafts();
+                        draftApprovalProcess(advisor);
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
@@ -346,5 +319,32 @@ public class LoginSystem {
                 break;
         }
         return null;
+    }
+
+    private void draftApprovalProcess(Advisor advisor) {
+        if (advisor.getDrafts().isEmpty()) {
+            System.out.println("No drafts to approve currently");
+            return;
+        }
+        System.out.println("\nPlease proceed with this draft:.\n");
+        for (ArrayList<Course> draft : advisor.getDrafts()) {
+            
+            //Print all draft courses
+            for (Course course : draft) {
+                System.out.println(course.getCourseName() + " " + course.getCourseCode());
+            }
+
+            System.out.println("Do you approve this draft? yes/no");
+            String isApprovedByAdvisor = scanner.nextLine();
+            Student draftStudent = (Student) getUserWithId(draft.get(0).getStudent().getStudentId(), "Student");
+
+            if (isApprovedByAdvisor.equals("yes")) {
+                draftStudent.approveDraft(draft);
+            } else if (isApprovedByAdvisor.equals("no")) {
+                draftStudent.clearDraft();
+            }
+        }
+
+        advisor.clearDrafts();
     }
 }
