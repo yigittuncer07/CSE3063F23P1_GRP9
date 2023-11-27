@@ -194,7 +194,7 @@ public class JSONFileManager {
             advisorJson.put("email", advisor.getEmail());
             advisorJson.put("password", advisor.getPassword());
             advisorJson.put("advisorId", advisor.getStaffID());
-            advisorJson.put("profession", advisor.getProffesion());
+            advisorJson.put("profession", advisor.getProfession());
 
             JSONArray draftsArray = new JSONArray();
             for (ArrayList<Course> innerList : advisor.getDrafts()) {
@@ -248,7 +248,7 @@ public class JSONFileManager {
                         advisor.setEmail((String) jsonObject.get("email"));
                         advisor.setPassword((String) jsonObject.get("password"));
                         advisor.setStaffID((String) jsonObject.get("advisorId"));
-                        advisor.setProffesion((String) jsonObject.get("profession"));
+                        advisor.setProfession((String) jsonObject.get("profession"));
 
                         ArrayList<ArrayList<Course>> draftsList = new ArrayList<>();
 
@@ -422,7 +422,7 @@ public class JSONFileManager {
                         lecturer.setPassword((String) jsonObject.get("password"));
                         lecturer.setStaffID((String) jsonObject.get("lecturerId"));
                         lecturer.setDepartment((String) jsonObject.get("lecturerId"));
-                        lecturer.setProffesion((String) jsonObject.get("profession"));
+                        lecturer.setProfession((String) jsonObject.get("profession"));
 
                         lecturers.add(lecturer);
 
@@ -453,7 +453,7 @@ public class JSONFileManager {
             lecturerJSON.put("password", lecturer.getPassword());
             lecturerJSON.put("lecturerId", lecturer.getStaffID());
             lecturerJSON.put("department", lecturer.getDepartment());
-            lecturerJSON.put("profession", lecturer.getProffesion());
+            lecturerJSON.put("profession", lecturer.getProfession());
 
             try (FileWriter fileWriter = new FileWriter("database/lecturers/" + lecturer.getStaffID() + ".json")) {
                 fileWriter.write(lecturerJSON.toJSONString());

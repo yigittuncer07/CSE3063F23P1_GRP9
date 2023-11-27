@@ -1,21 +1,19 @@
 public class Lecturer extends Staff {
     
-    private String Proffesion;
-
+    private String profession;
+    
     public Lecturer(){
 
     }
-    
-    public Lecturer(String Proffesion){
-        this.Proffesion=Proffesion;
-
+    public Lecturer(String profession){
+        this.profession=profession;
     }
 
-	public String getProffesion() {
-		return Proffesion;
+	public String getProfession() {
+		return profession;
 	}
     
-	public void setProffesion(String proffesion) {
-		Proffesion = proffesion;
+	public void setProfession(String proffesion) {
+		profession = proffesion;
 	}
 }

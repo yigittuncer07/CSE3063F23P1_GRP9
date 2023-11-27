@@ -1,14 +1,17 @@
 public class Course {
-	Student student = new Student();
-	Advisor advisor = new Advisor();
+	private Student student = new Student();
+	private Advisor advisor = new Advisor();
+	private Lecturer courseLecturer = new Lecturer();
+	private Grade grade = new Grade();
 	private String courseName;
 	private String courseCode;
-	Lecturer courseLecturer = new Lecturer();
-	long credits;
-	boolean prequisiteCompleted;
-	Grade grade = new Grade();
-	boolean completed;
-	String prequisite;
+	private String prequisite;
+	private long credits;
+	/*
+	 * TODO: NEEDS IMPLEMENTATION
+	 */
+	private boolean prequisiteCompleted; 
+	private boolean completed;
 
 	public Student getStudent() {
 		return student;
@@ -17,6 +20,7 @@ public class Course {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
+
 	public String getPrequisite() {
 		return prequisite;
 	}
@@ -88,9 +92,4 @@ public class Course {
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
-
-	public Course() {
-
-	}
-
 }

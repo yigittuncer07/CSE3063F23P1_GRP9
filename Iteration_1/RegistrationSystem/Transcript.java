@@ -51,7 +51,7 @@ public class Transcript {
             result.append("Course Code: ").append(course.getCourseCode())
                     .append(", Course Name: ").append(course.getCourseName())
                     .append(", Credit: ").append(course.getCredits())
-                    .append(", Letter Grade: ").append(course.grade.getLetterGrade())
+                    .append(", Letter Grade: ").append(course.getGrade().getLetterGrade())
                     .append("\n");
         }
 

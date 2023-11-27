@@ -5,9 +5,9 @@ public class StudentAffairsStaff extends Staff {
     public StudentAffairsStaff(){
 
     }
+    
     public StudentAffairsStaff(String workingField){
         this.workingField=workingField;
-
     }
 
     public String getWorkingField() {

@@ -123,7 +123,7 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
-                        System.out.println(lecturer.getProffesion());
+                        System.out.println(lecturer.getProfession());
                         break;
                     case 2:
                         System.out.println("\nYou have logged out succesfully.");
@@ -170,7 +170,7 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
-                        System.out.println(advisor.getProffesion());
+                        System.out.println(advisor.getProfession());
                         break;
                     case 2:
                         draftApprovalProcess(advisor);
