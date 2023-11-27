@@ -42,47 +42,6 @@ public class LoginSystem {
         }
     }
 
-    private User getUserWithId(String ID, String className) {
-        switch (className) {
-            case "Student":
-                for (Student student : jsonFileManager.getStudents()) {
-                    if (student.getStudentId().equals(ID)) {
-                        return student;
-                    }
-                }
-                break;
-            case "Lecturer":
-                for (Lecturer lecturer : jsonFileManager.getLecturers()) {
-                    if (lecturer.getStaffID().equals(ID)) {
-                        return lecturer;
-                    }
-                }
-                break;
-            case "Advisor":
-                for (Advisor advisor : jsonFileManager.getAdvisors()) {
-                    if (advisor.getStaffID().equals(ID)) {
-                        return advisor;
-                    }
-                }
-                break;
-            case "StudentAffairs":
-                for (StudentAffairsStaff studentAffairsStaff : jsonFileManager.getStudentAffairsStaffs()) {
-                    if (studentAffairsStaff.getStaffID().equals(ID)) {
-                        return studentAffairsStaff;
-                    }
-                }
-                break;
-
-            default:
-                break;
-        }
-        return null;
-    }
-
-    private boolean isPasswordCorrect(User user, String password) {
-        return user.getPassword().equals(password);
-    }
-
     private void studentLogin() {
 
         System.out.println("\nEnter your StudentID: ");
@@ -90,25 +49,14 @@ public class LoginSystem {
         System.out.println("Enter your Password: ");
         String password = scanner.nextLine();
 
-        boolean validInformation = false;
-        boolean userFound = false;
-
         Student student = (Student) getUserWithId(studentID, "Student");
 
-        if (isPasswordCorrect(student, password)) {
-            validInformation = true;
-            userFound = true;
-        } else {
-            System.out.println("\nWrong Password!");
-            return;
-        }
-
-        if (!userFound) {
+        if (student == null) {
             System.out.println("\nStudent with StudentID " + studentID + " is not found!");
             return;
         }
 
-        if (validInformation) {
+        if (isPasswordCorrect(student, password)) {
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -133,6 +81,174 @@ public class LoginSystem {
                         registrationProcess(student);
                         break;
                     case 3:
+                        System.out.println("\nYou have logged out succesfully.");
+                        return;
+                    default:
+                        System.out.println("\nInvalid input!\n");
+                }
+            }
+        } else {
+            System.out.println("\nWrong Password!");
+            return;
+        }
+    }
+
+    private void lecturerLogin() {
+
+        System.out.println("\nEnter your StaffID: ");
+        String staffID = scanner.nextLine();
+        System.out.println("Enter your Password: ");
+        String password = scanner.nextLine();
+
+        Lecturer lecturer = (Lecturer) getUserWithId(staffID, "Lecturer");
+
+        if (lecturer == null) {
+            System.out.println("\nLecturer with StaffID " + staffID + " is not found!");
+            return;
+        }
+
+        if (isPasswordCorrect(lecturer, password)) {
+            System.out.println("\nWelcome " + lecturer.getName() + " " + lecturer.getLastName());
+            while (true) {
+                System.out.println("Choose your action you will like to perform.");
+                System.out.println("    Enter 1 to see your proffesion.");
+                System.out.println("    Enter 2 to logout.");
+                System.out.print("Enter action : ");
+
+                int choice = -1;// switch will go to default if integer cannot be parsed
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (Exception ignore) {
+                }
+
+                switch (choice) {
+                    case 1:
+                        System.out.println(lecturer.getProffesion());
+                        break;
+                    case 2:
+                        System.out.println("\nYou have logged out succesfully.");
+                        return;
+                    default:
+                        System.out.println("\nInvalid input!\n");
+                }
+            }
+        } else {
+            System.out.println("\nWrong Password!");
+            return;
+        }
+
+    }
+
+    private void advisorLogin() {
+
+        System.out.println("\nEnter your StaffID: ");
+        String staffID = scanner.nextLine();
+        System.out.println("Enter your Password: ");
+        String password = scanner.nextLine();
+
+        Advisor advisor = (Advisor) getUserWithId(staffID, "Advisor");
+
+        if (advisor == null) {
+            System.out.println("\nAdvisor with StaffID " + staffID + " is not found!");
+            return;
+        }
+
+        if (isPasswordCorrect(advisor, password)) {
+            System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
+            while (true) {
+                System.out.println("Choose your action you will like to perform.");
+                System.out.println("    Enter 1 to see your proffesion.");
+                System.out.println("    Enter 2 to approve student registrations.");
+                System.out.println("    Enter 3 to logout.");
+                System.out.print("Enter action : ");
+
+                int choice = -1;// switch will go to default if integer cannot be parsed
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (Exception ignore) {
+                }
+
+                switch (choice) {
+                    case 1:
+                        System.out.println(advisor.getProffesion());
+                        break;
+                    case 2:
+
+                        System.out.println("\nPlease proceed with this draft:.\n");
+                        Student draftStudent;
+                        for (ArrayList<Course> draft : advisor.getDrafts()) {
+                            draftStudent = draft.get(0).getStudent();
+                            for (Course course : draft) {
+                                System.out.println(course.getCourseName() + " " + course.getCourseCode());
+                            }
+                            System.out.println(draft.isEmpty());
+                            System.out.println("Do you approve this draft? yes/no");
+                            String advisorInput = scanner.nextLine();
+
+                            if (advisorInput.equals("yes")) {
+                                for (Student student : jsonFileManager.getStudents()) {
+                                    if (student.getStudentId().equals(draftStudent.getStudentId())) {
+                                        student.approveDraft(draft);
+                                    }
+                                }
+                            } else if (advisorInput.equals("no")) {
+                                for (Student student : jsonFileManager.getStudents()) {
+                                    if (student.getStudentId().equals(draftStudent.getStudentId())) {
+                                        student.clearDraft();
+                                    }
+                                }
+                            }
+                        }
+
+                        advisor.clearDrafts();
+                        break;
+                    case 3:
+                        System.out.println("\nYou have logged out succesfully.");
+                        return;
+                    default:
+                        System.out.println("\nInvalid input!\n");
+                }
+            }
+        } else {
+            System.out.println("\nWrong Password!");
+            return;
+        }
+
+    }
+
+    private void studentAffairsStaffLogin() {
+
+        System.out.println("\nEnter your StaffID: ");
+        String staffID = scanner.nextLine();
+        System.out.println("Enter your Password: ");
+        String password = scanner.nextLine();
+
+        StudentAffairsStaff studentAffairsStaff = (StudentAffairsStaff) getUserWithId(staffID, "StudentAffairsStaff");
+
+        if (studentAffairsStaff == null) {
+            System.out.println("\nStudent affairs staff with StaffID " + staffID + " is not found!");
+            return;
+        }
+
+        if (isPasswordCorrect(studentAffairsStaff, password)) {
+            System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
+            while (true) {
+                System.out.println("Choose your action you will like to perform.");
+                System.out.println("    Enter 1 to see your working field.");
+                System.out.println("    Enter 2 to logout.");
+                System.out.print("Enter action : ");
+
+                int choice = -1;// switch will go to default if integer cannot be parsed
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (Exception ignore) {
+                }
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("\nThis is your working field.\n");
+                        break;
+                    case 2:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
@@ -191,212 +307,44 @@ public class LoginSystem {
         }
     }
 
-    private void lecturerLogin() {
-
-        System.out.println("\nEnter your StaffID: ");
-        String staffID = scanner.nextLine();
-        System.out.println("Enter your Password: ");
-        String password = scanner.nextLine();
-
-        boolean validInformation = false;
-        boolean userFound = false;
-        int indexInDatabase = -1;
-        for (int i = 0; i < jsonFileManager.getLecturers().size(); i++) {
-            if (staffID.compareTo(jsonFileManager.getLecturers().get(i).getStaffID()) == 0) {
-                if (password.compareTo(jsonFileManager.getLecturers().get(i).getPassword()) == 0) {
-                    indexInDatabase = i;
-                    validInformation = true;
-                    userFound = true;
-                    break;
-                } else {
-                    System.out.println("\nWrong Password!");
-                    return;
-                }
-            }
-        }
-
-        if (!userFound) {
-            System.out.println("\nLecturer with StaffID " + staffID + " is not found!");
-            return;
-        }
-
-        Lecturer lecturer = jsonFileManager.getLecturers().get(indexInDatabase);
-
-        if (validInformation) {
-            System.out.println("\nWelcome " + lecturer.getName() + " " + lecturer.getLastName());
-            while (true) {
-                System.out.println("Choose your action you will like to perform.");
-                System.out.println("    Enter 1 to see your proffesion.");
-                System.out.println("    Enter 2 to logout.");
-                System.out.print("Enter action : ");
-
-                int choice = -1;// switch will go to default if integer cannot be parsed
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                } catch (Exception ignore) {
-                }
-
-                switch (choice) {
-                    case 1:
-                        System.out.println(lecturer.getProffesion());
-                        break;
-                    case 2:
-                        System.out.println("\nYou have logged out succesfully.");
-                        return;
-                    default:
-                        System.out.println("\nInvalid input!\n");
-                }
-            }
-        }
+    private boolean isPasswordCorrect(User user, String password) {
+        return user.getPassword().equals(password);
     }
 
-    private void advisorLogin() {
-
-        System.out.println("\nEnter your StaffID: ");
-        String staffID = scanner.nextLine();
-        System.out.println("Enter your Password: ");
-        String password = scanner.nextLine();
-
-        boolean validInformation = false;
-        boolean userFound = false;
-        int indexInDatabase = -1;
-        for (int i = 0; i < jsonFileManager.getAdvisors().size(); i++) {
-            if (staffID.compareTo(jsonFileManager.getAdvisors().get(i).getStaffID()) == 0) {
-                if (password.compareTo(jsonFileManager.getAdvisors().get(i).getPassword()) == 0) {
-                    indexInDatabase = i;
-                    validInformation = true;
-                    userFound = true;
-                    break;
-                } else {
-                    System.out.println("\nWrong Password!");
-                    return;
+    private User getUserWithId(String ID, String className) {
+        switch (className) {
+            case "Student":
+                for (Student student : jsonFileManager.getStudents()) {
+                    if (student.getStudentId().equals(ID)) {
+                        return student;
+                    }
                 }
-            }
-        }
-
-        if (!userFound) {
-            System.out.println("\nAdvisor with StaffID " + staffID + " is not found!");
-            return;
-        }
-
-        Advisor advisor = jsonFileManager.getAdvisors().get(indexInDatabase);
-
-        if (validInformation) {
-            System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
-            while (true) {
-                System.out.println("Choose your action you will like to perform.");
-                System.out.println("    Enter 1 to see your proffesion.");
-                System.out.println("    Enter 2 to approve student registrations.");
-                System.out.println("    Enter 3 to logout.");
-                System.out.print("Enter action : ");
-
-                int choice = -1;// switch will go to default if integer cannot be parsed
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                } catch (Exception ignore) {
+                break;
+            case "Lecturer":
+                for (Lecturer lecturer : jsonFileManager.getLecturers()) {
+                    if (lecturer.getStaffID().equals(ID)) {
+                        return lecturer;
+                    }
                 }
-
-                switch (choice) {
-                    case 1:
-                        System.out.println(advisor.getProffesion());
-                        break;
-                    case 2:
-
-                        System.out.println("\nPlease proceed with this draft:.\n");
-                        Student draftStudent;
-                        for (ArrayList<Course> draft : advisor.getDrafts()) {
-                            draftStudent = draft.get(0).getStudent();
-                            for (Course course : draft) {
-                                System.out.println(course.getCourseName() + " " + course.getCourseCode());
-                            }
-                            System.out.println(draft.isEmpty());
-                            System.out.println("Do you approve this draft? yes/no");
-                            String advisorInput = scanner.nextLine();
-
-                            if (advisorInput.equals("yes")) {
-                                for (Student student : jsonFileManager.getStudents()) {
-                                    if (student.getStudentId().equals(draftStudent.getStudentId())) {
-                                        student.approveDraft(draft);
-                                    }
-                                }
-                            } else if (advisorInput.equals("no")) {
-                                for (Student student : jsonFileManager.getStudents()) {
-                                    if (student.getStudentId().equals(draftStudent.getStudentId())) {
-                                        student.clearDraft();
-                                    }
-                                }
-                            }
-                        }
-
-                        advisor.clearDrafts();
-                        break;
-                    case 3:
-                        System.out.println("\nYou have logged out succesfully.");
-                        return;
-                    default:
-                        System.out.println("\nInvalid input!\n");
+                break;
+            case "Advisor":
+                for (Advisor advisor : jsonFileManager.getAdvisors()) {
+                    if (advisor.getStaffID().equals(ID)) {
+                        return advisor;
+                    }
                 }
-            }
+                break;
+            case "StudentAffairs":
+                for (StudentAffairsStaff studentAffairsStaff : jsonFileManager.getStudentAffairsStaffs()) {
+                    if (studentAffairsStaff.getStaffID().equals(ID)) {
+                        return studentAffairsStaff;
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
+        return null;
     }
-
-    private void studentAffairsStaffLogin() {
-
-        System.out.println("\nEnter your StaffID: ");
-        String staffID = scanner.nextLine();
-        System.out.println("Enter your Password: ");
-        String password = scanner.nextLine();
-
-        boolean validInformation = false;
-        boolean userFound = false;
-        int indexInDatabase = -1;
-        for (int i = 0; i < jsonFileManager.getStudentAffairsStaffs().size(); i++) {
-            if (staffID.compareTo(jsonFileManager.getStudentAffairsStaffs().get(i).getStaffID()) == 0) {
-                if (password.compareTo(jsonFileManager.getStudentAffairsStaffs().get(i).getPassword()) == 0) {
-                    indexInDatabase = i;
-                    validInformation = true;
-                    userFound = true;
-                    break;
-                } else {
-                    System.out.println("\nWrong Password!");
-                    return;
-                }
-            }
-        }
-
-        if (!userFound) {
-            System.out.println("\nStudent affairs staff with StaffID " + staffID + " is not found!");
-            return;
-        }
-
-        StudentAffairsStaff studentAffairsStaff = jsonFileManager.getStudentAffairsStaffs().get(indexInDatabase);
-
-        if (validInformation) {
-            System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
-            while (true) {
-                System.out.println("Choose your action you will like to perform.");
-                System.out.println("    Enter 1 to see your working field.");
-                System.out.println("    Enter 2 to logout.");
-                System.out.print("Enter action : ");
-
-                int choice = -1;// switch will go to default if integer cannot be parsed
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                } catch (Exception ignore) {
-                }
-
-                switch (choice) {
-                    case 1:
-                        System.out.println("\nThis is your working field.\n");
-                        break;
-                    case 2:
-                        System.out.println("\nYou have logged out succesfully.");
-                        return;
-                    default:
-                        System.out.println("\nInvalid input!\n");
-                }
-            }
-        }
-    }
-
 }
