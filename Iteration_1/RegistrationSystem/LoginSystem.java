@@ -43,36 +43,20 @@ public class LoginSystem {
     }
 
     private void studentLogin() {
+
         System.out.println("\nEnter your StudentID: ");
         String studentID = scanner.nextLine();
         System.out.println("Enter your Password: ");
         String password = scanner.nextLine();
 
-        boolean validInformation = false;
-        boolean userFound = false;
-        int indexInDatabase = -1;
-        for (int i = 0; i < jsonFileManager.getStudents().size(); i++) {
-            if (studentID.compareTo(jsonFileManager.getStudents().get(i).getStudentId()) == 0) {
-                if (password.compareTo(jsonFileManager.getStudents().get(i).getPassword()) == 0) {
-                    indexInDatabase = i;
-                    validInformation = true;
-                    userFound = true;
-                    break;
-                } else {
-                    System.out.println("\nWrong Password!");
-                    return;
-                }
-            }
-        }
+        Student student = (Student) getUserWithId(studentID, "Student");
 
-        if (!userFound) {
+        if (student == null) {
             System.out.println("\nStudent with StudentID " + studentID + " is not found!");
             return;
         }
 
-        Student student = jsonFileManager.getStudents().get(indexInDatabase);
-
-        if (validInformation) {
+        if (isPasswordCorrect(student, password)) {
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -103,56 +87,9 @@ public class LoginSystem {
                         System.out.println("\nInvalid input!\n");
                 }
             }
-        }
-    }
-
-    private void registrationProcess(Student student) {
-        ArrayList<Course> courses = jsonFileManager.getCourses();
-        while (true) {
-            System.out.println(
-                    "Enter a course code to register to said course, or enter \"submit\" to submit for approval:");
-            for (Course course : courses) {
-                System.out.println(course.getCourseCode() + " : " + course.getCourseName());
-            }
-
-
-            String input = scanner.nextLine();
-            
-            if (input.equals("submit")) {
-                for (Advisor advisor : jsonFileManager.getAdvisors()) {
-                    if (advisor.getStaffID().equals(student.getAdvisor().getStaffID())) {
-                        student.sendDraftToAdvisor(advisor);
-                    }
-                }
-                System.out.println("Sent for approval\n");
-                return;
-
-            } else {
-                boolean courseFound = false;
-                for (Course course : courses) {
-                    if (input.equals(course.getCourseCode())) {
-                        courseFound = true;
-                        boolean canAddToDraft = student.canAddToDraft(course);
-                        if (canAddToDraft) {
-                            course.setStudent(student);
-                            student.addToDraft(course);
-                            System.out.println("Course added succesfully!");
-                        } else {
-                            System.out.println("Course couldnt be added!");
-                        }
-                        continue;
-                    }
-                }
-                if (!courseFound) {
-                    System.out.println("no such course!");
-                }
-                courseFound = false;
-            }
-            System.out.print("Current draft: ");
-            for (Course course : student.getDraftForCourses()) {
-                System.out.print(course.getCourseCode() + " ");
-            }
-            System.out.println("\n ");
+        } else {
+            System.out.println("\nWrong Password!");
+            return;
         }
     }
 
@@ -163,31 +100,14 @@ public class LoginSystem {
         System.out.println("Enter your Password: ");
         String password = scanner.nextLine();
 
-        boolean validInformation = false;
-        boolean userFound = false;
-        int indexInDatabase = -1;
-        for (int i = 0; i < jsonFileManager.getLecturers().size(); i++) {
-            if (staffID.compareTo(jsonFileManager.getLecturers().get(i).getStaffID()) == 0) {
-                if (password.compareTo(jsonFileManager.getLecturers().get(i).getPassword()) == 0) {
-                    indexInDatabase = i;
-                    validInformation = true;
-                    userFound = true;
-                    break;
-                } else {
-                    System.out.println("\nWrong Password!");
-                    return;
-                }
-            }
-        }
+        Lecturer lecturer = (Lecturer) getUserWithId(staffID, "Lecturer");
 
-        if (!userFound) {
+        if (lecturer == null) {
             System.out.println("\nLecturer with StaffID " + staffID + " is not found!");
             return;
         }
 
-        Lecturer lecturer = jsonFileManager.getLecturers().get(indexInDatabase);
-
-        if (validInformation) {
+        if (isPasswordCorrect(lecturer, password)) {
             System.out.println("\nWelcome " + lecturer.getName() + " " + lecturer.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -212,7 +132,11 @@ public class LoginSystem {
                         System.out.println("\nInvalid input!\n");
                 }
             }
+        } else {
+            System.out.println("\nWrong Password!");
+            return;
         }
+
     }
 
     private void advisorLogin() {
@@ -222,31 +146,14 @@ public class LoginSystem {
         System.out.println("Enter your Password: ");
         String password = scanner.nextLine();
 
-        boolean validInformation = false;
-        boolean userFound = false;
-        int indexInDatabase = -1;
-        for (int i = 0; i < jsonFileManager.getAdvisors().size(); i++) {
-            if (staffID.compareTo(jsonFileManager.getAdvisors().get(i).getStaffID()) == 0) {
-                if (password.compareTo(jsonFileManager.getAdvisors().get(i).getPassword()) == 0) {
-                    indexInDatabase = i;
-                    validInformation = true;
-                    userFound = true;
-                    break;
-                } else {
-                    System.out.println("\nWrong Password!");
-                    return;
-                }
-            }
-        }
+        Advisor advisor = (Advisor) getUserWithId(staffID, "Advisor");
 
-        if (!userFound) {
+        if (advisor == null) {
             System.out.println("\nAdvisor with StaffID " + staffID + " is not found!");
             return;
         }
 
-        Advisor advisor = jsonFileManager.getAdvisors().get(indexInDatabase);
-
-        if (validInformation) {
+        if (isPasswordCorrect(advisor, password)) {
             System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -302,7 +209,11 @@ public class LoginSystem {
                         System.out.println("\nInvalid input!\n");
                 }
             }
+        } else {
+            System.out.println("\nWrong Password!");
+            return;
         }
+
     }
 
     private void studentAffairsStaffLogin() {
@@ -312,31 +223,14 @@ public class LoginSystem {
         System.out.println("Enter your Password: ");
         String password = scanner.nextLine();
 
-        boolean validInformation = false;
-        boolean userFound = false;
-        int indexInDatabase = -1;
-        for (int i = 0; i < jsonFileManager.getStudentAffairsStaffs().size(); i++) {
-            if (staffID.compareTo(jsonFileManager.getStudentAffairsStaffs().get(i).getStaffID()) == 0) {
-                if (password.compareTo(jsonFileManager.getStudentAffairsStaffs().get(i).getPassword()) == 0) {
-                    indexInDatabase = i;
-                    validInformation = true;
-                    userFound = true;
-                    break;
-                } else {
-                    System.out.println("\nWrong Password!");
-                    return;
-                }
-            }
-        }
+        StudentAffairsStaff studentAffairsStaff = (StudentAffairsStaff) getUserWithId(staffID, "StudentAffairsStaff");
 
-        if (!userFound) {
+        if (studentAffairsStaff == null) {
             System.out.println("\nStudent affairs staff with StaffID " + staffID + " is not found!");
             return;
         }
 
-        StudentAffairsStaff studentAffairsStaff = jsonFileManager.getStudentAffairsStaffs().get(indexInDatabase);
-
-        if (validInformation) {
+        if (isPasswordCorrect(studentAffairsStaff, password)) {
             System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -364,4 +258,93 @@ public class LoginSystem {
         }
     }
 
+    private void registrationProcess(Student student) {
+        ArrayList<Course> courses = jsonFileManager.getCourses();
+        while (true) {
+            System.out.println(
+                    "Enter a course code to register to said course, or enter \"submit\" to submit for approval:");
+            for (Course course : courses) {
+                System.out.println(course.getCourseCode() + " : " + course.getCourseName());
+            }
+
+            String input = scanner.nextLine();
+
+            if (input.equals("submit")) {
+                for (Advisor advisor : jsonFileManager.getAdvisors()) {
+                    if (advisor.getStaffID().equals(student.getAdvisor().getStaffID())) {
+                        student.sendDraftToAdvisor(advisor);
+                    }
+                }
+                System.out.println("Sent for approval\n");
+                return;
+
+            } else {
+                boolean courseFound = false;
+                for (Course course : courses) {
+                    if (input.equals(course.getCourseCode())) {
+                        courseFound = true;
+                        boolean canAddToDraft = student.canAddToDraft(course);
+                        if (canAddToDraft) {
+                            course.setStudent(student);
+                            student.addToDraft(course);
+                            System.out.println("Course added succesfully!");
+                        } else {
+                            System.out.println("Course couldnt be added!");
+                        }
+                        continue;
+                    }
+                }
+                if (!courseFound) {
+                    System.out.println("no such course!");
+                }
+                courseFound = false;
+            }
+            System.out.print("Current draft: ");
+            for (Course course : student.getDraftForCourses()) {
+                System.out.print(course.getCourseCode() + " ");
+            }
+            System.out.println("\n ");
+        }
+    }
+
+    private boolean isPasswordCorrect(User user, String password) {
+        return user.getPassword().equals(password);
+    }
+
+    private User getUserWithId(String ID, String className) {
+        switch (className) {
+            case "Student":
+                for (Student student : jsonFileManager.getStudents()) {
+                    if (student.getStudentId().equals(ID)) {
+                        return student;
+                    }
+                }
+                break;
+            case "Lecturer":
+                for (Lecturer lecturer : jsonFileManager.getLecturers()) {
+                    if (lecturer.getStaffID().equals(ID)) {
+                        return lecturer;
+                    }
+                }
+                break;
+            case "Advisor":
+                for (Advisor advisor : jsonFileManager.getAdvisors()) {
+                    if (advisor.getStaffID().equals(ID)) {
+                        return advisor;
+                    }
+                }
+                break;
+            case "StudentAffairs":
+                for (StudentAffairsStaff studentAffairsStaff : jsonFileManager.getStudentAffairsStaffs()) {
+                    if (studentAffairsStaff.getStaffID().equals(ID)) {
+                        return studentAffairsStaff;
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+        return null;
+    }
 }
