@@ -1,16 +1,26 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class LoginSystem {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
-    private Timer timer = new Timer();
+    ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
     public void startSystem() {
 
-        timer.schedule(new ExitTask(), 300 * 1000);
+        executorService.schedule(() -> {
+            System.out.println("Program will exit after 100 seconds!");
+        }, 5, TimeUnit.SECONDS);
+
+        executorService.schedule(() -> {
+            System.out.println("The system has timed out, please log in again.");
+            // Programın kapatılması için gerekli kodu buraya ekleyebilirsiniz.
+            System.exit(0);
+        }, 10, TimeUnit.SECONDS);
 
         while (true) {
             System.out.println(
@@ -332,8 +342,8 @@ public class LoginSystem {
         }
         System.out.println("\nPlease proceed with this draft:.\n");
         for (ArrayList<Course> draft : advisor.getDrafts()) {
-            
-            //Print all draft courses
+
+            // Print all draft courses
             for (Course course : draft) {
                 System.out.println(course.getCourseName() + " " + course.getCourseCode());
             }
