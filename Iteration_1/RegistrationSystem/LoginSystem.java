@@ -14,13 +14,13 @@ public class LoginSystem {
 
         executorService.schedule(() -> {
             System.out.println("Program will exit after 100 seconds!");
-        }, 5, TimeUnit.SECONDS);
+        }, 100, TimeUnit.SECONDS);
 
         executorService.schedule(() -> {
             System.out.println("The system has timed out, please log in again.");
             // Programın kapatılması için gerekli kodu buraya ekleyebilirsiniz.
             System.exit(0);
-        }, 10, TimeUnit.SECONDS);
+        }, 200, TimeUnit.SECONDS);
 
         while (true) {
             System.out.println(
