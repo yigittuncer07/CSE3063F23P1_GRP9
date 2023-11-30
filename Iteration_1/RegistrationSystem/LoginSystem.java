@@ -18,7 +18,6 @@ public class LoginSystem {
 
         executorService.schedule(() -> {
             System.out.println("The system has timed out, please log in again.");
-            // Programın kapatılması için gerekli kodu buraya ekleyebilirsiniz.
             System.exit(0);
         }, 200, TimeUnit.SECONDS);
 
