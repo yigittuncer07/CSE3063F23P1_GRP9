@@ -1,12 +1,16 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
 
 public class LoginSystem {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
+    private Timer timer = new Timer();
 
     public void startSystem() {
+
+        timer.schedule(new ExitTask(), 300 * 1000);
 
         while (true) {
             System.out.println(
