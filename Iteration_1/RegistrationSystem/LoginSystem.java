@@ -12,6 +12,8 @@ public class LoginSystem {
 
     public void startSystem() {
 
+        init();
+
         executorService.schedule(() -> {
             System.out.println("Program will exit after 100 seconds!");
         }, 100, TimeUnit.SECONDS);
@@ -226,6 +228,7 @@ public class LoginSystem {
     private void registrationProcess(Student student) {
         System.out.println("\nWelcome to the registration.\n");
         ArrayList<Course> eligableCourses = student.getEligableCourses(jsonFileManager.getCourses());
+        Advisor advisor = (Advisor) getUserWithId(student.getAdvisor().getStaffID(), "Advisor");
         while (true) {
             System.out.println(
                     "Enter a course code to register to said course, enter \"submit\" to submit for approval and \"exit\" to scrap draft and exit:");
@@ -241,17 +244,13 @@ public class LoginSystem {
             String input = scanner.nextLine();
 
             if (input.equals("submit")) {
-                for (Advisor advisor : jsonFileManager.getAdvisors()) {
-                    if (advisor.getStaffID().equals(student.getAdvisor().getStaffID())) {
-                        student.sendDraftToAdvisor(advisor);
-                    }
-                }
+                student.sendDraftToAdvisor(advisor);
                 System.out.println("Sent for approval\n");
                 return;
 
             } else if (input.equals("exit")) {
                 System.out.println("\nDraft cleared and exited.\n");
-                student.clearDraft();
+                student.getDraft().clearDraft();
                 return;
             } else {
                 boolean courseFound = false;
@@ -261,7 +260,7 @@ public class LoginSystem {
                         boolean canAddToDraft = student.canAddToDraft(course);
                         if (canAddToDraft) {
                             course.setStudent(student);
-                            student.addToDraft(course);
+                            student.getDraft().addClass(course);
                             System.out.println("Course added succesfully!");
                         } else {
                             System.out.println("Course couldnt be added!");
@@ -275,7 +274,7 @@ public class LoginSystem {
                 courseFound = false;
             }
             System.out.print("Current draft: ");
-            for (Course course : student.getDraftForCourses()) {
+            for (Course course : student.getDraft().getCourses()) {
                 System.out.print(course.getCourseCode() + " ");
             }
             System.out.println("\n ");
@@ -343,24 +342,29 @@ public class LoginSystem {
             return;
         }
         System.out.println("\nPlease proceed with this draft:.\n");
-        for (ArrayList<Course> draft : advisor.getDrafts()) {
+        for (Draft draft : advisor.getDrafts()) {
 
             // Print all draft courses
-            for (Course course : draft) {
+            for (Course course : draft.getCourses()) {
                 System.out.println(course.getCourseName() + " " + course.getCourseCode());
             }
 
             System.out.println("Do you approve this draft? yes/no");
             String isApprovedByAdvisor = scanner.nextLine();
-            Student draftStudent = (Student) getUserWithId(draft.get(0).getStudent().getStudentId(), "Student");
 
             if (isApprovedByAdvisor.equals("yes")) {
-                draftStudent.approveDraft(draft);
+                draft.getStudent().approveDraft(draft);
             } else if (isApprovedByAdvisor.equals("no")) {
-                draftStudent.clearDraft();
+                draft.clearDraft();
             }
         }
 
         advisor.clearDrafts();
+    }
+
+    private void init(){
+        for (Student student: jsonFileManager.getStudents()){
+            student.getDraft().setStudent(student);
+        }
     }
 }

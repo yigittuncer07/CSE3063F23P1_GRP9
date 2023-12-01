@@ -2,13 +2,14 @@ import java.util.ArrayList;
 
 public class Advisor extends Lecturer {
 
-    private ArrayList<ArrayList<Course>> drafts = new ArrayList<>();
+    private ArrayList<Draft> drafts;
+    private ArrayList<Student> students;
 
-    public void addDraft(ArrayList<Course> draft) {
+    public void addDraft(Draft draft) {
         this.drafts.add(draft);
     }
 
-    public ArrayList<ArrayList<Course>> getDrafts() {
+    public ArrayList<Draft> getDrafts() {
         return drafts;
     }
 
@@ -16,8 +17,14 @@ public class Advisor extends Lecturer {
         drafts.clear();
     }
 
-    public void setDrafts(ArrayList<ArrayList<Course>> drafts) {
+    public void setDrafts(ArrayList<Draft> drafts) {
         this.drafts = drafts;
+    }
+
+    
+    public void approveDraft(Student student, Draft draft) {
+        student.getRegisteredCourses().addAll(draft.getCourses());
+        draft.clearDraft();
     }
 
 }

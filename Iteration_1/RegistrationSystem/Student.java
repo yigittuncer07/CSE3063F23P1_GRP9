@@ -5,7 +5,7 @@ public class Student extends User {
     private String studentId;
     private Advisor advisor;
     private ArrayList<Course> registeredCourses = new ArrayList<>();
-    private ArrayList<Course> draftForCourses = new ArrayList<>();
+    private Draft draft = new Draft();
 
     public String getTranscriptInformation(Transcript transcript) {
         return transcript.toString();
@@ -26,6 +26,25 @@ public class Student extends User {
         return eligableCourses;
     }
 
+    public boolean canAddToDraft(Course course) {
+        if (isRegisteredCourse(course)) {
+            return false;
+        }
+        if (draft.getNumberOfClasses() >= 5 || !course.isPrequisiteCompleted(studentId) || draft.hasCourse(course)) {
+            return false;
+        }
+        return true;
+    }
+
+    public void sendDraftToAdvisor(Advisor studentAdvisor) {
+        studentAdvisor.addDraft(draft);
+    }
+
+    public void approveDraft(Draft draft) {
+        registeredCourses.addAll(draft.getCourses());
+        draft.clearDraft();
+    }
+
     private boolean isRegisteredCourse(Course course) {
         for (Course registeredCourse : registeredCourses) {
             if (registeredCourse.getCourseCode().equals(course.getCourseCode())) {
@@ -33,40 +52,6 @@ public class Student extends User {
             }
         }
         return false;
-    }
-
-    public boolean canAddToDraft(Course course) {
-        if (draftForCourses.size() != 0) {
-            if (draftForCourses.contains(course)) {
-                return false;
-            }
-        }
-        for (Course course1 : registeredCourses) {
-            if (course1.getCourseCode().equals(course.getCourseCode())) {
-                return false;
-            }
-        }
-        if (draftForCourses.size() >= 5 || !course.isPrequisiteCompleted(studentId)) {
-            return false;
-        }
-        return true;
-    }
-
-    public void addToDraft(Course course) {
-        this.draftForCourses.add(course);
-    }
-
-    public void sendDraftToAdvisor(Advisor studentAdvisor) {
-        studentAdvisor.addDraft(draftForCourses);
-    }
-
-    public void approveDraft(ArrayList<Course> draft) {
-        registeredCourses.addAll(draft);
-        clearDraft();
-    }
-
-    public void clearDraft() {
-        draftForCourses.clear();
     }
 
     public Transcript getTranscript() {
@@ -85,8 +70,8 @@ public class Student extends User {
         return registeredCourses;
     }
 
-    public ArrayList<Course> getDraftForCourses() {
-        return draftForCourses;
+    public Draft getDraft() {
+        return draft;
     }
 
     public void setTranscript(Transcript transcript) {
