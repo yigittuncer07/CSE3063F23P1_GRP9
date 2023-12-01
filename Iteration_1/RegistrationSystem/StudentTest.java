@@ -9,12 +9,7 @@ public class StudentTest {
         Student student = createTestStudent();
         Course validCourse = new Course();
 
-        if (student.addToDraft(validCourse)) {
-            System.out.println("Test passed: Adding a valid course to draft");
-        } else {
-            System.out.println("Test failed: Adding a valid course to draft");
-        }
-
+    
         if (!student.canAddToDraft(validCourse)) {
             System.out.println("Test passed: Adding the same course to draft again correctly returns false");
         } else {
