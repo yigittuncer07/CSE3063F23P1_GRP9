@@ -225,11 +225,16 @@ public class LoginSystem {
 
     private void registrationProcess(Student student) {
         System.out.println("\nWelcome to the registration.\n");
-        ArrayList<Course> courses = jsonFileManager.getCourses();
+        ArrayList<Course> eligableCourses = student.getEligableCourses(jsonFileManager.getCourses());
         while (true) {
             System.out.println(
-                    "Enter a course code to register to said course, or enter \"submit\" to submit for approval:");
-            for (Course course : courses) {
+                    "Enter a course code to register to said course, enter \"submit\" to submit for approval and \"exit\" to scrap draft and exit:");
+
+            if (eligableCourses.isEmpty()) {
+                System.out.println("You cannot take any courses!\n");
+                return;
+            }
+            for (Course course : eligableCourses) {
                 System.out.println(course.getCourseCode() + " : " + course.getCourseName());
             }
 
@@ -244,9 +249,13 @@ public class LoginSystem {
                 System.out.println("Sent for approval\n");
                 return;
 
+            } else if (input.equals("exit")) {
+                System.out.println("\nDraft cleared and exited.\n");
+                student.clearDraft();
+                return;
             } else {
                 boolean courseFound = false;
-                for (Course course : courses) {
+                for (Course course : eligableCourses) {
                     if (input.equals(course.getCourseCode())) {
                         courseFound = true;
                         boolean canAddToDraft = student.canAddToDraft(course);

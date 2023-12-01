@@ -69,7 +69,7 @@ public class Course {
 		this.credits = credits;
 	}
 
-	public boolean isPrequisiteCompleted() {
+	public boolean isPrequisiteCompleted(String studentID) {
 		return true;
 	}
 

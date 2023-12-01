@@ -11,6 +11,30 @@ public class Student extends User {
         return transcript.toString();
     }
 
+    /*
+     * For a course to be elligable, it must:
+     * Not be already taken
+     * prerequisites must be complete
+     */
+    public ArrayList<Course> getEligableCourses(ArrayList<Course> allCourses) {
+        ArrayList<Course> eligableCourses = new ArrayList<>();
+        for (Course course : allCourses) {
+            if (!isRegisteredCourse(course) && course.isPrequisiteCompleted(studentId)) {
+                eligableCourses.add(course);
+            }
+        }
+        return eligableCourses;
+    }
+
+    private boolean isRegisteredCourse(Course course) {
+        for (Course registeredCourse : registeredCourses) {
+            if (registeredCourse.getCourseCode().equals(course.getCourseCode())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean canAddToDraft(Course course) {
         if (draftForCourses.size() != 0) {
             if (draftForCourses.contains(course)) {
@@ -22,15 +46,14 @@ public class Student extends User {
                 return false;
             }
         }
-        if (draftForCourses.size() >= 5 || !course.isPrequisiteCompleted()) {
+        if (draftForCourses.size() >= 5 || !course.isPrequisiteCompleted(studentId)) {
             return false;
         }
         return true;
     }
 
-    public boolean addToDraft(Course course) {
+    public void addToDraft(Course course) {
         this.draftForCourses.add(course);
-        return true;
     }
 
     public void sendDraftToAdvisor(Advisor studentAdvisor) {
