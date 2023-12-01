@@ -8,12 +8,8 @@ public class AdvisorTest {
     private static void testAddDraft() {
         Student student = createTestStudent();
         Course validCourse = new Course();
+        student.addToDraft(validCourse);
 
-        if (student.addToDraft(validCourse)) {
-            System.out.println("Test passed: Adding a valid course to draft");
-        } else {
-            System.out.println("Test failed: Adding a valid course to draft");
-        }
     }
 
     private static void testClearDrafts() {

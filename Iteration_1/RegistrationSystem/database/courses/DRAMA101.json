@@ -1,7 +1,1 @@
-{
-  "courseName": "Drama",
-  "credits": 4,
-  "courseCode": "DRAMA202",
-  "prerequisite": "DRAMA101",
-  "courseLecturer": "160555"
-}
+{"courseName":"Drama","credits":4,"courseCode":"DRAMA101","prerequisite":"","courseLecturer":"160555"}
