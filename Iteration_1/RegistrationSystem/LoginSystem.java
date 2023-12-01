@@ -25,7 +25,7 @@ public class LoginSystem {
             System.out.println(
                     "Welcome to the LOGIN SYSTEM:\n\tEnter 1 if you are a Student.\n\tEnter 2 if you are a Lecturer.\n\tEnter 3 if you are an Advisor.\n\tEnter 4 if you are a Student Affairs Staff.\n\tEnter 5 exit.\nEnter action : ");
 
-            int choice = (int) takeUserInput("Integer");
+            int choice = intInput();
 
             switch (choice) {
                 case 1:
@@ -74,11 +74,7 @@ public class LoginSystem {
                 System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = -1;// switch will go to default if integer cannot be parsed
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                } catch (Exception ignore) {
-                }
+                int choice = intInput();
 
                 switch (choice) {
                     case 1:
@@ -86,7 +82,6 @@ public class LoginSystem {
                         System.out.println(student.getTranscript());
                         break;
                     case 2:
-                        System.out.println("\nWelcome to the registration.\n");
                         registrationProcess(student);
                         break;
                     case 3:
@@ -124,11 +119,7 @@ public class LoginSystem {
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = -1;// switch will go to default if integer cannot be parsed
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                } catch (Exception ignore) {
-                }
+                int choice = intInput();
 
                 switch (choice) {
                     case 1:
@@ -171,11 +162,7 @@ public class LoginSystem {
                 System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = -1;// switch will go to default if integer cannot be parsed
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                } catch (Exception ignore) {
-                }
+                int choice = intInput();
 
                 switch (choice) {
                     case 1:
@@ -220,11 +207,7 @@ public class LoginSystem {
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
-                int choice = -1;// switch will go to default if integer cannot be parsed
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                } catch (Exception ignore) {
-                }
+                int choice = intInput();
 
                 switch (choice) {
                     case 1:
@@ -241,6 +224,7 @@ public class LoginSystem {
     }
 
     private void registrationProcess(Student student) {
+        System.out.println("\nWelcome to the registration.\n");
         ArrayList<Course> courses = jsonFileManager.getCourses();
         while (true) {
             System.out.println(
@@ -330,24 +314,18 @@ public class LoginSystem {
         return null;
     }
 
-    private Object takeUserInput(String inputType) {
-        int intInput = 0;
-        switch (inputType) {
-            case "String":
-                return scanner.nextLine();
-            case "Integer":
-                boolean isIntInput = false;
-                while (!isIntInput) {
-                    try {
-                        intInput = Integer.parseInt(scanner.nextLine());
-                        isIntInput = true;
-                    } catch (Exception ignore) {
-                        System.out.println("Please input a number:");
-                    }
-                }
-                return intInput;
+    private int intInput() {
+        boolean isInt = false;
+        int input = 0;
+        while (!isInt) {
+            try {
+                input = Integer.parseInt(scanner.nextLine());
+                isInt = true;
+            } catch (Exception ignore) {
+                System.out.println("Please input a number:");
+            }
         }
-        return null;
+        return input;
     }
 
     private void draftApprovalProcess(Advisor advisor) {
