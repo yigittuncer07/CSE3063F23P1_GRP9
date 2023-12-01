@@ -8,7 +8,7 @@ public class LoginSystem {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
-    ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+    private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
     public void startSystem() {
 
@@ -25,11 +25,7 @@ public class LoginSystem {
             System.out.println(
                     "Welcome to the LOGIN SYSTEM:\n\tEnter 1 if you are a Student.\n\tEnter 2 if you are a Lecturer.\n\tEnter 3 if you are an Advisor.\n\tEnter 4 if you are a Student Affairs Staff.\n\tEnter 5 exit.\nEnter action : ");
 
-            int choice = -1;// This will go to the default value if it is not writen in the try catch block
-            try {
-                choice = Integer.parseInt(scanner.nextLine());
-            } catch (Exception ignore) {
-            }
+            int choice = (int) takeUserInput("Integer");
 
             switch (choice) {
                 case 1:
@@ -330,6 +326,26 @@ public class LoginSystem {
 
             default:
                 break;
+        }
+        return null;
+    }
+
+    private Object takeUserInput(String inputType) {
+        int intInput = 0;
+        switch (inputType) {
+            case "String":
+                return scanner.nextLine();
+            case "Integer":
+                boolean isIntInput = false;
+                while (!isIntInput) {
+                    try {
+                        intInput = Integer.parseInt(scanner.nextLine());
+                        isIntInput = true;
+                    } catch (Exception ignore) {
+                        System.out.println("Please input a number:");
+                    }
+                }
+                return intInput;
         }
         return null;
     }
