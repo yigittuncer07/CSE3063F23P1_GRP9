@@ -51,12 +51,16 @@ public class LoginSystem {
         }
     }
 
+    int incorrectAttempts = 0;
+
     private void studentLogin() {
 
         System.out.println("\nEnter your StudentID: ");
         String studentID = scanner.nextLine();
         System.out.println("Enter your Password: ");
         String password = scanner.nextLine();
+        final int maxAttempts = 3;
+        final int timeoutSeconds = 20;
 
         Student student = (Student) getUserWithId(studentID, "Student");
 
@@ -92,41 +96,58 @@ public class LoginSystem {
                 }
             }
         } else {
+            incorrectAttempts++;
             System.out.println("\nWrong Password!");
-            System.out.println("\tChoose 1 to try again.");
-            System.out.println("\tChoose 2 if you forgot your password.");
-            while (true) {
-                int choice = intInput();
-                if (choice == 1) {
-                    return;
-                } else if (choice == 2) {
-                    while (true) {
-                        boolean checkInfo = checkInformation(student);
-                        if (checkInfo) {
-                            System.out.println("\nEnter a new password!");
-                            Scanner scanner = new Scanner(System.in);
-                            String newPassword = scanner.next();
-                            student.setPassword(newPassword);
-                            return;
-                        } else {
+
+            if (incorrectAttempts == maxAttempts) {
+                System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                try {
+                    Thread.sleep(timeoutSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Reset attempts after timeout
+                incorrectAttempts = 0;
+            }
+            else{            
+
+                System.out.println("\tChoose 1 to try again.");
+                System.out.println("\tChoose 2 if you forgot your password.");
+                while (true) {
+                    int choice = intInput();
+                    if (choice == 1) {
+
+                        return;
+                    }   else if (choice == 2) {
                             while (true) {
-                                System.out.println("\nInvalid Information!");
-                                System.out.println("\tChoose 1 to try again.");
-                                System.out.println("\tChoose 2 to leave.");
-                                int option = intInput();
-                                if (option == 1) {
-                                    break;
-                                } else if (option == 2) {
-                                    return;
-                                } else {
-                                    System.out.println("Invalid Input!");
+                                boolean checkInfo = checkInformation(student);
+                                if (checkInfo) {
+                                incorrectAttempts = 0; 
+                                System.out.println("\nEnter a new password!");
+                                Scanner scanner = new Scanner(System.in);
+                                String newPassword = scanner.next();
+                                student.setPassword(newPassword);
+                                return;
+                            } else {
+                                while (true) {
+                                    System.out.println("\nInvalid Information!");
+                                    System.out.println("\tChoose 1 to try again.");
+                                    System.out.println("\tChoose 2 to leave.");
+                                    int option = intInput();
+                                    if (option == 1) {
+                                        break;
+                                    } else if (option == 2) {
+                                        return;
+                                    } else {
+                                        System.out.println("Invalid Input!");
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        System.out.println("Invalid choice!");
                     }
-                } else {
-                    System.out.println("Invalid choice!");
-                }
+                }   
             }
         }
     }
