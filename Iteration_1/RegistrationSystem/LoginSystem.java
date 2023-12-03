@@ -9,7 +9,12 @@ public class LoginSystem {
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
     private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-    int incorrectAttempts = 0;
+    int incorrectAttemptsStudent = 0;
+    int incorrectAttemptsLecturer = 0;
+    int incorrectAttemptsAdvisor = 0;
+    int incorrectAttemptsStaff = 0;
+    final int maxAttempts = 3;
+    final int timeoutSeconds = 20;
 
     public void startSystem() {
 
@@ -58,8 +63,6 @@ public class LoginSystem {
         String studentID = scanner.nextLine();
         System.out.println("Enter your Password: ");
         String password = scanner.nextLine();
-        final int maxAttempts = 3;
-        final int timeoutSeconds = 20;
 
         Student student = (Student) getUserWithId(studentID, "Student");
 
@@ -69,7 +72,7 @@ public class LoginSystem {
         }
 
         if (isPasswordCorrect(student, password)) {
-            incorrectAttempts = 0;
+            incorrectAttemptsStudent = 0;
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -96,10 +99,10 @@ public class LoginSystem {
                 }
             }
         } else {
-            incorrectAttempts++;
+            incorrectAttemptsStudent++;
             System.out.println("\nWrong Password!");
 
-            if (incorrectAttempts == maxAttempts) {
+            if (incorrectAttemptsStudent == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
@@ -107,7 +110,7 @@ public class LoginSystem {
                     e.printStackTrace();
                 }
                 // Reset attempts after timeout
-                incorrectAttempts = 0;
+                incorrectAttemptsStudent = 0;
             }
         }
     }
@@ -127,6 +130,7 @@ public class LoginSystem {
         }
 
         if (isPasswordCorrect(lecturer, password)) {
+            incorrectAttemptsLecturer = 0;
             System.out.println("\nWelcome " + lecturer.getName() + " " + lecturer.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -148,7 +152,19 @@ public class LoginSystem {
                 }
             }
         } else {
+            incorrectAttemptsLecturer++;
             System.out.println("\nWrong Password!");
+
+            if (incorrectAttemptsLecturer == maxAttempts) {
+                System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                try {
+                    Thread.sleep(timeoutSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Reset attempts after timeout
+                incorrectAttemptsLecturer = 0;
+            }
             return;
         }
 
@@ -169,6 +185,8 @@ public class LoginSystem {
         }
 
         if (isPasswordCorrect(advisor, password)) {
+            incorrectAttemptsAdvisor = 0;
+            
             System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -194,7 +212,19 @@ public class LoginSystem {
                 }
             }
         } else {
+            incorrectAttemptsAdvisor++;
             System.out.println("\nWrong Password!");
+
+            if (incorrectAttemptsAdvisor == maxAttempts) {
+                System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                try {
+                    Thread.sleep(timeoutSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Reset attempts after timeout
+                incorrectAttemptsAdvisor = 0;
+            }
             return;
         }
 
@@ -215,6 +245,8 @@ public class LoginSystem {
         }
 
         if (isPasswordCorrect(studentAffairsStaff, password)) {
+            incorrectAttemptsStaff = 0;
+
             System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -235,6 +267,21 @@ public class LoginSystem {
                         System.out.println("\nInvalid input!\n");
                 }
             }
+        } else {
+            incorrectAttemptsStaff++;
+            System.out.println("\nWrong Password!");
+
+            if (incorrectAttemptsStaff == maxAttempts) {
+                System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                try {
+                    Thread.sleep(timeoutSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Reset attempts after timeout
+                incorrectAttemptsStaff = 0;
+            }
+            return;
         }
     }
 
