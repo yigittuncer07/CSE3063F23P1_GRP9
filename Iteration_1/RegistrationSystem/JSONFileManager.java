@@ -478,7 +478,6 @@ public class JSONFileManager {
             studentAffairsStaffJSON.put("password", studentAffairsStaff.getPassword());
             studentAffairsStaffJSON.put("lecturerId", studentAffairsStaff.getStaffID());
             studentAffairsStaffJSON.put("department", studentAffairsStaff.getDepartment());
-            studentAffairsStaffJSON.put("department", studentAffairsStaff.getDepartment());
 
             try (FileWriter fileWriter = new FileWriter(
                     "database/studentAffairsStaffs/" + studentAffairsStaff.getStaffID() + ".json")) {
