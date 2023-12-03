@@ -514,7 +514,7 @@ public class JSONFileManager {
                         studentAffairsStaff.setEmail((String) jsonObject.get("email"));
                         studentAffairsStaff.setPassword((String) jsonObject.get("password"));
                         studentAffairsStaff.setStaffID((String) jsonObject.get("lecturerId"));
-                        studentAffairsStaff.setDepartment((String) jsonObject.get("lecturerId"));
+                        studentAffairsStaff.setDepartment((String) jsonObject.get("department"));
                         studentAffairsStaff.setWorkingField((String) jsonObject.get("workingField"));
 
                         studentAffairsStaffs.add(studentAffairsStaff);
