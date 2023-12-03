@@ -371,7 +371,7 @@ public class LoginSystem {
                     }
                 }
                 break;
-            case "StudentAffairs":
+            case "StudentAffairsStaff":
                 for (StudentAffairsStaff studentAffairsStaff : jsonFileManager.getStudentAffairsStaffs()) {
                     if (studentAffairsStaff.getStaffID().equals(ID)) {
                         return studentAffairsStaff;
