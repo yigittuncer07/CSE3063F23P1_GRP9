@@ -9,6 +9,7 @@ public class LoginSystem {
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
     private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+    int incorrectAttempts = 0;
 
     public void startSystem() {
 
@@ -51,8 +52,6 @@ public class LoginSystem {
         }
     }
 
-    int incorrectAttempts = 0;
-
     private void studentLogin() {
 
         System.out.println("\nEnter your StudentID: ");
@@ -70,6 +69,7 @@ public class LoginSystem {
         }
 
         if (isPasswordCorrect(student, password)) {
+            incorrectAttempts = 0;
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -109,63 +109,6 @@ public class LoginSystem {
                 // Reset attempts after timeout
                 incorrectAttempts = 0;
             }
-            else{            
-
-                System.out.println("\tChoose 1 to try again.");
-                System.out.println("\tChoose 2 if you forgot your password.");
-                while (true) {
-                    int choice = intInput();
-                    if (choice == 1) {
-
-                        return;
-                    }   else if (choice == 2) {
-                            while (true) {
-                                boolean checkInfo = checkInformation(student);
-                                if (checkInfo) {
-                                incorrectAttempts = 0; 
-                                System.out.println("\nEnter a new password!");
-                                Scanner scanner = new Scanner(System.in);
-                                String newPassword = scanner.next();
-                                student.setPassword(newPassword);
-                                return;
-                            } else {
-                                while (true) {
-                                    System.out.println("\nInvalid Information!");
-                                    System.out.println("\tChoose 1 to try again.");
-                                    System.out.println("\tChoose 2 to leave.");
-                                    int option = intInput();
-                                    if (option == 1) {
-                                        break;
-                                    } else if (option == 2) {
-                                        return;
-                                    } else {
-                                        System.out.println("Invalid Input!");
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        System.out.println("Invalid choice!");
-                    }
-                }   
-            }
-        }
-    }
-
-    private boolean checkInformation(Student student) {
-
-        System.out.println("\nEnter your ssn!");
-        String tempSSN = scanner.next();
-        System.out.println("Enter your email!");
-        String tempEmail = scanner.next();
-        System.out.println("Enter your lastname!");
-        String tempLastName = scanner.next();
-
-        if (student.getSsn().equals(tempSSN) && student.getEmail().equals(tempEmail)
-                && student.getLastName().equals(tempLastName)) {
-            return true;
-        } else {
-            return false;
         }
     }
 
