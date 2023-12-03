@@ -9,12 +9,12 @@ public class LoginSystem {
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
     private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-    int incorrectAttemptsStudent = 0;
-    int incorrectAttemptsLecturer = 0;
-    int incorrectAttemptsAdvisor = 0;
-    int incorrectAttemptsStaff = 0;
-    final int maxAttempts = 3;
-    final int timeoutSeconds = 20;
+    private int incorrectAttemptsStudent = 0;
+    private int incorrectAttemptsLecturer = 0;
+    private int incorrectAttemptsAdvisor = 0;
+    private int incorrectAttemptsStaff = 0;
+    private final int maxAttempts = 3;
+    private final int timeoutSeconds = 20;
 
     public void startSystem() {
 
