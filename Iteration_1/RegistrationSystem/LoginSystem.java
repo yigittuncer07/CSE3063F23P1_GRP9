@@ -67,7 +67,7 @@ public class LoginSystem {
             return;
         }
 
-        if (isPasswordCorrect(student, password)) {
+        if (student.getPassword().equals(password)) {
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -113,7 +113,7 @@ public class LoginSystem {
             return;
         }
 
-        if (isPasswordCorrect(lecturer, password)) {
+        if (lecturer.getPassword().equals(password)) {
             System.out.println("\nWelcome " + lecturer.getName() + " " + lecturer.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -155,7 +155,7 @@ public class LoginSystem {
             return;
         }
 
-        if (isPasswordCorrect(advisor, password)) {
+        if (advisor.getPassword().equals(password)) {
             System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -201,7 +201,7 @@ public class LoginSystem {
             return;
         }
 
-        if (isPasswordCorrect(studentAffairsStaff, password)) {
+        if (studentAffairsStaff.getPassword().equals(password)) {
             System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -280,11 +280,7 @@ public class LoginSystem {
             System.out.println("\n ");
         }
     }
-
-    private boolean isPasswordCorrect(User user, String password) {
-        return user.getPassword().equals(password);
-    }
-
+    
     private User getUserWithId(String ID, String className) {
         switch (className) {
             case "Student":
