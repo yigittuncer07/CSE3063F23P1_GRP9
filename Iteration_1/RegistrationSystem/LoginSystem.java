@@ -407,7 +407,7 @@ public class LoginSystem {
         System.out.println("\nPlease proceed with this draft:.\n");
         for (ArrayList<Course> draft : advisor.getDrafts()) {
 
-            System.out.println("Student Info:\n" + draft.get(0).getStudent().getInfo() + "\n\nCourses:");
+            System.out.println("Student Info:\nStudentID: " + draft.get(0).getStudent().getStudentId() + "\n" + draft.get(0).getStudent().getInfo() + "\n\nCourses:");
 
             // Print all draft courses
             for (Course course : draft) {
