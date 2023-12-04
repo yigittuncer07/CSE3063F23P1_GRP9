@@ -289,8 +289,6 @@ public class JSONFileManager {
                             draftsList.add(innerList);
                         }
 
-                        advisor.findAllCourseInstances(courses);
-
                         advisors.add(advisor);
 
                         advisor.setDrafts(draftsList);
