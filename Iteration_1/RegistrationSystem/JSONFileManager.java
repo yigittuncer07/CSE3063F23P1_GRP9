@@ -16,11 +16,11 @@ public class JSONFileManager {
     private ArrayList<Course> courses = new ArrayList<>();
 
     public JSONFileManager() {
+        getAllCoursesData();
+        getAllStudentsData();
         getAllAdvisorsData();
         getAllLecturersData();
         getAllStudentAffairsStaffsData();
-        getAllStudentsData();
-        getAllCoursesData();
     }
 
     public ArrayList<Student> getStudents() {
@@ -412,7 +412,7 @@ public class JSONFileManager {
                         Object obj = jsonParser.parse(fileReader);
                         JSONObject jsonObject = (JSONObject) obj;
 
-                        Lecturer lecturer = new Advisor();
+                        Lecturer lecturer = new Lecturer(courses);
                         lecturer.setName((String) jsonObject.get("firstName"));
                         lecturer.setLastName((String) jsonObject.get("lastName"));
                         lecturer.setBirthDate((String) jsonObject.get("birthDate"));
