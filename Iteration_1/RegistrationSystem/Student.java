@@ -6,6 +6,7 @@ public class Student extends User {
     private Advisor advisor;
     private ArrayList<Course> registeredCourses = new ArrayList<>();
     private ArrayList<Course> draftForCourses = new ArrayList<>();
+    private ArrayList<Course> approvedCourses = new ArrayList<>();
 
     public String getTranscriptInformation(Transcript transcript) {
         return transcript.toString();
@@ -62,6 +63,7 @@ public class Student extends User {
 
     public void approveDraft(ArrayList<Course> draft) {
         registeredCourses.addAll(draft);
+        approvedCourses.addAll(draft);  
         clearDraft();
     }
 
@@ -88,6 +90,9 @@ public class Student extends User {
     public ArrayList<Course> getDraftForCourses() {
         return draftForCourses;
     }
+    public ArrayList<Course> getApprovedCourses() {
+        return approvedCourses;
+    }
 
     public void setTranscript(Transcript transcript) {
         this.transcript = transcript;
@@ -104,4 +109,8 @@ public class Student extends User {
     public void setRegisteredCourses(ArrayList<Course> registeredCourses) {
         this.registeredCourses = registeredCourses;
     }
+    public void setApprovedCourses(ArrayList<Course> approvedCourses) {
+        this.approvedCourses = approvedCourses;
+    }
+
 }

@@ -250,7 +250,7 @@ public class LoginSystem {
             System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
-                System.out.println("    Enter 1 to see your working field.");
+                System.out.println("    Enter 1 to see the information that needs to be updated in the system.");
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
@@ -258,7 +258,8 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("\nThis is your working field.\n");
+                        System.out.println(studentAffairsStaff.getWorkingField());
+                        printApprovedCourses();
                         break;
                     case 2:
                         System.out.println("\nYou have logged out succesfully.");
@@ -398,6 +399,17 @@ public class LoginSystem {
         }
         return input;
     }
+    private void printApprovedCourses() {
+        System.out.println("\nApproved Courses:");
+        for (Student student : jsonFileManager.getStudents()) {
+            System.out.println(student.getName() + " " + student.getLastName() + "'s Approved Courses:");
+            for (Course course : student.getApprovedCourses()) {
+                System.out.println(course.getCourseName() + " " + course.getCourseCode());
+            }
+            System.out.println();
+        }
+    }
+    
 
     private void draftApprovalProcess(Advisor advisor) {
         if (advisor.getDrafts().isEmpty()) {
