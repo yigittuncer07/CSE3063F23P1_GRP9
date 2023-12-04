@@ -407,12 +407,14 @@ public class LoginSystem {
         System.out.println("\nPlease proceed with this draft:.\n");
         for (ArrayList<Course> draft : advisor.getDrafts()) {
 
+            System.out.println("Student Info:\n" + draft.get(0).getStudent().getInfo() + "\n\nCourses:");
+
             // Print all draft courses
             for (Course course : draft) {
                 System.out.println(course.getCourseName() + " " + course.getCourseCode());
             }
 
-            System.out.println("Do you approve this draft? yes/no");
+            System.out.println("\nDo you approve this draft? yes/no");
             String isApprovedByAdvisor = scanner.nextLine();
             Student draftStudent = (Student) getUserWithId(draft.get(0).getStudent().getStudentId(), "Student");
 
