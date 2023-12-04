@@ -27,6 +27,8 @@ public class LoginSystem {
             System.exit(0);
         }, 200, TimeUnit.SECONDS);
 
+        connectStudentsWithCourseInstances(jsonFileManager);
+
         while (true) {
             System.out.println(
                     "Welcome to the LOGIN SYSTEM:\n\tEnter 1 if you are a Student.\n\tEnter 2 if you are a Lecturer.\n\tEnter 3 if you are an Advisor.\n\tEnter 4 if you are a Student Affairs Staff.\n\tEnter 5 exit.\nEnter action : ");
@@ -135,7 +137,8 @@ public class LoginSystem {
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
-                System.out.println("    Enter 2 to logout.");
+                System.out.println("    Enter 2 to see the courses you teach.");
+                System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
                 int choice = intInput();
@@ -145,6 +148,11 @@ public class LoginSystem {
                         System.out.println(lecturer.getProfession());
                         break;
                     case 2:
+                        for (int i = 0; i < lecturer.getCourseInstances().size(); i++) {
+                            System.out.println(lecturer.getCourseInstances().get(i).getCourseCode());
+                        }
+                        break;
+                    case 3:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
@@ -186,7 +194,7 @@ public class LoginSystem {
 
         if (isPasswordCorrect(advisor, password)) {
             incorrectAttemptsAdvisor = 0;
-            
+
             System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -407,7 +415,8 @@ public class LoginSystem {
         System.out.println("\nPlease proceed with this draft:.\n");
         for (ArrayList<Course> draft : advisor.getDrafts()) {
 
-            System.out.println("Student Info:\nStudentID: " + draft.get(0).getStudent().getStudentId() + "\n" + draft.get(0).getStudent().getInfo() + "\n\nCourses:");
+            System.out.println("Student Info:\nStudentID: " + draft.get(0).getStudent().getStudentId() + "\n"
+                    + draft.get(0).getStudent().getInfo() + "\n\nCourses:");
 
             // Print all draft courses
             for (Course course : draft) {
@@ -427,4 +436,21 @@ public class LoginSystem {
 
         advisor.clearDrafts();
     }
+
+    private void connectStudentsWithCourseInstances(JSONFileManager data) {
+
+        for (int i = 0; i < data.getLecturers().size(); i++) {
+            for (int j = 0; j < data.getLecturers().get(i).getCourseInstances().size(); j++) {
+                for (int k = 0; k < data.getStudents().size(); k++) {
+                    for (int m = 0; m < data.getStudents().get(k).getRegisteredCourses().size() ; m++) {
+                        if (data.getLecturers().get(i).getCourseInstances().get(j).getCourseCode().equals(data.getStudents().get(k).getRegisteredCourses().get(m).getCourseCode())) {
+                            data.getLecturers().get(i).getCourseInstances().get(j).getRegisteredStudents().add(data.getStudents().get(k));
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
 }
