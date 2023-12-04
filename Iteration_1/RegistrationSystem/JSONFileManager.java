@@ -16,11 +16,11 @@ public class JSONFileManager {
     private ArrayList<Course> courses = new ArrayList<>();
 
     public JSONFileManager() {
+        getAllCoursesData();
+        getAllStudentsData();
         getAllAdvisorsData();
         getAllLecturersData();
         getAllStudentAffairsStaffsData();
-        getAllStudentsData();
-        getAllCoursesData();
     }
 
     public ArrayList<Student> getStudents() {
@@ -249,6 +249,7 @@ public class JSONFileManager {
                         advisor.setPassword((String) jsonObject.get("password"));
                         advisor.setStaffID((String) jsonObject.get("advisorId"));
                         advisor.setProfession((String) jsonObject.get("profession"));
+                        advisor.setDepartment((String) jsonObject.get("department"));
 
                         ArrayList<ArrayList<Course>> draftsList = new ArrayList<>();
 
@@ -412,7 +413,7 @@ public class JSONFileManager {
                         Object obj = jsonParser.parse(fileReader);
                         JSONObject jsonObject = (JSONObject) obj;
 
-                        Lecturer lecturer = new Advisor();
+                        Lecturer lecturer = new Lecturer();
                         lecturer.setName((String) jsonObject.get("firstName"));
                         lecturer.setLastName((String) jsonObject.get("lastName"));
                         lecturer.setBirthDate((String) jsonObject.get("birthDate"));
@@ -423,6 +424,8 @@ public class JSONFileManager {
                         lecturer.setStaffID((String) jsonObject.get("lecturerId"));
                         lecturer.setDepartment((String) jsonObject.get("lecturerId"));
                         lecturer.setProfession((String) jsonObject.get("profession"));
+
+                        lecturer.findAllCourseInstances(courses);
 
                         lecturers.add(lecturer);
 
