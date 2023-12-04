@@ -137,7 +137,7 @@ public class LoginSystem {
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
-                System.out.println("    Enter 2 to see the courses you teach.");
+                System.out.println("    Enter 2 to see and control the courses you teach.");
                 System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
@@ -148,9 +148,7 @@ public class LoginSystem {
                         System.out.println(lecturer.getProfession());
                         break;
                     case 2:
-                        for (int i = 0; i < lecturer.getCourseInstances().size(); i++) {
-                            System.out.println(lecturer.getCourseInstances().get(i).getCourseCode());
-                        }
+                        controlYourCourses(lecturer);
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
@@ -449,6 +447,7 @@ public class LoginSystem {
         advisor.clearDrafts();
     }
 
+    // This method is used for teachers to find all students that attent to their courses.
     private void connectStudentsWithCourseInstances(JSONFileManager data) {
 
         for (int i = 0; i < data.getLecturers().size(); i++) {
@@ -463,6 +462,55 @@ public class LoginSystem {
             }
         }
 
+    }
+
+    // This is where a lecturer can control their courses
+    private void controlYourCourses(Lecturer lecturer) {
+
+        while (true) {
+            System.out.println("\nThese are the courses you give.");
+            int i = 0;
+            for (i = 0 ; i < lecturer.getCourseInstances().size() ; i++) {
+                System.out.println("\t" + i + " -> " + lecturer.getCourseInstances().get(i).getCourseCode() + ": " + lecturer.getCourseInstances().get(i).getCourseName());
+            }
+            System.out.println("\t" + i + " -> cancel");
+            System.out.println("Choose a number to perform an action to one of your courses");
+
+            int choice = scanner.nextInt();
+
+            if (choice == i) {
+                return;
+            }
+            else if (choice >= 0 && choice < i) {
+                System.out.println("You have chosen the course -> " + lecturer.getCourseInstances().get(choice).getCourseCode() + ": " + lecturer.getCourseInstances().get(choice).getCourseName());
+                System.out.println("\tEnter 1 to get the course information.");
+                System.out.println("\tEnter 2 to grade students.");
+                System.out.println("\tEnter 3 to pass/fail a student.");
+                System.out.println("\tEnter 4 to choose another course");
+                choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("test1");
+                        break;
+                    case 2:
+                        System.out.println("test2");
+                        break;
+                    case 3:
+                        System.out.println("test3");
+                        break;
+                    case 4:
+                        System.out.println("\nYou have returned succesfully.");
+                        return;
+                    default:
+                        System.out.println("\nInvalid input!\n");
+                }
+
+            }
+            else {
+                System.out.println("\nInvalid input!\n");
+            }
+        }
     }
 
 }

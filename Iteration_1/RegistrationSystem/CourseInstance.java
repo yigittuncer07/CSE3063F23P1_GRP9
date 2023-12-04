@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+/* This class is created to make an interconnection between the students and teachers. By using this class we can see which teacher gives which lecture and which students are attending */
+
 public class CourseInstance {
 
     private final long maxNumberStudents = 30;

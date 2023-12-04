@@ -13,6 +13,7 @@ public class Lecturer extends Staff {
         this.profession=profession;
     }
 
+    // This method finds all the courses a teacher has.
     public void findAllCourseInstances(ArrayList<Course> courses) {
 
         for (int i = 0 ; i < courses.size() ; i++) {
