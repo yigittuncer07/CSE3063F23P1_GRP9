@@ -1,1 +1,44 @@
-{"profession":"Blockchain","firstName":"Yilmaz","lastName":"Dogan","password":"111111","address":"Izmir, Turkey","advisorId":"160111","drafts":[],"birthDate":"13:03:70.454+0530","email":"yilmazdogan@gmail.com","ssn":"22222222222"}
+{
+    "profession": "Blockchain",
+    "firstName": "Yilmaz",
+    "lastName": "Dogan",
+    "password": "111111",
+    "address": "Izmir, Turkey",
+    "advisorId": "160111",
+    "drafts": [
+        {
+            "studentId": "150111",
+            "courses": [
+                {
+                    "courseName": "Data Structures",
+                    "credits": 6,
+                    "courseCode": "CSE102",
+                    "prerequisite": "CSE101",
+                    "courseLecturer": "160222"
+                },
+                {
+                    "courseName": "Mathematic 101",
+                    "credits": 4,
+                    "courseCode": "MATH101",
+                    "prerequisite": "MATH100",
+                    "courseLecturer": "160555"
+                }
+            ]
+        },
+        {
+            "studentId": "150222",
+            "courses": [
+                {
+                    "courseName": "Philosophy",
+                    "credits": 3,
+                    "courseCode": "PHIL101",
+                    "prerequisite": "",
+                    "courseLecturer": "170555"
+                }
+            ]
+        }
+    ],
+    "birthDate": "13:03:70.454+0530",
+    "email": "yilmazdogan@gmail.com",
+    "ssn": "22222222222"
+}
