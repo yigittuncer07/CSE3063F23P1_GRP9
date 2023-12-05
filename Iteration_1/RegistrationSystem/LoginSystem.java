@@ -349,7 +349,11 @@ public class LoginSystem {
             String isApprovedByAdvisor = scanner.nextLine();
 
             if (isApprovedByAdvisor.equals("yes")) {
-                draft.getStudent().approveDraft(draft); //NEED TO REVIEW
+
+                ((Student) getUserWithId(draft.getStudent().getStudentId(), "Student")).approveDraft(draft);
+
+
+
             } else if (isApprovedByAdvisor.equals("no")) {
                 draft.clearDraft();
             }
