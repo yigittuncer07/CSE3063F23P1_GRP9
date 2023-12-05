@@ -9,6 +9,12 @@ public class LoginSystem {
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
     private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+    private int incorrectAttemptsStudent = 0;
+    private int incorrectAttemptsLecturer = 0;
+    private int incorrectAttemptsAdvisor = 0;
+    private int incorrectAttemptsStaff = 0;
+    private final int maxAttempts = 3;
+    private final int timeoutSeconds = 20;
 
     public void startSystem() {
 
@@ -22,6 +28,8 @@ public class LoginSystem {
             System.out.println("The system has timed out, please log in again.");
             System.exit(0);
         }, 200, TimeUnit.SECONDS);
+
+        connectStudentsWithCourseInstances(jsonFileManager);
 
         while (true) {
             System.out.println(
@@ -68,6 +76,7 @@ public class LoginSystem {
         }
 
         if (student.getPassword().equals(password)) {
+
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -94,8 +103,19 @@ public class LoginSystem {
                 }
             }
         } else {
+            incorrectAttemptsStudent++;
             System.out.println("\nWrong Password!");
-            return;
+
+            if (incorrectAttemptsStudent == maxAttempts) {
+                System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                try {
+                    Thread.sleep(timeoutSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Reset attempts after timeout
+                incorrectAttemptsStudent = 0;
+            }
         }
     }
 
@@ -114,11 +134,13 @@ public class LoginSystem {
         }
 
         if (lecturer.getPassword().equals(password)) {
+
             System.out.println("\nWelcome " + lecturer.getName() + " " + lecturer.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see your proffesion.");
-                System.out.println("    Enter 2 to logout.");
+                System.out.println("    Enter 2 to see and control the courses you teach.");
+                System.out.println("    Enter 3 to logout.");
                 System.out.print("Enter action : ");
 
                 int choice = intInput();
@@ -128,6 +150,9 @@ public class LoginSystem {
                         System.out.println(lecturer.getProfession());
                         break;
                     case 2:
+                        controlYourCourses(lecturer);
+                        break;
+                    case 3:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
@@ -135,7 +160,19 @@ public class LoginSystem {
                 }
             }
         } else {
+            incorrectAttemptsLecturer++;
             System.out.println("\nWrong Password!");
+
+            if (incorrectAttemptsLecturer == maxAttempts) {
+                System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                try {
+                    Thread.sleep(timeoutSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Reset attempts after timeout
+                incorrectAttemptsLecturer = 0;
+            }
             return;
         }
 
@@ -155,7 +192,9 @@ public class LoginSystem {
             return;
         }
 
+
         if (advisor.getPassword().equals(password)) {
+
             System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -181,7 +220,19 @@ public class LoginSystem {
                 }
             }
         } else {
+            incorrectAttemptsAdvisor++;
             System.out.println("\nWrong Password!");
+
+            if (incorrectAttemptsAdvisor == maxAttempts) {
+                System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                try {
+                    Thread.sleep(timeoutSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Reset attempts after timeout
+                incorrectAttemptsAdvisor = 0;
+            }
             return;
         }
 
@@ -201,11 +252,13 @@ public class LoginSystem {
             return;
         }
 
+
         if (studentAffairsStaff.getPassword().equals(password)) {
+
             System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
-                System.out.println("    Enter 1 to see your working field.");
+                System.out.println("    Enter 1 to see the information that needs to be updated in the system.");
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
@@ -213,7 +266,8 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("\nThis is your working field.\n");
+                        System.out.println(studentAffairsStaff.getWorkingField());
+                        printApprovedCourses();
                         break;
                     case 2:
                         System.out.println("\nYou have logged out succesfully.");
@@ -222,6 +276,21 @@ public class LoginSystem {
                         System.out.println("\nInvalid input!\n");
                 }
             }
+        } else {
+            incorrectAttemptsStaff++;
+            System.out.println("\nWrong Password!");
+
+            if (incorrectAttemptsStaff == maxAttempts) {
+                System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                try {
+                    Thread.sleep(timeoutSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Reset attempts after timeout
+                incorrectAttemptsStaff = 0;
+            }
+            return;
         }
     }
 
@@ -304,7 +373,7 @@ public class LoginSystem {
                     }
                 }
                 break;
-            case "StudentAffairs":
+            case "StudentAffairsStaff":
                 for (StudentAffairsStaff studentAffairsStaff : jsonFileManager.getStudentAffairsStaffs()) {
                     if (studentAffairsStaff.getStaffID().equals(ID)) {
                         return studentAffairsStaff;
@@ -331,6 +400,17 @@ public class LoginSystem {
         }
         return input;
     }
+    private void printApprovedCourses() {
+        System.out.println("\nApproved Courses:");
+        for (Student student : jsonFileManager.getStudents()) {
+            System.out.println(student.getName() + " " + student.getLastName() + "'s Approved Courses:");
+            for (Course course : student.getApprovedCourses()) {
+                System.out.println(course.getCourseName() + " " + course.getCourseCode());
+            }
+            System.out.println();
+        }
+    }
+    
 
     private void draftApprovalProcess(Advisor advisor) {
         if (advisor.getDrafts().isEmpty()) {
@@ -340,12 +420,15 @@ public class LoginSystem {
         System.out.println("\nPlease proceed with this draft:.\n");
         for (Draft draft : advisor.getDrafts()) {
 
+            System.out.println("Student Info:\nStudentID: " + draft.get(0).getStudent().getStudentId() + "\n"
+                    + draft.get(0).getStudent().getInfo() + "\n\nCourses:");
+
             // Print all draft courses
             for (Course course : draft.getCourses()) {
                 System.out.println(course.getCourseName() + " " + course.getCourseCode());
             }
 
-            System.out.println("Do you approve this draft? yes/no");
+            System.out.println("\nDo you approve this draft? yes/no");
             String isApprovedByAdvisor = scanner.nextLine();
 
             if (isApprovedByAdvisor.equals("yes")) {
@@ -367,4 +450,71 @@ public class LoginSystem {
             student.getDraft().setStudent(student);
         }
     }
+
+    // This method is used for teachers to find all students that attent to their courses.
+    private void connectStudentsWithCourseInstances(JSONFileManager data) {
+
+        for (int i = 0; i < data.getLecturers().size(); i++) {
+            for (int j = 0; j < data.getLecturers().get(i).getCourseInstances().size(); j++) {
+                for (int k = 0; k < data.getStudents().size(); k++) {
+                    for (int m = 0; m < data.getStudents().get(k).getRegisteredCourses().size() ; m++) {
+                        if (data.getLecturers().get(i).getCourseInstances().get(j).getCourseCode().equals(data.getStudents().get(k).getRegisteredCourses().get(m).getCourseCode())) {
+                            data.getLecturers().get(i).getCourseInstances().get(j).getRegisteredStudents().add(data.getStudents().get(k));
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    // This is where a lecturer can control their courses
+    private void controlYourCourses(Lecturer lecturer) {
+
+        while (true) {
+            System.out.println("\nThese are the courses you give.");
+            int i = 0;
+            for (i = 0 ; i < lecturer.getCourseInstances().size() ; i++) {
+                System.out.println("\t" + i + " -> " + lecturer.getCourseInstances().get(i).getCourseCode() + ": " + lecturer.getCourseInstances().get(i).getCourseName());
+            }
+            System.out.println("\t" + i + " -> cancel");
+            System.out.println("Choose a number to perform an action to one of your courses");
+
+            int choice = scanner.nextInt();
+
+            if (choice == i) {
+                return;
+            }
+            else if (choice >= 0 && choice < i) {
+                System.out.println("You have chosen the course -> " + lecturer.getCourseInstances().get(choice).getCourseCode() + ": " + lecturer.getCourseInstances().get(choice).getCourseName());
+                System.out.println("\tEnter 1 to get the course information.");
+                System.out.println("\tEnter 2 to grade students.");
+                System.out.println("\tEnter 3 to pass/fail a student.");
+                System.out.println("\tEnter 4 to choose another course");
+                choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("test1");
+                        break;
+                    case 2:
+                        System.out.println("test2");
+                        break;
+                    case 3:
+                        System.out.println("test3");
+                        break;
+                    case 4:
+                        System.out.println("\nYou have returned succesfully.");
+                        return;
+                    default:
+                        System.out.println("\nInvalid input!\n");
+                }
+
+            }
+            else {
+                System.out.println("\nInvalid input!\n");
+            }
+        }
+    }
+
 }

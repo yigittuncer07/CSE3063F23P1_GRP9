@@ -16,11 +16,11 @@ public class JSONFileManager {
     private ArrayList<Course> courses = new ArrayList<>();
 
     public JSONFileManager() {
+        getAllCoursesData();
+        getAllStudentsData();
         getAllAdvisorsData();
         getAllLecturersData();
         getAllStudentAffairsStaffsData();
-        getAllStudentsData();
-        getAllCoursesData();
     }
 
     public ArrayList<Student> getStudents() {
@@ -253,6 +253,7 @@ public class JSONFileManager {
                         advisor.setPassword((String) jsonObject.get("password"));
                         advisor.setStaffID((String) jsonObject.get("advisorId"));
                         advisor.setProfession((String) jsonObject.get("profession"));
+                        advisor.setDepartment((String) jsonObject.get("department"));
 
                         ArrayList<Draft> draftsList = new ArrayList<>();
 
@@ -423,7 +424,7 @@ public class JSONFileManager {
                         Object obj = jsonParser.parse(fileReader);
                         JSONObject jsonObject = (JSONObject) obj;
 
-                        Lecturer lecturer = new Advisor();
+                        Lecturer lecturer = new Lecturer();
                         lecturer.setName((String) jsonObject.get("firstName"));
                         lecturer.setLastName((String) jsonObject.get("lastName"));
                         lecturer.setBirthDate((String) jsonObject.get("birthDate"));
@@ -434,6 +435,8 @@ public class JSONFileManager {
                         lecturer.setStaffID((String) jsonObject.get("lecturerId"));
                         lecturer.setDepartment((String) jsonObject.get("lecturerId"));
                         lecturer.setProfession((String) jsonObject.get("profession"));
+
+                        lecturer.findAllCourseInstances(courses); // This is used to make an interconnection between the courses and the teacher.
 
                         lecturers.add(lecturer);
 
@@ -489,7 +492,6 @@ public class JSONFileManager {
             studentAffairsStaffJSON.put("password", studentAffairsStaff.getPassword());
             studentAffairsStaffJSON.put("lecturerId", studentAffairsStaff.getStaffID());
             studentAffairsStaffJSON.put("department", studentAffairsStaff.getDepartment());
-            studentAffairsStaffJSON.put("department", studentAffairsStaff.getDepartment());
 
             try (FileWriter fileWriter = new FileWriter(
                     "database/studentAffairsStaffs/" + studentAffairsStaff.getStaffID() + ".json")) {
@@ -525,7 +527,7 @@ public class JSONFileManager {
                         studentAffairsStaff.setEmail((String) jsonObject.get("email"));
                         studentAffairsStaff.setPassword((String) jsonObject.get("password"));
                         studentAffairsStaff.setStaffID((String) jsonObject.get("lecturerId"));
-                        studentAffairsStaff.setDepartment((String) jsonObject.get("lecturerId"));
+                        studentAffairsStaff.setDepartment((String) jsonObject.get("department"));
                         studentAffairsStaff.setWorkingField((String) jsonObject.get("workingField"));
 
                         studentAffairsStaffs.add(studentAffairsStaff);
