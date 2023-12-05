@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Draft {
-    private ArrayList<Course> courses;
+    private ArrayList<Course> courses = new ArrayList<>();
     private Student student;
     
     public boolean hasCourse(Course course) {

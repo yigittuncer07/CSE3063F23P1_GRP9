@@ -157,7 +157,7 @@ public class JSONFileManager {
 
             studentJson.put("registeredCourses", registeredCoursesArray);
 
-            JSONArray coursesWaitingForApprovalArray = new JSONArray();
+            //JSONArray coursesWaitingForApprovalArray = new JSONArray();
             /*for (Course course : student.getDraftForCourses()) {
                 JSONObject draftJSON = new JSONObject();
 
