@@ -197,30 +197,41 @@ public class JSONFileManager {
             advisorJson.put("profession", advisor.getProfession());
 
             JSONArray draftsArray = new JSONArray();
-            for (ArrayList<Course> innerList : advisor.getDrafts()) {
-                JSONArray innerArray = new JSONArray();
-                for (Course course : innerList) {
-                    JSONObject courseJson = new JSONObject();
-                    courseJson.put("courseName", course.getCourseName());
-                    courseJson.put("courseCode", course.getCourseCode());
-                    courseJson.put("courseLecturer", course.getCourseLecturer().getStaffID());
-                    courseJson.put("studentId", course.getStudent().getStudentId());
-                    courseJson.put("studentName", course.getStudent().getName());
-                    courseJson.put("credits", course.getCredits());
-                    courseJson.put("advisor", advisor.getStaffID());
+            for (Draft draft : advisor.getDrafts()) {
+                JSONObject draftObject = new JSONObject();
+                draftObject.put("studentId", draft.getStudent().getStudentId());
 
-                    innerArray.add(courseJson);
+                JSONArray coursesArray = new JSONArray();
+                for (Course course : draft.getCourses()) {
+                    JSONObject courseObject = new JSONObject();
+                    courseObject.put("courseName", course.getCourseName());
+                    courseObject.put("credits", course.getCredits());
+                    courseObject.put("courseCode", course.getCourseCode());
+                    courseObject.put("prerequisite", course.getPrequisite());
+
+                    Lecturer lecturer = course.getCourseLecturer();
+                    JSONObject lecturerObject = new JSONObject();
+                    lecturerObject.put("courseLecturer", lecturer.getStaffID());
+                    courseObject.put("lecturer", lecturerObject);
+
+                    coursesArray.add(courseObject);
                 }
-                draftsArray.add(innerArray);
-            }
-            advisorJson.put("drafts", draftsArray);
+                draftObject.put("courses", coursesArray);
 
-            try (FileWriter fileWriter = new FileWriter("database/advisors/" + advisor.getStaffID() + ".json")) {
-                fileWriter.write(advisorJson.toJSONString());
-            } catch (IOException e) {
-                e.printStackTrace();
+                draftsArray.add(draftObject);
             }
+            advisorObject.put("drafts", draftsArray);
+
+            advisorsArray.add(advisorObject);
         }
+        advisorJson.put("drafts", draftsArray);
+
+        try (FileWriter fileWriter = new FileWriter("database/advisors/" + advisor.getStaffID() + ".json")) {
+            fileWriter.write(advisorJson.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     }
 
@@ -250,47 +261,54 @@ public class JSONFileManager {
                         advisor.setStaffID((String) jsonObject.get("advisorId"));
                         advisor.setProfession((String) jsonObject.get("profession"));
 
-                        ArrayList<ArrayList<Course>> draftsList = new ArrayList<>();
+                        ArrayList<Draft> draftsList = new ArrayList<>();
 
-                        JSONArray draftsArray = (JSONArray) jsonObject.get("drafts");
+                        JSONArray drafts = (JSONArray) jsonObject.get("drafts");
 
-                        for (Object innerArrayObj : draftsArray) {
-                            JSONArray innerArray = (JSONArray) innerArrayObj;
-                            ArrayList<Course> innerList = new ArrayList<>();
+                        for (Object draftObj : drafts) {
 
-                            for (Object innerObj : innerArray) {
-                                Course course = new Course();
-                                JSONObject courseJSON = (JSONObject) innerObj;
+                            Draft draftObject = new Draft();
 
-                                course.setCourseName((String) courseJSON.get("courseName"));
-                                course.setCourseCode((String) courseJSON.get("courseCode"));
+                            ArrayList<Course> coursesObject = new ArrayList<>();
+
+                            JSONObject draft = (JSONObject) draftObj;
+                            
+                            Student student = new Student();
+                            
+                            student.setStudentId((String) draft.get("studentId"));
+
+                            draftObject.setStudent(student);
+
+                            JSONArray courses = (JSONArray) draft.get("courses");
+
+                            for (Object courseObj : courses) {
+
+                                Course courseObject = new Course();
+
+                                JSONObject course = (JSONObject) courseObj;
+
+                                courseObject.setCourseName((String) course.get("courseName"));
+                                courseObject.setCredits((Long) course.get("credits"));
+                                courseObject.setCourseCode((String) course.get("courseCode"));
+                                courseObject.setPrequisite((String) course.get("prerequisite"));
 
                                 Lecturer lecturer = new Lecturer();
-                                lecturer.setStaffID((String) courseJSON.get("courseLecturer"));
-                                course.setCourseLecturer(lecturer);
 
-                                Student student = new Student();
-                                student.setStudentId((String) courseJSON.get("studentId"));
-                                student.setName((String) courseJSON.get("studentName"));
-                                course.setStudent(student);
+                                lecturer.setStaffID((String) course.get("courseLecturer"));
 
-                                course.setCredits((long) courseJSON.get("credits"));
+                                courseObject.setCourseLecturer(lecturer);
 
-                                Advisor courseAdvisor = new Advisor();
-                                courseAdvisor.setStaffID((String) courseJSON.get("advisor"));
-                                course.setAdvisor(courseAdvisor);
+                                coursesObject.add(courseObject);
 
-                                course.setPrequisiteCompleted(false);
-
-                                innerList.add(course);
                             }
+                            draftObject.setCourses(coursesObject);
 
-                            draftsList.add(innerList);
+                            draftsList.add(draftObject);
                         }
 
-                        advisors.add(advisor);
-
                         advisor.setDrafts(draftsList);
+
+                        advisors.add(advisor);
 
                         fileReader.close();
                     } catch (IOException | ParseException e) {
