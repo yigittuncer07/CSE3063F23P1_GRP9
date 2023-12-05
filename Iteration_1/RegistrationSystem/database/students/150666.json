@@ -1,1 +1,3 @@
-{"studentId":"150666","firstName":"Elif","lastName":"Yılmaz","password":"elif456","coursesWaitingForApproval":[],"address":"Bursa, Turkey","advisorId":"160222","registeredCourses":[],"birthDate":"04:02:05.932+0300","email":"elifyilmaz@gmail.com","ssn":"55555555555"}
+
+{"studentId":"150666","firstName":"Elif","lastName":"Yılmaz","password":"elif456","address":"Bursa, Turkey","advisorId":"160222","registeredCourses":[{"courseName":"Literature","credits":3,"courseCode":"LIT101","grade":88.0,"courseLecturer":"160222"},{"courseName":"Art History","credits":4,"courseCode":"ARTH202","grade":70.0,"courseLecturer":"160111"}],"birthDate":"04:02:05.932+0300","email":"elifyilmaz@gmail.com","ssn":"55555555555"}
+

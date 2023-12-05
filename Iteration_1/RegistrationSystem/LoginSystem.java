@@ -18,6 +18,8 @@ public class LoginSystem {
 
     public void startSystem() {
 
+        init();
+
         executorService.schedule(() -> {
             System.out.println("Program will exit after 100 seconds!");
         }, 100, TimeUnit.SECONDS);
@@ -73,8 +75,8 @@ public class LoginSystem {
             return;
         }
 
-        if (isPasswordCorrect(student, password)) {
-            incorrectAttemptsStudent = 0;
+        if (student.getPassword().equals(password)) {
+
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -131,8 +133,8 @@ public class LoginSystem {
             return;
         }
 
-        if (isPasswordCorrect(lecturer, password)) {
-            incorrectAttemptsLecturer = 0;
+        if (lecturer.getPassword().equals(password)) {
+
             System.out.println("\nWelcome " + lecturer.getName() + " " + lecturer.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
@@ -190,8 +192,8 @@ public class LoginSystem {
             return;
         }
 
-        if (isPasswordCorrect(advisor, password)) {
-            incorrectAttemptsAdvisor = 0;
+
+        if (advisor.getPassword().equals(password)) {
 
             System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
             while (true) {
@@ -250,8 +252,8 @@ public class LoginSystem {
             return;
         }
 
-        if (isPasswordCorrect(studentAffairsStaff, password)) {
-            incorrectAttemptsStaff = 0;
+
+        if (studentAffairsStaff.getPassword().equals(password)) {
 
             System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
             while (true) {
@@ -295,6 +297,7 @@ public class LoginSystem {
     private void registrationProcess(Student student) {
         System.out.println("\nWelcome to the registration.\n");
         ArrayList<Course> eligableCourses = student.getEligableCourses(jsonFileManager.getCourses());
+        Advisor advisor = (Advisor) getUserWithId(student.getAdvisor().getStaffID(), "Advisor");
         while (true) {
             System.out.println(
                     "Enter a course code to register to said course, enter \"submit\" to submit for approval and \"exit\" to scrap draft and exit:");
@@ -310,17 +313,13 @@ public class LoginSystem {
             String input = scanner.nextLine();
 
             if (input.equals("submit")) {
-                for (Advisor advisor : jsonFileManager.getAdvisors()) {
-                    if (advisor.getStaffID().equals(student.getAdvisor().getStaffID())) {
-                        student.sendDraftToAdvisor(advisor);
-                    }
-                }
+                student.sendDraftToAdvisor(advisor);
                 System.out.println("Sent for approval\n");
                 return;
 
             } else if (input.equals("exit")) {
                 System.out.println("\nDraft cleared and exited.\n");
-                student.clearDraft();
+                student.getDraft().clearDraft();
                 return;
             } else {
                 boolean courseFound = false;
@@ -330,7 +329,7 @@ public class LoginSystem {
                         boolean canAddToDraft = student.canAddToDraft(course);
                         if (canAddToDraft) {
                             course.setStudent(student);
-                            student.addToDraft(course);
+                            student.getDraft().addClass(course);
                             System.out.println("Course added succesfully!");
                         } else {
                             System.out.println("Course couldnt be added!");
@@ -344,17 +343,13 @@ public class LoginSystem {
                 courseFound = false;
             }
             System.out.print("Current draft: ");
-            for (Course course : student.getDraftForCourses()) {
+            for (Course course : student.getDraft().getCourses()) {
                 System.out.print(course.getCourseCode() + " ");
             }
             System.out.println("\n ");
         }
     }
-
-    private boolean isPasswordCorrect(User user, String password) {
-        return user.getPassword().equals(password);
-    }
-
+    
     private User getUserWithId(String ID, String className) {
         switch (className) {
             case "Student":
@@ -423,28 +418,37 @@ public class LoginSystem {
             return;
         }
         System.out.println("\nPlease proceed with this draft:.\n");
-        for (ArrayList<Course> draft : advisor.getDrafts()) {
+        for (Draft draft : advisor.getDrafts()) {
 
             System.out.println("Student Info:\nStudentID: " + draft.get(0).getStudent().getStudentId() + "\n"
                     + draft.get(0).getStudent().getInfo() + "\n\nCourses:");
 
             // Print all draft courses
-            for (Course course : draft) {
+            for (Course course : draft.getCourses()) {
                 System.out.println(course.getCourseName() + " " + course.getCourseCode());
             }
 
             System.out.println("\nDo you approve this draft? yes/no");
             String isApprovedByAdvisor = scanner.nextLine();
-            Student draftStudent = (Student) getUserWithId(draft.get(0).getStudent().getStudentId(), "Student");
 
             if (isApprovedByAdvisor.equals("yes")) {
-                draftStudent.approveDraft(draft);
+
+                ((Student) getUserWithId(draft.getStudent().getStudentId(), "Student")).approveDraft(draft);
+
+
+
             } else if (isApprovedByAdvisor.equals("no")) {
-                draftStudent.clearDraft();
+                draft.clearDraft();
             }
         }
 
         advisor.clearDrafts();
+    }
+
+    private void init(){
+        for (Student student: jsonFileManager.getStudents()){
+            student.getDraft().setStudent(student);
+        }
     }
 
     // This method is used for teachers to find all students that attent to their courses.
