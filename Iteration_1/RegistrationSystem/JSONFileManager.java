@@ -433,7 +433,7 @@ public class JSONFileManager {
                         lecturer.setEmail((String) jsonObject.get("email"));
                         lecturer.setPassword((String) jsonObject.get("password"));
                         lecturer.setStaffID((String) jsonObject.get("lecturerId"));
-                        lecturer.setDepartment((String) jsonObject.get("lecturerId"));
+                        lecturer.setDepartment((String) jsonObject.get("department"));
                         lecturer.setProfession((String) jsonObject.get("profession"));
 
                         lecturer.findAllCourseInstances(courses); // This is used to make an interconnection between the courses and the teacher.

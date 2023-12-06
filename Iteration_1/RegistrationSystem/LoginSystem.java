@@ -420,8 +420,8 @@ public class LoginSystem {
         System.out.println("\nPlease proceed with this draft:.\n");
         for (Draft draft : advisor.getDrafts()) {
 
-            System.out.println("Student Info:\nStudentID: " + draft.get(0).getStudent().getStudentId() + "\n"
-                    + draft.get(0).getStudent().getInfo() + "\n\nCourses:");
+            System.out.println("Student Info:\nStudentID: " + draft.getStudent().getStudentId() + "\n"
+                    + draft.getStudent().getInfo() + "\n\nCourses:");
 
             // Print all draft courses
             for (Course course : draft.getCourses()) {
@@ -480,7 +480,7 @@ public class LoginSystem {
             System.out.println("\t" + i + " -> cancel");
             System.out.println("Choose a number to perform an action to one of your courses");
 
-            int choice = scanner.nextInt();
+            int choice = intInput();
 
             if (choice == i) {
                 return;
@@ -491,11 +491,11 @@ public class LoginSystem {
                 System.out.println("\tEnter 2 to grade students.");
                 System.out.println("\tEnter 3 to pass/fail a student.");
                 System.out.println("\tEnter 4 to choose another course");
-                choice = scanner.nextInt();
+                int actionChoice = intInput();
 
-                switch (choice) {
+                switch (actionChoice) {
                     case 1:
-                        System.out.println("test1");
+                        getCourseInformationFromLecturer(lecturer, lecturer.getCourseInstances().get(choice));
                         break;
                     case 2:
                         System.out.println("test2");
@@ -514,6 +514,18 @@ public class LoginSystem {
             else {
                 System.out.println("\nInvalid input!\n");
             }
+        }
+    }
+
+    private void getCourseInformationFromLecturer(Lecturer lecturer, CourseInstance course) {
+        System.out.println("\nCourse Name: " + course.getCourseName() + "\tCourse Code: " + course.getCourseCode());
+        System.out.println("Course Lecturer -> \n\t\t   Name: " + lecturer.getName() + " " + lecturer.getLastName());
+        System.out.println("                   Department: " + lecturer.getDepartment());
+        System.out.println("                   Profession: " + lecturer.getProfession());
+        System.out.println("                   Email: " + lecturer.getEmail());
+        System.out.println("Course Students -> ");
+        for (int i = 0 ; i < course.getRegisteredStudents().size() ; i++) {
+            System.out.println("                   Name: " + course.getRegisteredStudents().get(i).getName() + " " + course.getRegisteredStudents().get(i).getLastName() + " ID: " + course.getRegisteredStudents().get(i).getStudentId() + " Email: " + course.getRegisteredStudents().get(i).getEmail());
         }
     }
 
