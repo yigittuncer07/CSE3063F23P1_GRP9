@@ -400,6 +400,21 @@ public class LoginSystem {
         }
         return input;
     }
+
+    private double doubleInput() {
+        boolean isDouble = false;
+        double input = 0;
+        while (!isDouble) {
+            try {
+                input = Double.parseDouble(scanner.nextLine());
+                isDouble = true;
+            } catch (Exception ignore) {
+                System.out.println("Please input a double:");
+            }
+        }
+        return input;
+    }
+
     private void printApprovedCourses() {
         System.out.println("\nApproved Courses:");
         for (Student student : jsonFileManager.getStudents()) {
@@ -478,7 +493,7 @@ public class LoginSystem {
                 System.out.println("\t" + i + " -> " + lecturer.getCourseInstances().get(i).getCourseCode() + ": " + lecturer.getCourseInstances().get(i).getCourseName());
             }
             System.out.println("\t" + i + " -> cancel");
-            System.out.println("Choose a number to perform an action to one of your courses");
+            System.out.println("Choose a number to perform an action to one of your courses:");
 
             int choice = intInput();
 
@@ -490,7 +505,8 @@ public class LoginSystem {
                 System.out.println("\tEnter 1 to get the course information.");
                 System.out.println("\tEnter 2 to grade students.");
                 System.out.println("\tEnter 3 to pass/fail a student.");
-                System.out.println("\tEnter 4 to choose another course");
+                System.out.println("\tEnter 4 to choose another course or return.");
+                System.out.println("Choose a number:");
                 int actionChoice = intInput();
 
                 switch (actionChoice) {
@@ -498,7 +514,7 @@ public class LoginSystem {
                         getCourseInformationFromLecturer(lecturer, lecturer.getCourseInstances().get(choice));
                         break;
                     case 2:
-                        System.out.println("test2");
+                        gradeStudent(lecturer.getCourseInstances().get(choice));
                         break;
                     case 3:
                         System.out.println("test3");
@@ -509,7 +525,6 @@ public class LoginSystem {
                     default:
                         System.out.println("\nInvalid input!\n");
                 }
-
             }
             else {
                 System.out.println("\nInvalid input!\n");
@@ -517,6 +532,58 @@ public class LoginSystem {
         }
     }
 
+    //Method for the lecturer so it can grade students of a particular course.
+    private void gradeStudent(CourseInstance course) {
+
+        while (true) {
+            System.out.println("\nCourse Name: " + course.getCourseName() + "\tCourse Code: " + course.getCourseCode());
+            int i = 0;
+            for(i = 0 ; i < course.getRegisteredStudents().size() ; i++) {
+                System.out.println("\t" + i + " -> StudentID" + course.getRegisteredStudents().get(i).getStudentId() + " Name:" + course.getRegisteredStudents().get(i).getName() + " " + course.getRegisteredStudents().get(i).getLastName());
+            }
+
+            System.out.println("\t" + i + " -> to return.");
+            System.out.println("Choose a number:");
+            int choice = intInput();
+            if (choice == course.getRegisteredStudents().size()) {
+                return;
+            }
+            else if (choice >= 0 && choice < course.getRegisteredStudents().size()) {
+                int index = 0;
+
+                for (int j = 0 ; j < course.getRegisteredStudents().get(choice).getRegisteredCourses().size() ; j++) {
+                    if (course.getRegisteredStudents().get(choice).getRegisteredCourses().get(j).getCourseCode().equals(course.getCourseCode())) {
+                        index = j;
+                    }
+                }
+
+                System.out.println("StudentID: " + course.getRegisteredStudents().get(choice).getStudentId() + " Name: " + course.getRegisteredStudents().get(choice).getName() + " " + course.getRegisteredStudents().get(choice).getLastName());
+                System.out.println("Current grade: " + course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade().getOutOfHundred());
+                
+                while (true) {
+                    System.out.println("Enter a grade with a value between 0.00-100.00: ");
+                    double givenGrade = doubleInput();
+                    if (givenGrade >= 0.0 && givenGrade <= 100.0) {
+                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade().setOutOfHundred(givenGrade);
+                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade().convertHundredToGano(givenGrade);
+                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade().convertHundredToLetterGrade(givenGrade);
+                        System.out.println("Grade updated succesfully! GANO and letter grade updated automatically!");
+                        break;
+                    }
+                    else {
+                        System.out.println("\nInvalid input!\n");
+                    }
+                }
+                
+            }
+            else {
+                System.out.println("\nInvalid input!\n");
+            }
+        }
+
+    }
+
+    //Method for the lecturer so it can see information about the a course. Including course info, lecturer info, and students that take the course.
     private void getCourseInformationFromLecturer(Lecturer lecturer, CourseInstance course) {
         System.out.println("\nCourse Name: " + course.getCourseName() + "\tCourse Code: " + course.getCourseCode());
         System.out.println("Course Lecturer -> \n\t\t   Name: " + lecturer.getName() + " " + lecturer.getLastName());
