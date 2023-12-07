@@ -517,7 +517,7 @@ public class LoginSystem {
                         gradeStudent(lecturer.getCourseInstances().get(choice));
                         break;
                     case 3:
-                        System.out.println("test3");
+                        passOrFailStudent(lecturer.getCourseInstances().get(choice));
                         break;
                     case 4:
                         System.out.println("\nYou have returned succesfully.");
@@ -530,6 +530,11 @@ public class LoginSystem {
                 System.out.println("\nInvalid input!\n");
             }
         }
+    }
+
+    //This method is used for passing or failing a student.
+    private void passOrFailStudent(CourseInstance course) {
+        System.out.println("Still in the making!");
     }
 
     //Method for the lecturer so it can grade students of a particular course.
