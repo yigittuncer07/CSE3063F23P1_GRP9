@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 public class Transcript {
     private ArrayList<Course> courses;
@@ -37,7 +38,7 @@ public class Transcript {
         }
 
         if (totalCredits > 0) {
-            GPA = weightedSum / totalCredits;
+            GPA = (weightedSum / totalCredits) / 25;
         } else {
             GPA = 0.0;
         }
@@ -45,17 +46,19 @@ public class Transcript {
 
     @Override
     public String toString() {
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String formattedGPA = decimalFormat.format(GPA);
         StringBuilder result = new StringBuilder("Transcript: \n");
 
         for (Course course : courses) {
             result.append("Course Code: ").append(course.getCourseCode())
                     .append(", Course Name: ").append(course.getCourseName())
                     .append(", Credit: ").append(course.getCredits())
-                    .append(", Letter Grade: ").append(course.getGrade().getLetterGrade())
+                    .append(", Letter Grade: ").append(course.grade.getLetterGrade())
                     .append("\n");
         }
 
-        result.append("GPA: ").append(GPA);
+        result.append("GPA: ").append(formattedGPA);
         return result.toString();
     }
 }
