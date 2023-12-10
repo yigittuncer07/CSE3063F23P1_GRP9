@@ -296,7 +296,7 @@ public class LoginSystem {
 
     private void registrationProcess(Student student) {
         System.out.println("\nWelcome to the registration.\n");
-        ArrayList<Course> eligableCourses = student.getEligibleCourses(jsonFileManager.getCourses());
+        ArrayList<Course> eligableCourses = student.getEligableCourses(jsonFileManager.getCourses());
         Advisor advisor = (Advisor) getUserWithId(student.getAdvisor().getStaffID(), "Advisor");
         while (true) {
             System.out.println(
