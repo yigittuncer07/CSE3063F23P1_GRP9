@@ -462,7 +462,13 @@ public class LoginSystem {
 
     private void init(){
         for (Student student: jsonFileManager.getStudents()){
+            //Sets the student of the draft
             student.getDraft().setStudent(student);
+
+            //Sets the student of the enrolled courses
+            for (Course course : student.getRegisteredCourses()) {
+                course.setStudent(student);
+            }
         }
     }
 
