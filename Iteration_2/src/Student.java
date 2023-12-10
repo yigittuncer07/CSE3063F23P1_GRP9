@@ -20,7 +20,7 @@ public class Student extends User {
     public ArrayList<Course> getEligableCourses(ArrayList<Course> allCourses) {
         ArrayList<Course> eligableCourses = new ArrayList<>();
         for (Course course : allCourses) {
-            if (!isRegisteredCourse(course) && course.isPrequisiteCompleted(studentId)) {
+            if (!isRegisteredCourse(course) && course.isPrequisiteCompleted(course.getPrequisite())) {
                 eligableCourses.add(course);
             }
         }
@@ -31,7 +31,7 @@ public class Student extends User {
         if (isRegisteredCourse(course)) {
             return false;
         }
-        if (draft.getNumberOfClasses() >= 5 || !course.isPrequisiteCompleted(studentId) || draft.hasCourse(course)) {
+        if (draft.getNumberOfClasses() >= 5 || !course.isPrequisiteCompleted(course.getPrequisite()) || draft.hasCourse(course)) {
             return false;
         }
         return true;

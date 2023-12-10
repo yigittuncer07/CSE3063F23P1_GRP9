@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Course {
 	private Student student = new Student();
 	private Advisor advisor = new Advisor();
@@ -69,9 +71,26 @@ public class Course {
 		this.credits = credits;
 	}
 
-	public boolean isPrequisiteCompleted(String studentID) {
-		return true;
-	}
+	public boolean isPrequisiteCompleted(String pCourse) {
+
+        if (pCourse.equals("")){
+          return true;
+        }
+		
+        ArrayList<Course> registeredCourses = getStudent().getRegisteredCourses();
+         boolean hasCompleted = false;
+        for (Course rcourse : registeredCourses) {
+
+                if(pCourse.equals(rcourse.getCourseCode())){
+                    Grade grade1 = rcourse.getGrade();
+                  if(!grade1.getLetterGrade().equals("FF")){
+                  hasCompleted = true;
+                  break;
+                }
+         }
+    }
+        return hasCompleted;
+    }
 
 	public void setPrequisiteCompleted(boolean prequisiteCompleted) {
 		this.prequisiteCompleted = prequisiteCompleted;
