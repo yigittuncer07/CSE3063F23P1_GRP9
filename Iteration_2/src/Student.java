@@ -1,16 +1,12 @@
 import java.util.ArrayList;
 
 public class Student extends User {
-    private Transcript transcript;
     private String studentId;
     private Advisor advisor;
-    private ArrayList<Course> registeredCourses = new ArrayList<>();
+    private Transcript transcript;
     private Draft draft = new Draft();
-    private ArrayList<Course> approvedCourses = new ArrayList<>();
-
-    public String getTranscriptInformation(Transcript transcript) {
-        return transcript.toString();
-    }
+    private ArrayList<Course> registeredCourses = new ArrayList<>();
+    // private ArrayList<Course> approvedCourses = new ArrayList<>();
 
     /*
      * For a course to be elligable, it must:
@@ -20,7 +16,7 @@ public class Student extends User {
     public ArrayList<Course> getEligableCourses(ArrayList<Course> allCourses) {
         ArrayList<Course> eligableCourses = new ArrayList<>();
         for (Course course : allCourses) {
-            if (!isRegisteredCourse(course) && course.isPrequisiteCompleted(course.getPrequisite())) {
+            if (!isRegisteredCourse(course) && course.isPrerequisitesCompleted(course.getPrequisite())) {
                 eligableCourses.add(course);
             }
         }
@@ -31,7 +27,8 @@ public class Student extends User {
         if (isRegisteredCourse(course)) {
             return false;
         }
-        if (draft.getNumberOfClasses() >= 5 || !course.isPrequisiteCompleted(course.getPrequisite()) || draft.hasCourse(course)) {
+        if (draft.getNumberOfClasses() >= 5 || !course.isPrerequisitesCompleted(course.getPrequisite())
+                || draft.hasCourse(course)) {
             return false;
         }
         return true;
@@ -40,16 +37,6 @@ public class Student extends User {
     public void sendDraftToAdvisor(Advisor studentAdvisor) {
         studentAdvisor.addDraft(draft);
     }
-
-
-    public void approveDraft(Draft draft) {
-        // İlgili draft'taki dersleri onaylanmış derslere ekleyin
-        approvedCourses.addAll(draft.getCourses());
-        
-        // Draft'ı temizleyin
-        draft.clearDraft();
-    }
-    
 
     private boolean isRegisteredCourse(Course course) {
         for (Course registeredCourse : registeredCourses) {
@@ -79,9 +66,10 @@ public class Student extends User {
     public Draft getDraft() {
         return draft;
     }
-    public ArrayList<Course> getApprovedCourses() {
-        return approvedCourses;
-    }
+
+    // public ArrayList<Course> getApprovedCourses() {
+    //     return approvedCourses;
+    // }
 
     public void setTranscript(Transcript transcript) {
         this.transcript = transcript;
@@ -98,8 +86,21 @@ public class Student extends User {
     public void setRegisteredCourses(ArrayList<Course> registeredCourses) {
         this.registeredCourses = registeredCourses;
     }
-    public void setApprovedCourses(ArrayList<Course> approvedCourses) {
-        this.approvedCourses = approvedCourses;
+
+    public void addToRegisteredCourses(Course course){
+        this.registeredCourses.add(course);
+    }
+
+    // public void setApprovedCourses(ArrayList<Course> approvedCourses) {
+    //     this.approvedCourses = approvedCourses;
+    // }
+
+    // public void addToApprovedCourses(Course course) {
+    //     this.approvedCourses.add(course);
+    // }
+
+    public String getTranscriptInformation(Transcript transcript) {
+        return transcript.toString();
     }
 
 }

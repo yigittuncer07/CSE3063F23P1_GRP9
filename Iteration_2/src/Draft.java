@@ -5,8 +5,8 @@ import java.util.ArrayList;
  * for managing the draft, such as checking if a course is in the draft, retrieving the list
  * of courses, and manipulating the contents of the draft.
  *
- * @author ??
- * @version 1.0
+ * @author yigit_tuncer
+ * @version 13.0
  * @since 2023-12-10
  */
 public class Draft {
@@ -45,6 +45,16 @@ public class Draft {
      */
     public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
+    }
+
+    public boolean removeCourse(String courseCode){
+        for (Course course : courses){
+            if (course.getCourseCode().equals(courseCode)){
+                courses.remove(course);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

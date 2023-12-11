@@ -375,7 +375,7 @@ public class JSONFileManager {
 
                             // ADD prerequisite
 
-                            registeredCourse.setPrequisiteCompleted(true);
+                            registeredCourse.setPrerequisitesCompleted(true);
                             registeredCoursesList.add(registeredCourse);
 
                         }
