@@ -43,10 +43,13 @@ public class Student extends User {
 
 
     public void approveDraft(Draft draft) {
-        registeredCourses.addAll(draft.getCourses());
+        // İlgili draft'taki dersleri onaylanmış derslere ekleyin
+        approvedCourses.addAll(draft.getCourses());
+        
+        // Draft'ı temizleyin
         draft.clearDraft();
-
     }
+    
 
     private boolean isRegisteredCourse(Course course) {
         for (Course registeredCourse : registeredCourses) {

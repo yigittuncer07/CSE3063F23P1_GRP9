@@ -415,16 +415,31 @@ public class LoginSystem {
         return input;
     }
 
-    private void printApprovedCourses() {
-        System.out.println("\nApproved Courses:");
-        for (Student student : jsonFileManager.getStudents()) {
-            System.out.println(student.getName() + " " + student.getLastName() + "'s Approved Courses:");
-            for (Course course : student.getApprovedCourses()) {
-                System.out.println(course.getCourseName() + " " + course.getCourseCode());
-            }
-            System.out.println();
+    private void printApprovedCourses(Student student) {
+    System.out.println("\nApproved Courses for \n" + student.getInfo());
+    ArrayList<Course> approvedCourses = student.getApprovedCourses();
+
+    if (approvedCourses.isEmpty()) {
+        System.out.println("No approved courses.");
+    } else {
+        for (Course course : approvedCourses) {
+            System.out.println("Course name to be added to the system ="+course.getCourseName() + " Course Code= " + course.getCourseCode());
         }
     }
+    System.out.println();
+}
+
+// ...
+
+private void printApprovedCourses() {
+    for (Student student : jsonFileManager.getStudents()) {
+        if (!student.getApprovedCourses().isEmpty()) {
+            printApprovedCourses(student);
+        }
+    }
+}
+
+    
     
 
     private void draftApprovalProcess(Advisor advisor) {
