@@ -6,7 +6,7 @@ public class Student extends User {
     private Transcript transcript;
     private Draft draft = new Draft();
     private ArrayList<Course> registeredCourses = new ArrayList<>();
-    private ArrayList<Course> approvedCourses = new ArrayList<>();
+    // private ArrayList<Course> approvedCourses = new ArrayList<>();
 
     /*
      * For a course to be elligable, it must:
@@ -67,9 +67,9 @@ public class Student extends User {
         return draft;
     }
 
-    public ArrayList<Course> getApprovedCourses() {
-        return approvedCourses;
-    }
+    // public ArrayList<Course> getApprovedCourses() {
+    //     return approvedCourses;
+    // }
 
     public void setTranscript(Transcript transcript) {
         this.transcript = transcript;
@@ -87,13 +87,17 @@ public class Student extends User {
         this.registeredCourses = registeredCourses;
     }
 
-    public void setApprovedCourses(ArrayList<Course> approvedCourses) {
-        this.approvedCourses = approvedCourses;
+    public void addToRegisteredCourses(Course course){
+        this.registeredCourses.add(course);
     }
 
-    public void addToApprovedCourses(Course course) {
-        this.approvedCourses.add(course);
-    }
+    // public void setApprovedCourses(ArrayList<Course> approvedCourses) {
+    //     this.approvedCourses = approvedCourses;
+    // }
+
+    // public void addToApprovedCourses(Course course) {
+    //     this.approvedCourses.add(course);
+    // }
 
     public String getTranscriptInformation(Transcript transcript) {
         return transcript.toString();

@@ -27,23 +27,12 @@ public class Advisor extends Lecturer {
 
     public void processDrafts() {
         for (Draft draft : drafts) {
-            processDraft(draft);
-        }
-    }
-
-    private void clearDrafts() {
-        drafts.clear();
-    }
-
-    // Adds approved courses to students registered courses
-    private void processDraft(Draft draft) {
-        Student student = draft.getStudent();
-        for (Course course : draft.getCourses()) {
-            if (course.isApproved()) {
-                student.addToApprovedCourses(course);
-                draft.removeCourse(course.getCourseCode());
+            for (Course course : draft.getCourses()) {
+                if (course.isApproved()) {
+                    draft.getStudent().addToRegisteredCourses(course);
+                }
             }
         }
-        clearDrafts();
+        drafts.clear();
     }
 }
