@@ -5,18 +5,23 @@ public class Student extends User {
     private Advisor advisor;
     private Transcript transcript;
     private Draft draft = new Draft();
+    private long year;
+
     private ArrayList<Course> registeredCourses = new ArrayList<>();
     // private ArrayList<Course> approvedCourses = new ArrayList<>();
 
     /*
      * For a course to be elligable, it must:
-     * Not be already taken
-     * prerequisites must be complete
+     * - not be already taken
+     * - prerequisites must be complete
+     * - must have required year complete
+     * 
+     * 
      */
     public ArrayList<Course> getEligableCourses(ArrayList<Course> allCourses) {
         ArrayList<Course> eligableCourses = new ArrayList<>();
         for (Course course : allCourses) {
-            if (!isRegisteredCourse(course) && course.isPrerequisitesCompleted(course.getPrequisite())) {
+            if (!isRegisteredCourse(course) && course.isPrerequisitesCompleted(course.getPrequisite()) || (course.getYear() <= year)) {
                 eligableCourses.add(course);
             }
         }
@@ -27,8 +32,9 @@ public class Student extends User {
         if (isRegisteredCourse(course)) {
             return false;
         }
-        if (draft.getNumberOfClasses() >= 5 || !course.isPrerequisitesCompleted(course.getPrequisite())
-                || draft.hasCourse(course)) {
+        if (draft.getNumberOfClasses() >= 5
+                || !course.isPrerequisitesCompleted(course.getPrequisite())
+                || draft.hasCourse(course) || (course.getYear() <= year)) {
             return false;
         }
         return true;
@@ -68,7 +74,7 @@ public class Student extends User {
     }
 
     // public ArrayList<Course> getApprovedCourses() {
-    //     return approvedCourses;
+    // return approvedCourses;
     // }
 
     public void setTranscript(Transcript transcript) {
@@ -87,16 +93,16 @@ public class Student extends User {
         this.registeredCourses = registeredCourses;
     }
 
-    public void addToRegisteredCourses(Course course){
+    public void addToRegisteredCourses(Course course) {
         this.registeredCourses.add(course);
     }
 
     // public void setApprovedCourses(ArrayList<Course> approvedCourses) {
-    //     this.approvedCourses = approvedCourses;
+    // this.approvedCourses = approvedCourses;
     // }
 
     // public void addToApprovedCourses(Course course) {
-    //     this.approvedCourses.add(course);
+    // this.approvedCourses.add(course);
     // }
 
     public String getTranscriptInformation(Transcript transcript) {
