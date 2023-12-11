@@ -9,9 +9,18 @@ public class Course {
 	private String courseCode;
 	private String prequisite;
 	private long credits;
+	private long year;
 	private boolean isPrerequisitesCompleted;
 	private boolean isCompleted;
 	private boolean isApproved;
+
+	public long getYear() {
+		return this.year;
+	}
+
+	public void setYear(long year) {
+		this.year = year;
+	}
 
 	public Student getStudent() {
 		return student;

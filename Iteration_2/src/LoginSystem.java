@@ -644,6 +644,7 @@ public class LoginSystem {
                 }
             }
         }
+        
         for (Student student : jsonFileManager.getStudents()) {
 
             // Sets the student of the draft
