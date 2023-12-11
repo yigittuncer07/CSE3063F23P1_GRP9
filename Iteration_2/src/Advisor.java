@@ -21,10 +21,22 @@ public class Advisor extends Lecturer {
         this.drafts = drafts;
     }
 
+    public ArrayList<Student> getStudents(){
+        return students;
+    }
     
-    public void approveDraft(Student student, Draft draft) {
-        student.getRegisteredCourses().addAll(draft.getCourses());
-        draft.clearDraft();
+    public void addStudent(Student student){
+        students.add(student);
     }
 
+    //Adds approved courses to students registered courses
+    public void processDraft(Student student) {
+        Draft draft = student.getDraft();
+        for (Course course : draft.getCourses()){
+            if (course.isApproved()){
+                student.addToApprovedCourses(course);
+                draft.removeCourse(course.getCourseCode());
+            }   
+        }
+    }
 }

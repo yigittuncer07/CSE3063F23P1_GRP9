@@ -29,8 +29,6 @@ public class LoginSystem {
             System.exit(0);
         }, 200, TimeUnit.SECONDS);
 
-        connectStudentsWithCourseInstances(jsonFileManager);
-
         while (true) {
             System.out.println(
                     "Welcome to the LOGIN SYSTEM:\n\tEnter 1 if you are a Student.\n\tEnter 2 if you are a Lecturer.\n\tEnter 3 if you are an Advisor.\n\tEnter 4 if you are a Student Affairs Staff.\n\tEnter 5 exit.\nEnter action : ");
@@ -192,7 +190,6 @@ public class LoginSystem {
             return;
         }
 
-
         if (advisor.getPassword().equals(password)) {
 
             System.out.println("\nWelcome " + advisor.getName() + " " + advisor.getLastName());
@@ -252,7 +249,6 @@ public class LoginSystem {
             return;
         }
 
-
         if (studentAffairsStaff.getPassword().equals(password)) {
 
             System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
@@ -295,44 +291,74 @@ public class LoginSystem {
     }
 
     private void registrationProcess(Student student) {
-        System.out.println("\nWelcome to the registration.\n");
+
+        System.out.println("\nWelcome to registration!");
+
         ArrayList<Course> eligableCourses = student.getEligableCourses(jsonFileManager.getCourses());
         Advisor advisor = (Advisor) getUserWithId(student.getAdvisor().getStaffID(), "Advisor");
+        Draft draft = student.getDraft();
+
+        if (!draft.isEmpty()) {
+            System.out.print("\nsaved draft: ");
+            for (Course course : draft.getCourses()) {
+                System.out.print(course.getCourseCode() + " ");
+            }
+        }
+
         while (true) {
             System.out.println(
-                    "Enter a course code to register to said course, enter \"submit\" to submit for approval and \"exit\" to scrap draft and exit:");
+                    "\nCommands:\n-enter a course code to add to draft\n-\"submit\" to submit for approval\n-\"exit\" to save draft and exit\n-\"clear\" to clear draft\n-\"remove\" coursecode to remove from draft\n");
 
             if (eligableCourses.isEmpty()) {
                 System.out.println("You cannot take any courses!\n");
                 return;
             }
             for (Course course : eligableCourses) {
-                System.out.println(course.getCourseCode() + " : " + course.getCourseName());
+                //Check if already added to draft
+                if (!draft.getCourses().contains(course)) {
+                    System.out.println(course.getCourseCode() + " : " + course.getCourseName());
+                }
             }
 
-            String input = scanner.nextLine();
+            String studentInput = scanner.nextLine();
 
-            if (input.equals("submit")) {
+            if (studentInput.equals("submit")) {
                 student.sendDraftToAdvisor(advisor);
-                System.out.println("Sent for approval\n");
+                System.out.println("\nDraft sent for advisor approval\n");
                 return;
+            } else if (studentInput.equals("exit")) {
+                System.out.println("\nDraft saved and exited.\n");
+                return;
+            } else if (studentInput.equals("clear")) {
+                draft.clearDraft();
+                System.out.println("\nDraft cleared.\n");
+                return;
+            } else if (studentInput.substring(0, Math.min(studentInput.length(), 6)).equals("remove")) { // checks if
+                                                                                                         // input string
+                                                                                                         // starts with
+                                                                                                         // remove
+                String[] studentInputArray = studentInput.split("\\s+");
+                String courseCode = studentInputArray[1];
 
-            } else if (input.equals("exit")) {
-                System.out.println("\nDraft cleared and exited.\n");
-                student.getDraft().clearDraft();
-                return;
+                if (draft.removeCourse(courseCode)) {
+                    System.out.println("Course with course code  " + courseCode + " removed.");
+                } else {
+                    System.out.println("Course with course code " + courseCode + " is not in draft.");
+
+                }
+
             } else {
                 boolean courseFound = false;
                 for (Course course : eligableCourses) {
-                    if (input.equals(course.getCourseCode())) {
+                    if (studentInput.equals(course.getCourseCode())) {
                         courseFound = true;
                         boolean canAddToDraft = student.canAddToDraft(course);
                         if (canAddToDraft) {
                             course.setStudent(student);
-                            student.getDraft().addClass(course);
+                            draft.addClass(course);
                             System.out.println("Course added succesfully!");
                         } else {
-                            System.out.println("Course couldnt be added!");
+                            System.out.println("Course couldn't be added!");
                         }
                         continue;
                     }
@@ -343,13 +369,13 @@ public class LoginSystem {
                 courseFound = false;
             }
             System.out.print("Current draft: ");
-            for (Course course : student.getDraft().getCourses()) {
+            for (Course course : draft.getCourses()) {
                 System.out.print(course.getCourseCode() + " ");
             }
             System.out.println("\n ");
         }
     }
-    
+
     private User getUserWithId(String ID, String className) {
         switch (className) {
             case "Student":
@@ -416,92 +442,70 @@ public class LoginSystem {
     }
 
     private void printApprovedCourses(Student student) {
-    System.out.println("\nApproved Courses for \n" + student.getInfo());
-    ArrayList<Course> approvedCourses = student.getApprovedCourses();
+        System.out.println("\nApproved Courses for \n" + student.getInfo());
+        ArrayList<Course> approvedCourses = student.getApprovedCourses();
 
-    if (approvedCourses.isEmpty()) {
-        System.out.println("No approved courses.");
-    } else {
-        for (Course course : approvedCourses) {
-            System.out.println("Course name to be added to the system ="+course.getCourseName() + " Course Code= " + course.getCourseCode());
+        if (approvedCourses.isEmpty()) {
+            System.out.println("No approved courses.");
+        } else {
+            for (Course course : approvedCourses) {
+                System.out.println("Course name to be added to the system =" + course.getCourseName() + " Course Code= "
+                        + course.getCourseCode());
+            }
+        }
+        System.out.println();
+    }
+
+    private void printApprovedCourses() {
+        for (Student student : jsonFileManager.getStudents()) {
+            if (!student.getApprovedCourses().isEmpty()) {
+                printApprovedCourses(student);
+            }
         }
     }
-    System.out.println();
-}
-
-// ...
-
-private void printApprovedCourses() {
-    for (Student student : jsonFileManager.getStudents()) {
-        if (!student.getApprovedCourses().isEmpty()) {
-            printApprovedCourses(student);
-        }
-    }
-}
-
-    
-    
 
     private void draftApprovalProcess(Advisor advisor) {
+        Student student;
         if (advisor.getDrafts().isEmpty()) {
             System.out.println("No drafts to approve currently");
             return;
         }
         System.out.println("\nPlease proceed with this draft:.\n");
         for (Draft draft : advisor.getDrafts()) {
-
-            System.out.println("Student Info:\nStudentID: " + draft.getStudent().getStudentId() + "\n"
-                    + draft.getStudent().getInfo() + "\n\nCourses:");
+            student = (Student) getUserWithId(draft.getStudent().getStudentId(), "Student");
+            System.out.println("Student Info:\nStudentID: " + student.getStudentId() + "\n"
+                    + student.getInfo() + "\n\nCourses:");
 
             // Print all draft courses
             for (Course course : draft.getCourses()) {
                 System.out.println(course.getCourseName() + " " + course.getCourseCode());
+                System.out.print("Do you approve of this course? (yes/no): ");
+                String advisorInput = scanner.nextLine();
+
+                if (advisorInput.equals("yes")) {
+                    course.approve();
+                } else if (advisorInput.equals("no")) {
+                    // Dont do anything here
+                } else {
+                    System.out.println("Unkown input!");
+                }
             }
 
-            System.out.println("\nDo you approve this draft? yes/no");
-            String isApprovedByAdvisor = scanner.nextLine();
-
-            if (isApprovedByAdvisor.equals("yes")) {
-
-                ((Student) getUserWithId(draft.getStudent().getStudentId(), "Student")).approveDraft(draft);
-
-
-
-            } else if (isApprovedByAdvisor.equals("no")) {
-                draft.clearDraft();
-            }
+            System.out.println("draft for student " + student.getStudentId() + " complete");
+            advisor.processDraft(student);
+            /*
+             * if (advisorInput.equals("yes")) {
+             * 
+             * ((Student) getUserWithId(draft.getStudent().getStudentId(),
+             * "Student")).approveDraft(draft);
+             * 
+             * } else if (advisorInput.equals("no")) {
+             * draft.clearDraft();
+             * }
+             */
         }
 
         advisor.clearDrafts();
-    }
-
-    private void init(){
-        for (Student student: jsonFileManager.getStudents()){
-            //Sets the student of the draft
-            student.getDraft().setStudent(student);
-
-            //Sets the student of the enrolled courses
-            for (Course course : student.getRegisteredCourses()) {
-                course.setStudent(student);
-            }
-        }
-    }
-
-    // This method is used for teachers to find all students that attent to their courses.
-    private void connectStudentsWithCourseInstances(JSONFileManager data) {
-
-        for (int i = 0; i < data.getLecturers().size(); i++) {
-            for (int j = 0; j < data.getLecturers().get(i).getCourseInstances().size(); j++) {
-                for (int k = 0; k < data.getStudents().size(); k++) {
-                    for (int m = 0; m < data.getStudents().get(k).getRegisteredCourses().size() ; m++) {
-                        if (data.getLecturers().get(i).getCourseInstances().get(j).getCourseCode().equals(data.getStudents().get(k).getRegisteredCourses().get(m).getCourseCode())) {
-                            data.getLecturers().get(i).getCourseInstances().get(j).getRegisteredStudents().add(data.getStudents().get(k));
-                        }
-                    }
-                }
-            }
-        }
-
     }
 
     // This is where a lecturer can control their courses
@@ -510,8 +514,9 @@ private void printApprovedCourses() {
         while (true) {
             System.out.println("\nThese are the courses you give.");
             int i = 0;
-            for (i = 0 ; i < lecturer.getCourseInstances().size() ; i++) {
-                System.out.println("\t" + i + " -> " + lecturer.getCourseInstances().get(i).getCourseCode() + ": " + lecturer.getCourseInstances().get(i).getCourseName());
+            for (i = 0; i < lecturer.getCourseInstances().size(); i++) {
+                System.out.println("\t" + i + " -> " + lecturer.getCourseInstances().get(i).getCourseCode() + ": "
+                        + lecturer.getCourseInstances().get(i).getCourseName());
             }
             System.out.println("\t" + i + " -> cancel");
             System.out.println("Choose a number to perform an action to one of your courses:");
@@ -520,9 +525,10 @@ private void printApprovedCourses() {
 
             if (choice == i) {
                 return;
-            }
-            else if (choice >= 0 && choice < i) {
-                System.out.println("You have chosen the course -> " + lecturer.getCourseInstances().get(choice).getCourseCode() + ": " + lecturer.getCourseInstances().get(choice).getCourseName());
+            } else if (choice >= 0 && choice < i) {
+                System.out.println(
+                        "You have chosen the course -> " + lecturer.getCourseInstances().get(choice).getCourseCode()
+                                + ": " + lecturer.getCourseInstances().get(choice).getCourseName());
                 System.out.println("\tEnter 1 to get the course information.");
                 System.out.println("\tEnter 2 to grade students.");
                 System.out.println("\tEnter 3 to pass/fail a student.");
@@ -546,26 +552,27 @@ private void printApprovedCourses() {
                     default:
                         System.out.println("\nInvalid input!\n");
                 }
-            }
-            else {
+            } else {
                 System.out.println("\nInvalid input!\n");
             }
         }
     }
 
-    //This method is used for passing or failing a student.
+    // This method is used for passing or failing a student.
     private void passOrFailStudent(CourseInstance course) {
         System.out.println("Still in the making!");
     }
 
-    //Method for the lecturer so it can grade students of a particular course.
+    // Method for the lecturer so it can grade students of a particular course.
     private void gradeStudent(CourseInstance course) {
 
         while (true) {
             System.out.println("\nCourse Name: " + course.getCourseName() + "\tCourse Code: " + course.getCourseCode());
             int i = 0;
-            for(i = 0 ; i < course.getRegisteredStudents().size() ; i++) {
-                System.out.println("\t" + i + " -> StudentID" + course.getRegisteredStudents().get(i).getStudentId() + " Name:" + course.getRegisteredStudents().get(i).getName() + " " + course.getRegisteredStudents().get(i).getLastName());
+            for (i = 0; i < course.getRegisteredStudents().size(); i++) {
+                System.out.println("\t" + i + " -> StudentID" + course.getRegisteredStudents().get(i).getStudentId()
+                        + " Name:" + course.getRegisteredStudents().get(i).getName() + " "
+                        + course.getRegisteredStudents().get(i).getLastName());
             }
 
             System.out.println("\t" + i + " -> to return.");
@@ -573,43 +580,48 @@ private void printApprovedCourses() {
             int choice = intInput();
             if (choice == course.getRegisteredStudents().size()) {
                 return;
-            }
-            else if (choice >= 0 && choice < course.getRegisteredStudents().size()) {
+            } else if (choice >= 0 && choice < course.getRegisteredStudents().size()) {
                 int index = 0;
 
-                for (int j = 0 ; j < course.getRegisteredStudents().get(choice).getRegisteredCourses().size() ; j++) {
-                    if (course.getRegisteredStudents().get(choice).getRegisteredCourses().get(j).getCourseCode().equals(course.getCourseCode())) {
+                for (int j = 0; j < course.getRegisteredStudents().get(choice).getRegisteredCourses().size(); j++) {
+                    if (course.getRegisteredStudents().get(choice).getRegisteredCourses().get(j).getCourseCode()
+                            .equals(course.getCourseCode())) {
                         index = j;
                     }
                 }
 
-                System.out.println("StudentID: " + course.getRegisteredStudents().get(choice).getStudentId() + " Name: " + course.getRegisteredStudents().get(choice).getName() + " " + course.getRegisteredStudents().get(choice).getLastName());
-                System.out.println("Current grade: " + course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade().getOutOfHundred());
-                
+                System.out.println("StudentID: " + course.getRegisteredStudents().get(choice).getStudentId() + " Name: "
+                        + course.getRegisteredStudents().get(choice).getName() + " "
+                        + course.getRegisteredStudents().get(choice).getLastName());
+                System.out.println("Current grade: " + course.getRegisteredStudents().get(choice).getRegisteredCourses()
+                        .get(index).getGrade().getOutOfHundred());
+
                 while (true) {
                     System.out.println("Enter a grade with a value between 0.00-100.00: ");
                     double givenGrade = doubleInput();
                     if (givenGrade >= 0.0 && givenGrade <= 100.0) {
-                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade().setOutOfHundred(givenGrade);
-                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade().convertHundredToGano(givenGrade);
-                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade().convertHundredToLetterGrade(givenGrade);
+                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade()
+                                .setOutOfHundred(givenGrade);
+                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade()
+                                .convertHundredToGano(givenGrade);
+                        course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade()
+                                .convertHundredToLetterGrade(givenGrade);
                         System.out.println("Grade updated succesfully! GANO and letter grade updated automatically!");
                         break;
-                    }
-                    else {
+                    } else {
                         System.out.println("\nInvalid input!\n");
                     }
                 }
-                
-            }
-            else {
+
+            } else {
                 System.out.println("\nInvalid input!\n");
             }
         }
 
     }
 
-    //Method for the lecturer so it can see information about the a course. Including course info, lecturer info, and students that take the course.
+    // Method for the lecturer so it can see information about the a course.
+    // Including course info, lecturer info, and students that take the course.
     private void getCourseInformationFromLecturer(Lecturer lecturer, CourseInstance course) {
         System.out.println("\nCourse Name: " + course.getCourseName() + "\tCourse Code: " + course.getCourseCode());
         System.out.println("Course Lecturer -> \n\t\t   Name: " + lecturer.getName() + " " + lecturer.getLastName());
@@ -617,8 +629,40 @@ private void printApprovedCourses() {
         System.out.println("                   Profession: " + lecturer.getProfession());
         System.out.println("                   Email: " + lecturer.getEmail());
         System.out.println("Course Students -> ");
-        for (int i = 0 ; i < course.getRegisteredStudents().size() ; i++) {
-            System.out.println("                   Name: " + course.getRegisteredStudents().get(i).getName() + " " + course.getRegisteredStudents().get(i).getLastName() + " ID: " + course.getRegisteredStudents().get(i).getStudentId() + " Email: " + course.getRegisteredStudents().get(i).getEmail());
+        for (int i = 0; i < course.getRegisteredStudents().size(); i++) {
+            System.out.println("                   Name: " + course.getRegisteredStudents().get(i).getName() + " "
+                    + course.getRegisteredStudents().get(i).getLastName() + " ID: "
+                    + course.getRegisteredStudents().get(i).getStudentId() + " Email: "
+                    + course.getRegisteredStudents().get(i).getEmail());
+        }
+    }
+
+    private void init() {
+        // This loop is used for teachers to find all students that attent to their
+        // courses.
+        for (int i = 0; i < jsonFileManager.getLecturers().size(); i++) {
+            for (int j = 0; j < jsonFileManager.getLecturers().get(i).getCourseInstances().size(); j++) {
+                for (int k = 0; k < jsonFileManager.getStudents().size(); k++) {
+                    for (int m = 0; m < jsonFileManager.getStudents().get(k).getRegisteredCourses().size(); m++) {
+                        if (jsonFileManager.getLecturers().get(i).getCourseInstances().get(j).getCourseCode()
+                                .equals(jsonFileManager.getStudents().get(k).getRegisteredCourses().get(m)
+                                        .getCourseCode())) {
+                            jsonFileManager.getLecturers().get(i).getCourseInstances().get(j).getRegisteredStudents()
+                                    .add(jsonFileManager.getStudents().get(k));
+                        }
+                    }
+                }
+            }
+        }
+        for (Student student : jsonFileManager.getStudents()) {
+
+            // Sets the student of the draft
+            student.getDraft().setStudent(student);
+
+            // Sets the student of the enrolled courses
+            for (Course course : student.getRegisteredCourses()) {
+                course.setStudent(student);
+            }
         }
     }
 

@@ -9,11 +9,9 @@ public class Course {
 	private String courseCode;
 	private String prequisite;
 	private long credits;
-	/*
-	 * TODO: NEEDS IMPLEMENTATION
-	 */
-	private boolean prequisiteCompleted; 
-	private boolean completed;
+	private boolean isPrerequisitesCompleted;
+	private boolean isCompleted;
+	private boolean isApproved;
 
 	public Student getStudent() {
 		return student;
@@ -71,29 +69,33 @@ public class Course {
 		this.credits = credits;
 	}
 
-	public boolean isPrequisiteCompleted(String pCourse) {
+	public boolean isPrerequisitesCompleted(String pCourse) {
 
-        if (pCourse.equals("")){
-          return true;
-        }
-		
-        ArrayList<Course> registeredCourses = getStudent().getRegisteredCourses();
-         boolean hasCompleted = false;
-        for (Course rcourse : registeredCourses) {
+		if (pCourse.equals("")) {
+			this.isPrerequisitesCompleted = true;
+			return isPrerequisitesCompleted;
+		}
 
-                if(pCourse.equals(rcourse.getCourseCode())){
-                    Grade grade1 = rcourse.getGrade();
-                  if(!grade1.getLetterGrade().equals("FF")){
-                  hasCompleted = true;
-                  break;
-                }
-         }
-    }
-        return hasCompleted;
-    }
+		ArrayList<Course> registeredCourses = getStudent().getRegisteredCourses();
+		for (Course rcourse : registeredCourses) {
 
-	public void setPrequisiteCompleted(boolean prequisiteCompleted) {
-		this.prequisiteCompleted = prequisiteCompleted;
+			if (pCourse.equals(rcourse.getCourseCode())) {
+				Grade grade1 = rcourse.getGrade();
+				if (!grade1.getLetterGrade().equals("FF")) {
+					isPrerequisitesCompleted = true;
+					break;
+				}
+			}
+		}
+		return isPrerequisitesCompleted;
+	}
+
+	public void setPrerequisitesCompleted(boolean prequisiteCompleted) {
+		this.isPrerequisitesCompleted = prequisiteCompleted;
+	}
+
+	public boolean getPrerequisitesCompleted() {
+		return this.isPrerequisitesCompleted;
 	}
 
 	public Grade getGrade() {
@@ -105,10 +107,18 @@ public class Course {
 	}
 
 	public boolean isCompleted() {
-		return completed;
+		return isCompleted;
 	}
 
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
+	public boolean isApproved() {
+		return isApproved;
+	}
+
+	public void approve() {
+		isApproved = true;
+	}
+
+	public void setIsCompleted(boolean completed) {
+		this.isCompleted = completed;
 	}
 }
