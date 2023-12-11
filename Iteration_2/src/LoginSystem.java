@@ -314,7 +314,7 @@ public class LoginSystem {
                 return;
             }
             for (Course course : eligableCourses) {
-                //Check if already added to draft
+                // Check if already added to draft
                 if (!draft.getCourses().contains(course)) {
                     System.out.println(course.getCourseCode() + " : " + course.getCourseName());
                 }
@@ -492,7 +492,6 @@ public class LoginSystem {
             }
 
             System.out.println("draft for student " + student.getStudentId() + " complete");
-            advisor.processDraft(student);
             /*
              * if (advisorInput.equals("yes")) {
              * 
@@ -504,8 +503,8 @@ public class LoginSystem {
              * }
              */
         }
-
-        advisor.clearDrafts();
+        advisor.processDrafts();
+        // advisor.clearDrafts();
     }
 
     // This is where a lecturer can control their courses
@@ -658,6 +657,9 @@ public class LoginSystem {
 
             // Sets the student of the draft
             student.getDraft().setStudent(student);
+
+            // Add student to advisor group
+            student.getAdvisor().addStudent(student);
 
             // Sets the student of the enrolled courses
             for (Course course : student.getRegisteredCourses()) {

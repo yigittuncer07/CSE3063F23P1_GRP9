@@ -69,18 +69,18 @@ public class Course {
 		this.credits = credits;
 	}
 
-	public boolean isPrerequisitesCompleted(String pCourse) {
+	public boolean isPrerequisitesCompleted(String course) {
 
-		if (pCourse.equals("")) {
+		if (course.equals("")) {
 			this.isPrerequisitesCompleted = true;
 			return isPrerequisitesCompleted;
 		}
 
 		ArrayList<Course> registeredCourses = getStudent().getRegisteredCourses();
-		for (Course rcourse : registeredCourses) {
+		for (Course registeredCourse : registeredCourses) {
 
-			if (pCourse.equals(rcourse.getCourseCode())) {
-				Grade grade1 = rcourse.getGrade();
+			if (course.equals(registeredCourse.getCourseCode())) {
+				Grade grade1 = registeredCourse.getGrade();
 				if (!grade1.getLetterGrade().equals("FF")) {
 					isPrerequisitesCompleted = true;
 					break;
