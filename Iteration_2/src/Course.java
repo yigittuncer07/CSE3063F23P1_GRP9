@@ -9,7 +9,7 @@ public class Course {
 	private String courseCode;
 	private String prequisite;
 	private long credits;
-	private long year;
+	private long year = 0;
 	private boolean isPrerequisitesCompleted;
 	private boolean isCompleted;
 	private boolean isApproved;
