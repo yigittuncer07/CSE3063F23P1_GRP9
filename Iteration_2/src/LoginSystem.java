@@ -294,49 +294,61 @@ public class LoginSystem {
 
         System.out.println("\nWelcome to registration!");
 
+        System.out.println(
+                "\nCommands:\n-\"add\" coursecode to add to draft\n-\"remove\" coursecode to remove from draft\\n-\"submit\" to submit for approval\n-\"exit\" to save draft and exit\n-\"clear\" to clear draft and exit\n-\"commands\" to see commands\n");
+
         ArrayList<Course> eligableCourses = student.getEligableCourses(jsonFileManager.getCourses());
         Advisor advisor = (Advisor) getUserWithId(student.getAdvisor().getStaffID(), "Advisor");
         Draft draft = student.getDraft();
 
-        if (!draft.isEmpty()) {
-            System.out.print("\nsaved draft: ");
-            for (Course course : draft.getCourses()) {
-                System.out.print(course.getCourseCode() + " ");
-            }
-        }
-
         while (true) {
-            System.out.println(
-                    "\nCommands:\n-enter a course code to add to draft\n-\"submit\" to submit for approval\n-\"exit\" to save draft and exit\n-\"clear\" to clear draft\n-\"remove\" coursecode to remove from draft\n");
 
             if (eligableCourses.isEmpty()) {
                 System.out.println("You cannot take any courses!\n");
                 return;
             }
-            for (Course course : eligableCourses) {
-                // Check if already added to draft
-                if (!draft.getCourses().contains(course)) {
-                    System.out.println(course.getCourseCode() + " : " + course.getCourseName());
+            if (!draft.isEmpty()) {
+                System.out.print("\nCurrent draft: ");
+                for (Course course : draft.getCourses()) {
+                    System.out.print(course.getCourseCode() + " ");
                 }
             }
 
+            System.out.print("\nAvailable Courses: ");
+            for (Course course : eligableCourses) {
+                // Check if already added to draft
+                if (!draft.getCourses().contains(course)) {
+                    System.out.print(course.getCourseCode() + " ");
+                }
+            }
+
+            System.out.print("\nenter a command: ");
             String studentInput = scanner.nextLine();
 
-            if (studentInput.equals("submit")) {
-                student.sendDraftToAdvisor(advisor);
-                System.out.println("\nDraft sent for advisor approval\n");
-                return;
-            } else if (studentInput.equals("exit")) {
-                System.out.println("\nDraft saved and exited.\n");
-                return;
-            } else if (studentInput.equals("clear")) {
-                draft.clearDraft();
-                System.out.println("\nDraft cleared.\n");
-                return;
-            } else if (studentInput.substring(0, Math.min(studentInput.length(), 6)).equals("remove")) { // checks if
-                                                                                                         // input string
-                                                                                                         // starts with
-                                                                                                         // remove
+            if (studentInput.substring(0, Math.min(studentInput.length(), 3)).equals("add")) {
+
+                String[] studentInputArray = studentInput.split("\\s+");
+                String courseCode = studentInputArray[1];
+
+                if (draft.hasCourse(courseCode)) {
+                    System.out.println("Draft already has course!");
+                } else {
+                    boolean isCourseFound = false;
+                    for (Course course : eligableCourses) {
+                        if (course.getCourseCode().equals(courseCode)) {
+                            course.setStudent(student);
+                            draft.addCourse(course);
+                            isCourseFound = true;
+                        }
+                    }
+
+                    if (!isCourseFound) {
+                        System.out.println("No such eligable course!");
+                    }
+                }
+
+            } else if (studentInput.substring(0, Math.min(studentInput.length(), 6)).equals("remove")) {
+
                 String[] studentInputArray = studentInput.split("\\s+");
                 String courseCode = studentInputArray[1];
 
@@ -347,32 +359,23 @@ public class LoginSystem {
 
                 }
 
+            } else if (studentInput.equals("submit")) {
+                student.sendDraftToAdvisor(advisor);
+                System.out.println("\nDraft sent for advisor approval\n");
+                return;
+            } else if (studentInput.equals("commands")) {
+                System.out.println(
+                        "\nCommands:\n-\"add\" coursecode to add to draft\n-\"remove\" coursecode to remove from draft\\n-\"submit\" to submit for approval\n-\"exit\" to save draft and exit\n-\"clear\" to clear draft and exit\n-\"commands\" to see commands\n");
+            } else if (studentInput.equals("exit")) {
+                System.out.println("\nDraft saved and exited.\n");
+                return;
+            } else if (studentInput.equals("clear")) {
+                draft.clearDraft();
+                System.out.println("\nDraft cleared.\n");
+                return;
             } else {
-                boolean courseFound = false;
-                for (Course course : eligableCourses) {
-                    if (studentInput.equals(course.getCourseCode())) {
-                        courseFound = true;
-                        boolean canAddToDraft = student.canAddToDraft(course);
-                        if (canAddToDraft) {
-                            course.setStudent(student);
-                            draft.addClass(course);
-                            System.out.println("Course added succesfully!");
-                        } else {
-                            System.out.println("Course couldn't be added!");
-                        }
-                        continue;
-                    }
-                }
-                if (!courseFound) {
-                    System.out.println("no such course!");
-                }
-                courseFound = false;
+                System.out.println("INVALID INPUT");
             }
-            System.out.print("Current draft: ");
-            for (Course course : draft.getCourses()) {
-                System.out.print(course.getCourseCode() + " ");
-            }
-            System.out.println("\n ");
         }
     }
 
@@ -644,7 +647,7 @@ public class LoginSystem {
                 }
             }
         }
-        
+
         for (Student student : jsonFileManager.getStudents()) {
 
             // Sets the student of the draft
