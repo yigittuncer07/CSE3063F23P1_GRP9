@@ -16,7 +16,6 @@ public class Student extends User {
      * - prerequisites must be complete
      * - must have required year complete
      * 
-     * 
      */
     public ArrayList<Course> getEligableCourses(ArrayList<Course> allCourses) {
         ArrayList<Course> eligableCourses = new ArrayList<>();
@@ -26,18 +25,6 @@ public class Student extends User {
             }
         }
         return eligableCourses;
-    }
-
-    public boolean canAddToDraft(Course course) {
-        if (isRegisteredCourse(course)) {
-            return false;
-        }
-        if (draft.getNumberOfClasses() >= 5
-                || !course.isPrerequisitesCompleted(course.getPrequisite())
-                || draft.hasCourse(course) || (course.getYear() > year)) {
-            return false;
-        }
-        return true;
     }
 
     public void sendDraftToAdvisor(Advisor studentAdvisor) {
