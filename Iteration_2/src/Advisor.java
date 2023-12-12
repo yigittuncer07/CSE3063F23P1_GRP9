@@ -29,7 +29,6 @@ public class Advisor extends Lecturer {
         for (Draft draft : drafts) {
             for (Course course : draft.getCourses()) {
                 if (course.isApproved()) {
-                    System.out.println("\t\tSTUDENT NAME IN DRAFT: " + draft.getStudent().getName());
                     draft.getStudent().addToRegisteredCourses(course);
                 }
             }
