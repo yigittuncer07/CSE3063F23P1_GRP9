@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 
 /**
- * The Draft class represents a draft of courses selected by a student. It contains methods
- * for managing the draft, such as checking if a course is in the draft, retrieving the list
+ * The Draft class represents a draft of courses selected by a student. It
+ * contains methods
+ * for managing the draft, such as checking if a course is in the draft,
+ * retrieving the list
  * of courses, and manipulating the contents of the draft.
  *
  * @author yigit_tuncer
@@ -29,6 +31,15 @@ public class Draft {
         return false;
     }
 
+    public boolean hasCourse(String courseCode) {
+        for (Course draftCourse : courses) {
+            if (draftCourse.getCourseCode().equals(courseCode)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Retrieves the list of courses in the draft.
      *
@@ -47,9 +58,9 @@ public class Draft {
         this.courses = courses;
     }
 
-    public boolean removeCourse(String courseCode){
-        for (Course course : courses){
-            if (course.getCourseCode().equals(courseCode)){
+    public boolean removeCourse(String courseCode) {
+        for (Course course : courses) {
+            if (course.getCourseCode().equals(courseCode)) {
                 courses.remove(course);
                 return true;
             }
@@ -87,7 +98,7 @@ public class Draft {
      *
      * @param course The course to add to the draft.
      */
-    public void addClass(Course course) {
+    public void addCourse(Course course) {
         courses.add(course);
     }
 
