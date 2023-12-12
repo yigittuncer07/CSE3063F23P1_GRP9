@@ -151,6 +151,7 @@ public class JSONFileManager {
                 courseJson.put("courseLecturer", course.getCourseLecturer().getStaffID());
                 courseJson.put("credits", course.getCredits());
                 courseJson.put("grade", course.getGrade().getOutOfHundred());
+                courseJson.put("isCompleted", course.isCompleted());
 
                 registeredCoursesArray.add(courseJson);
             }
@@ -354,6 +355,7 @@ public class JSONFileManager {
 
                             registeredCourse.setCourseName((String) courseJSON.get("courseName"));
                             registeredCourse.setCourseCode((String) courseJSON.get("courseCode"));
+                            registeredCourse.setIsCompleted((boolean) courseJSON.get("isCompleted"));
 
                             Lecturer lecturer = new Lecturer();
                             lecturer.setStaffID((String) courseJSON.get("courseLecturer"));
