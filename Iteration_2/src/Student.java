@@ -60,6 +60,10 @@ public class Student extends User {
         return draft;
     }
 
+    public long getYear() {
+        return year;
+    }
+
     // public ArrayList<Course> getApprovedCourses() {
     // return approvedCourses;
     // }
@@ -78,6 +82,14 @@ public class Student extends User {
 
     public void setRegisteredCourses(ArrayList<Course> registeredCourses) {
         this.registeredCourses = registeredCourses;
+    }
+
+    public void setDraft(Draft draft) {
+        this.draft = draft;
+    }
+    
+    public void setYear(long year) {
+        this.year = year;
     }
 
     public void addToRegisteredCourses(Course course) {
