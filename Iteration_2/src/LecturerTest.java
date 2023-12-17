@@ -61,18 +61,18 @@ public class LecturerTest {
 
     @Test
     public void testGetProfession() {
-        assertEquals("Computer Science", lecturer.getProfession());
+        assertEquals("Data Science", lecturer.getProfession());
     }
 
     @Test
     public void testSetProfession() {
-        lecturer.setProfession("Software Engineering");
-        assertEquals("Software Engineering", lecturer.getProfession());
+        lecturer.setProfession("Data Science");
+        assertEquals("Data Science", lecturer.getProfession());
     }
 
     @Test
     public void testGetInfo() {
-        String expectedInfo = "Lecturer Info:\nName: John\nLastname: Doe\nBirthdate: 1990-01-01\nAddress: 123 Main St\nSSN: 123-45-6789\nEmail: john.doe@example.com";
+        String expectedInfo = "Lecturer Info:\nName: Ayşe\nLastname: Deniz\nBirthdate: 13:03:96.454+0530\nAddress: Ankara, Turkey\nSSN: 33333333333\nEmail: aysedeniz@gmail.com";
         assertEquals(expectedInfo, lecturer.getInfo());
     }
 }
