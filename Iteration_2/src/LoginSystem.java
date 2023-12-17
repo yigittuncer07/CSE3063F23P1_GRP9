@@ -715,7 +715,7 @@ public class LoginSystem {
             for (CourseInstance courseInstance : lecturer.getCourseInstances()) {
                 for (Student student : jsonFileManager.getStudents()) {
                     for (Course course : student.getRegisteredCourses()) {
-                        if (courseInstance.getCourseCode().equals(course.getCourseCode()) && !course.isCompleted() && !courseInstance.getRegisteredStudents().contains(student)) {
+                        if (courseInstance.getCourseCode().equals(course.getCourseCode()) && !course.isCompleted() && !hasStudent(courseInstance.getRegisteredStudents(), student)) {
                             courseInstance.getRegisteredStudents().add(student);
                         }
                     }
@@ -723,6 +723,15 @@ public class LoginSystem {
             }
         }
 
+    }
+
+    private boolean hasStudent(ArrayList<Student> students, Student student) {
+        for (Student student1 : students ) {
+            if (student1.getStudentId().equals(student.getStudentId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void init() {
