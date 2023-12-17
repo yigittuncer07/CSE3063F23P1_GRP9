@@ -11,6 +11,7 @@
             "credits": 4,
             "courseCode": "MATH101",
             "grade": 37.0,
+            "isCompleted": false,
             "courseLecturer": "160222"
         },
         {
@@ -18,6 +19,7 @@
             "credits": 6,
             "courseCode": "COMP202",
             "grade": 47.0,
+            "isCompleted": true,
             "courseLecturer": "160111"
         },
         {
@@ -25,6 +27,8 @@
             "credits": 4,
             "courseCode": "PH101",
             "grade": 0.0,
+            "isCompleted": true,
+
             "courseLecturer": "170666"
         },
         {
@@ -32,6 +36,7 @@
             "credits": 3,
             "courseCode": "LIT100",
             "grade": 0.0,
+            "isCompleted": true,
             "courseLecturer": "160111"
         }
     ],

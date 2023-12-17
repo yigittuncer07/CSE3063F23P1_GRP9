@@ -11,6 +11,7 @@
             "credits": 3,
             "courseCode": "BIO101",
             "grade": 55.0,
+            "isCompleted": true,
             "courseLecturer": "160222"
         },
         {
@@ -18,6 +19,7 @@
             "credits": 4,
             "courseCode": "STAT202",
             "grade": 82.0,
+            "isCompleted": false,
             "courseLecturer": "160555"
         }
     ],

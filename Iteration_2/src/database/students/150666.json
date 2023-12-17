@@ -11,6 +11,7 @@
             "credits": 3,
             "courseCode": "LIT101",
             "grade": 88.0,
+            "isCompleted": true,
             "courseLecturer": "160222"
         },
         {
@@ -18,6 +19,7 @@
             "credits": 4,
             "courseCode": "ARTH202",
             "grade": 70.0,
+            "isCompleted": true,
             "courseLecturer": "160111"
         }
     ],
