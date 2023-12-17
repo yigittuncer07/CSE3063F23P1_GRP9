@@ -477,8 +477,7 @@ public class LoginSystem {
         System.out.println("\nPlease proceed with this draft:.\n");
         for (Draft draft : advisor.getDrafts()) {
             student = (Student) getUserWithId(draft.getStudent().getStudentId(), "Student");
-            System.out.println("Student Info:\nStudentID: " + student.getStudentId() + "\n"
-                    + student.getInfo() + "\n\nCourses:");
+            System.out.println(student.getInfo() + "\nStudentID: " + student.getStudentId() + "\n" + "\n\nCourses:");
 
             // Print all draft courses
             for (Course course : draft.getCourses()) {
