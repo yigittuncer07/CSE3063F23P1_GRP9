@@ -255,6 +255,7 @@ public class LoginSystem {
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
                 System.out.println("    Enter 1 to see the information that needs to be updated in the system.");
+
                 System.out.println("    Enter 2 to logout.");
                 System.out.print("Enter action : ");
 
@@ -503,6 +504,8 @@ public class LoginSystem {
     // This is where a lecturer can control their courses
     private void controlYourCourses(Lecturer lecturer) {
 
+        assignStudentsToCourses();
+
         while (true) {
             System.out.println("\nThese are the courses you give.");
             int i = 0;
@@ -558,7 +561,8 @@ public class LoginSystem {
             int i = 0;
             ArrayList<Student> tempStudents = course.getRegisteredStudents();
             for (i = 0; i < tempStudents.size(); i++) {
-                System.out.println("\t" + i + " -> StudentID" + tempStudents.get(i).getStudentId() + " Name:" + tempStudents.get(i).getName() + " " + tempStudents.get(i).getLastName());
+                System.out.println("\t" + i + " -> StudentID" + tempStudents.get(i).getStudentId() + " Name:"
+                        + tempStudents.get(i).getName() + " " + tempStudents.get(i).getLastName());
             }
 
             System.out.println("\t" + i + " -> to return.");
@@ -566,68 +570,66 @@ public class LoginSystem {
             int choice = intInput();
             if (choice == tempStudents.size()) {
                 return;
-            }
-            else if (choice >= 0 && choice < tempStudents.size()) {
+            } else if (choice >= 0 && choice < tempStudents.size()) {
                 Course markCourse = new Course();
                 int index = 0;
                 for (int j = 0; j < tempStudents.get(choice).getRegisteredCourses().size(); j++) {
-                    if (tempStudents.get(choice).getRegisteredCourses().get(j).getCourseCode().equals(course.getCourseCode())) {
+                    if (tempStudents.get(choice).getRegisteredCourses().get(j).getCourseCode()
+                            .equals(course.getCourseCode())) {
                         markCourse = tempStudents.get(choice).getRegisteredCourses().get(j);
                         index = j;
                     }
                 }
 
-                System.out.println("StudentID: " + tempStudents.get(choice).getStudentId() + " Name: " + tempStudents.get(choice).getName() + " " + tempStudents.get(choice).getLastName());
+                System.out.println("StudentID: " + tempStudents.get(choice).getStudentId() + " Name: "
+                        + tempStudents.get(choice).getName() + " " + tempStudents.get(choice).getLastName());
                 System.out.println("Enter \"pass\" to pass the student, or \"fail\" to fail the student");
                 while (true) {
                     String passingCondition = scanner.nextLine();
                     if (passingCondition.equals("pass")) {
-                        System.out.println("Enter \"confirm\" to confirm your decision, or \"cancel\" to cancel your decision");
+                        System.out.println(
+                                "Enter \"confirm\" to confirm your decision, or \"cancel\" to cancel your decision");
                         while (true) {
                             String confirmation = scanner.nextLine();
                             if (confirmation.equals("confirm")) {
                                 markCourse.setIsCompleted(true);
                                 course.getRegisteredStudents().remove(choice);
-                                System.out.println("Your decision has been confirmed succesfully and is not being a part of this course anymore!");
+                                System.out.println(
+                                        "Your decision has been confirmed succesfully and is not being a part of this course anymore!");
                                 break;
-                            }
-                            else if (confirmation.equals("cancel")) {
+                            } else if (confirmation.equals("cancel")) {
                                 System.out.println("Your decision has been canceled succesfully!");
                                 break;
-                            }
-                            else {
+                            } else {
                                 System.out.println("\nInvalid input!\n");
                             }
                         }
                         break;
-                    }
-                    else if (passingCondition.equals("fail")) {
-                        System.out.println("Enter \"confirm\" to confirm your decision, or \"cancel\" to cancel your decision");
+                    } else if (passingCondition.equals("fail")) {
+                        System.out.println(
+                                "Enter \"confirm\" to confirm your decision, or \"cancel\" to cancel your decision");
                         while (true) {
                             String confirmation = scanner.nextLine();
                             if (confirmation.equals("confirm")) {
                                 markCourse.setIsCompleted(false);
                                 tempStudents.get(choice).getRegisteredCourses().remove(index);
                                 course.getRegisteredStudents().remove(choice);
-                                System.out.println("Your decision has been confirmed succesfully and is not being a part of this course anymore!");
+                                System.out.println(
+                                        "Your decision has been confirmed succesfully and is not being a part of this course anymore!");
                                 break;
-                            }
-                            else if (confirmation.equals("cancel")) {
+                            } else if (confirmation.equals("cancel")) {
                                 System.out.println("Your decision has been canceled succesfully!");
                                 break;
-                            }
-                            else {
+                            } else {
                                 System.out.println("\nInvalid input!\n");
                             }
                         }
                         break;
-                    }
-                    else {
+                    } else {
                         System.out.println("\nInvalid input!\n");
                     }
                 }
-            }
-            else {
+            } else {
                 System.out.println("\nInvalid input!\n");
             }
         }
@@ -707,19 +709,26 @@ public class LoginSystem {
         }
     }
 
-    private void init() {
-        // This loop is used for teachers to find all students that attent to their courses.
-        for (int i = 0; i < jsonFileManager.getLecturers().size(); i++) {
-            for (int j = 0; j < jsonFileManager.getLecturers().get(i).getCourseInstances().size(); j++) {
-                for (int k = 0; k < jsonFileManager.getStudents().size(); k++) {
-                    for (int m = 0; m < jsonFileManager.getStudents().get(k).getRegisteredCourses().size(); m++) {
-                        if (jsonFileManager.getLecturers().get(i).getCourseInstances().get(j).getCourseCode().equals(jsonFileManager.getStudents().get(k).getRegisteredCourses().get(m).getCourseCode()) && !jsonFileManager.getStudents().get(k).getRegisteredCourses().get(m).isCompleted()) {
-                            jsonFileManager.getLecturers().get(i).getCourseInstances().get(j).getRegisteredStudents().add(jsonFileManager.getStudents().get(k));
+    private void assignStudentsToCourses() {
+
+        for (Lecturer lecturer : jsonFileManager.getLecturers()) {
+            for (CourseInstance courseInstance : lecturer.getCourseInstances()) {
+                for (Student student : jsonFileManager.getStudents()) {
+                    for (Course course : student.getRegisteredCourses()) {
+                        if (courseInstance.getCourseCode().equals(course.getCourseCode()) && !course.isCompleted() && !courseInstance.getRegisteredStudents().contains(student)) {
+                            courseInstance.getRegisteredStudents().add(student);
                         }
                     }
                 }
             }
         }
+
+    }
+
+    private void init() {
+        // This loop is used for teachers to find all students that attent to their
+        // courses.
+        assignStudentsToCourses();
 
         for (Student student : jsonFileManager.getStudents()) {
 
