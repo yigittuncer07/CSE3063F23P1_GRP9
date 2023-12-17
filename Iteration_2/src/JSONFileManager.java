@@ -78,6 +78,8 @@ public class JSONFileManager {
             courseJSON.put("courseCode", course.getCourseCode());
             courseJSON.put("prerequisite", course.getPrequisite());
             courseJSON.put("courseLecturer", course.getCourseLecturer().getStaffID());
+            courseJSON.put("year", course.getYear());
+
 
             try (FileWriter fileWriter = new FileWriter("database/courses/" + course.getCourseCode() + ".json")) {
                 fileWriter.write(courseJSON.toJSONString());
@@ -140,6 +142,8 @@ public class JSONFileManager {
             studentJson.put("email", student.getEmail());
             studentJson.put("password", student.getPassword());
             studentJson.put("studentId", student.getStudentId());
+            studentJson.put("year", student.getYear());
+
 
             JSONArray registeredCoursesArray = new JSONArray();
             for (Course course : student.getRegisteredCourses()) {
@@ -342,6 +346,8 @@ public class JSONFileManager {
                         student.setEmail((String) jsonObject.get("email"));
                         student.setPassword((String) jsonObject.get("password"));
                         student.setStudentId((String) jsonObject.get("studentId"));
+                        student.setYear((Long) jsonObject.get("year"));
+
 
                         ArrayList<Course> registeredCoursesList = new ArrayList<>();
 
