@@ -5,6 +5,12 @@ public class Advisor extends Lecturer {
     private ArrayList<Draft> drafts = new ArrayList<>();
     private ArrayList<Student> students = new ArrayList<>();
 
+    public String getInfo() {
+        return "Advisor Info:" + "\nName: " + this.getName() + "\nLastname: " + this.getLastName() + "\nBirthdate: "
+                + this.getBirthDate() + "\nAddress: " + this.getAddress() + "\nSSN: " + this.getSsn() + "\nEmail: "
+                + this.getEmail();
+    }
+
     public void addDraft(Draft draft) {
         this.drafts.add(draft);
     }
