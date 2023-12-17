@@ -110,6 +110,8 @@ public class JSONFileManager {
                         course.setPrequisite((String) jsonObject.get("prerequisite"));
 
                         course.setCredits((long) jsonObject.get("credits"));
+                        course.setYear((long) jsonObject.get("year"));
+
                         Lecturer lecturer = new Lecturer();
                         lecturer.setStaffID((String) jsonObject.get("courseLecturer"));
 
@@ -287,7 +289,7 @@ public class JSONFileManager {
                                 JSONObject course = (JSONObject) courseObj;
 
                                 courseObject.setCourseName((String) course.get("courseName"));
-                                courseObject.setCredits((Long) course.get("credits"));
+                                courseObject.setCredits((long) course.get("credits"));
                                 courseObject.setCourseCode((String) course.get("courseCode"));
                                 courseObject.setPrequisite((String) course.get("prerequisite"));
 
@@ -346,7 +348,7 @@ public class JSONFileManager {
                         student.setEmail((String) jsonObject.get("email"));
                         student.setPassword((String) jsonObject.get("password"));
                         student.setStudentId((String) jsonObject.get("studentId"));
-                        student.setYear((Long) jsonObject.get("year"));
+                        student.setYear((long) jsonObject.get("year"));
 
 
                         ArrayList<Course> registeredCoursesList = new ArrayList<>();
