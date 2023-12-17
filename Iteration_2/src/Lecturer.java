@@ -83,4 +83,10 @@ public class Lecturer extends Staff {
     public void setProfession(String profession) {
         this.profession = profession;
     }
+
+    public String getInfo() {
+        return "Lecturer Info:" + "\nName: " + this.getName() + "\nLastname: " + this.getLastName() + "\nBirthdate: "
+                + this.getBirthDate() + "\nAddress: " + this.getAddress() + "\nSSN: " + this.getSsn() + "\nEmail: "
+                + this.getEmail();
+    }
 }
