@@ -1,1 +1,8 @@
-{"courseName":"Music","credits":3,"courseCode":"MUSIC101","prerequisite":"","courseLecturer":"160888"}
+{
+    "courseName": "Music",
+    "credits": 3,
+    "courseCode": "MUSIC101",
+    "prerequisite": "",
+    "year": 1,
+    "courseLecturer": "160888"
+}

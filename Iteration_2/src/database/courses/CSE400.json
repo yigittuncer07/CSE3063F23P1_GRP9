@@ -1,1 +1,8 @@
-{"courseName":"Computer Networks","credits":7,"courseCode":"CSE400","prerequisite":"CSE301","courseLecturer":"160666"}
+{
+    "courseName": "Computer Networks",
+    "credits": 7,
+    "courseCode": "CSE400",
+    "prerequisite": "CSE301",
+    "year": 4,
+    "courseLecturer": "160666"
+}

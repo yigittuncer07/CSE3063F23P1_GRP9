@@ -1,1 +1,8 @@
-{"courseName":"Anthropology","credits":4,"courseCode":"ANTH202","prerequisite":"","courseLecturer":"160888"}
+{
+    "courseName": "Anthropology",
+    "credits": 4,
+    "courseCode": "ANTH202",
+    "prerequisite": "",
+    "year": 2,
+    "courseLecturer": "160888"
+}

@@ -1,1 +1,8 @@
-{"courseName":"Assembly","credits":6,"courseCode":"CSE300","prerequisite":"CSE102","courseLecturer":"160555"}
+{
+    "courseName": "Assembly",
+    "credits": 6,
+    "courseCode": "CSE300",
+    "prerequisite": "CSE102",
+    "year": 3,
+    "courseLecturer": "160555"
+}

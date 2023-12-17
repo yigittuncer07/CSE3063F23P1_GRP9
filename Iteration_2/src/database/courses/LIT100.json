@@ -1,1 +1,8 @@
-{"courseName":"Literature","credits":3,"courseCode":"LIT100","prerequisite":"","courseLecturer":"160888"}
+{
+    "courseName": "Literature",
+    "credits": 3,
+    "courseCode": "LIT100",
+    "prerequisite": "",
+    "year": 1,
+    "courseLecturer": "160888"
+}
