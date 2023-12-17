@@ -90,7 +90,7 @@ public class Course {
 
 			if (course.equals(registeredCourse.getCourseCode())) {
 				Grade grade1 = registeredCourse.getGrade();
-				if (!grade1.getLetterGrade().equals("FF")) {
+				if (!grade1.getLetterGrade().equals("FF") && registeredCourse.isCompleted()) {
 					isPrerequisitesCompleted = true;
 					break;
 				}
