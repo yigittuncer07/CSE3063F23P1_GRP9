@@ -26,7 +26,8 @@ public class Student extends User {
     public ArrayList<Course> getEligableCourses(ArrayList<Course> allCourses) {
         ArrayList<Course> eligableCourses = new ArrayList<>();
         for (Course course : allCourses) {
-            if (!isRegisteredCourse(course) && course.isPrerequisitesCompleted(course.getPrequisite()) && (course.getYear() <= year)) {
+            if (!isRegisteredCourse(course) && course.isPrerequisitesCompleted(course.getPrequisite())
+                    && (course.getYear() <= year)) {
                 eligableCourses.add(course);
             }
         }
@@ -93,7 +94,7 @@ public class Student extends User {
     public void setDraft(Draft draft) {
         this.draft = draft;
     }
-    
+
     public void setYear(long year) {
         this.year = year;
     }
@@ -101,14 +102,6 @@ public class Student extends User {
     public void addToRegisteredCourses(Course course) {
         this.registeredCourses.add(course);
     }
-
-    // public void setApprovedCourses(ArrayList<Course> approvedCourses) {
-    // this.approvedCourses = approvedCourses;
-    // }
-
-    // public void addToApprovedCourses(Course course) {
-    // this.approvedCourses.add(course);
-    // }
 
     public String getTranscriptInformation(Transcript transcript) {
         return transcript.toString();
