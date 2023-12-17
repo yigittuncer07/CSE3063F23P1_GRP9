@@ -64,4 +64,10 @@ public class Staff extends User {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    public String getInfo() {
+        return "Staff Info:" + "\nName: " + this.getName() + "\nLastname: " + this.getLastName() + "\nBirthdate: "
+                + this.getBirthDate() + "\nAddress: " + this.getAddress() + "\nSSN: " + this.getSsn() + "\nEmail: "
+                + this.getEmail();
+    }
 }
