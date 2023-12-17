@@ -30,6 +30,12 @@ public class StudentAffairsStaff extends Staff {
         this.workingField = workingField;
     }
 
+    public String getInfo() {
+        return "Student Affairs Staff Info:" + "\nName: " + this.getName() + "\nLastname: " + this.getLastName() + "\nBirthdate: "
+                + this.getBirthDate() + "\nAddress: " + this.getAddress() + "\nSSN: " + this.getSsn() + "\nEmail: "
+                + this.getEmail();
+    }
+
     /**
      * Retrieves the working field of the student affairs staff.
      *
