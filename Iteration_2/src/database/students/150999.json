@@ -1,1 +1,28 @@
-{"studentId":"150999","firstName":"Selma","lastName":"Şahin","password":"selma456","address":"Eskişehir, Turkey","advisorId":"160333","registeredCourses":[{"courseName":"Philosophy","credits":3,"courseCode":"PHIL101","grade":80.0,"courseLecturer":"160222"},{"courseName":"Anthropology","credits":4,"courseCode":"ANTH202","grade":73.0,"courseLecturer":"160333"}],"birthDate":"02:05:08.456+0300","email":"selmasahin@gmail.com","ssn":"88888888888"}
+{
+    "studentId": "150999",
+    "firstName": "Selma",
+    "lastName": "Şahin",
+    "password": "selma456",
+    "address": "Eskişehir, Turkey",
+    "advisorId": "160333",
+    "registeredCourses": [
+        {
+            "courseName": "Philosophy",
+            "credits": 3,
+            "courseCode": "PHIL101",
+            "grade": 80.0,
+            "courseLecturer": "160222"
+        },
+        {
+            "courseName": "Anthropology",
+            "credits": 4,
+            "courseCode": "ANTH202",
+            "grade": 73.0,
+            "courseLecturer": "160333"
+        }
+    ],
+    "birthDate": "02:05:08.456+0300",
+    "year": 3,
+    "email": "selmasahin@gmail.com",
+    "ssn": "88888888888"
+}
