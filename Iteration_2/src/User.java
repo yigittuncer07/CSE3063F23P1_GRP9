@@ -47,7 +47,7 @@ public abstract class User {
     /**
      * Implement an abstract method for Polymorphism.
      */
-    public abstract void getInfo();
+    public abstract String getInfo();
 
     /**
      * Retrieves the first name of the user.
