@@ -45,14 +45,9 @@ public abstract class User {
     private String password;
 
     /**
-     * Retrieves a formatted string containing user information.
-     *
-     * @return A string with user information.
+     * Implement an abstract method for Polymorphism.
      */
-    public String getInfo() {
-        return "Name: " + name + "\nLastname: " + lastName + "\nBirthdate: " + birthDate +
-                "\nAddress: " + address + "\nSSN: " + ssn + "\nEmail: " + email;
-    }
+    public abstract void getInfo();
 
     /**
      * Retrieves the first name of the user.
