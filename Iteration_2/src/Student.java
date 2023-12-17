@@ -10,6 +10,12 @@ public class Student extends User {
     private ArrayList<Course> registeredCourses = new ArrayList<>();
     // private ArrayList<Course> approvedCourses = new ArrayList<>();
 
+    public String getInfo() {
+        return "Student Info:" + "\nName: " + this.getName() + "\nLastname: " + this.getLastName() + "\nBirthdate: "
+                + this.getBirthDate() + "\nAddress: " + this.getAddress() + "\nSSN: " + this.getSsn() + "\nEmail: "
+                + this.getEmail();
+    }
+
     /*
      * For a course to be elligable, it must:
      * - not be already taken
