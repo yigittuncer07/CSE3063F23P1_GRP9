@@ -268,7 +268,18 @@ public class LoginSystem {
                         System.out.println();
                         break;
                     case 2:
-                       // Daha sonra doldurulacak
+                    System.out.println("\nEnter StudentID: ");
+                    String studentID1 = scanner.nextLine();
+                    Student student1= (Student) getUserWithId(studentID1, "Student");
+                    if (student1 == null) {
+                    System.out.println("\nStudent with StudentID " + studentID1 + " is not found!");
+                     }
+                    else {
+                   System.out.println("\nEnter new StudentID: ");
+                      String updateStudentID = scanner.nextLine();
+                     student1.setStudentId(updateStudentID);;
+                    }
+                      break;
                     case 3:
                     System.out.println("\nEnter StudentID: ");
                     String studentID = scanner.nextLine();
