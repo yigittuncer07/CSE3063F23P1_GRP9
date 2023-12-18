@@ -23,6 +23,15 @@ public class JSONFileManager {
         getAllStudentAffairsStaffsData();
     }
 
+    public void writeAllDataToJSON() {
+        writeAllStudentsData();
+        writeAllAdvisorsData();
+        writeAllLecturersData();
+        writeAllStudentAffairsStaffsData();
+        writeAllCoursesData();
+
+    }
+
     public ArrayList<Student> getStudents() {
         return students;
     }
@@ -59,14 +68,7 @@ public class JSONFileManager {
         return this.courses;
     }
 
-    public void writeAllDataToJSON() {
-        writeAllStudentsData();
-        writeAllAdvisorsData();
-        writeAllLecturersData();
-        writeAllStudentAffairsStaffsData();
-        writeAllCoursesData();
-
-    }
+   
 
     private void writeAllCoursesData() {
 
