@@ -255,7 +255,7 @@ public class LoginSystem {
                         break;
                     case 2:
                         loggerSystem.getLogger().log(Level.INFO,
-                                "Draf approval process started by: " + advisor.getStaffID());
+                                "Draft approval process started by: " + advisor.getStaffID());
 
                         draftApprovalProcess(advisor);
                         break;
@@ -462,7 +462,7 @@ public class LoginSystem {
                 student.sendDraftToAdvisor(advisor);
                 System.out.println("\nDraft sent for advisor approval\n");
                 loggerSystem.getLogger().log(Level.INFO,
-                        "Draft sent by: " + student.getStudentId() + "to Advisor ID " + advisor.getStaffID());
+                        "Draft sent by: " + student.getStudentId() + " to Advisor ID " + advisor.getStaffID());
                 return;
             } else if (studentInput.equals("commands")) {
                 System.out.println(
@@ -586,11 +586,11 @@ public class LoginSystem {
                     course.approve();
                     student.approve();
                     loggerSystem.getLogger().log(Level.INFO,
-                            "Draft course approved by: " + advisor.getStaffID() + "from ID: " + student.getStudentId());
+                            "Draft course approved by: " + advisor.getStaffID() + " from ID: " + student.getStudentId());
                 } else if (advisorInput.equals("no")) {
                     // Dont do anything here
                     loggerSystem.getLogger().log(Level.INFO,
-                            "Draft course rejected by: " + advisor.getStaffID() + "from ID: " + student.getStudentId());
+                            "Draft course rejected by: " + advisor.getStaffID() + " from ID: " + student.getStudentId());
                 } else {
                     System.out.println("Unkown input!");
                     loggerSystem.getLogger().log(Level.SEVERE,
@@ -600,7 +600,7 @@ public class LoginSystem {
 
             System.out.println("draft for student " + student.getStudentId() + " complete");
             loggerSystem.getLogger().log(Level.INFO,
-                    "Draf completed by: " + advisor.getStaffID());
+                    "Draft completed by: " + advisor.getStaffID());
         }
         advisor.processDrafts();
         // advisor.clearDrafts();
