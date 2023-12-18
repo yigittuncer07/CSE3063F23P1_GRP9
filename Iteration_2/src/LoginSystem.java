@@ -252,7 +252,8 @@ public class LoginSystem {
 
                         break;
                     case 2:
-                        loggerSystem.getLogger().log(Level.INFO, "Draf approval process started.");
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Draf approval process started by: " + advisor.getStaffID());
 
                         draftApprovalProcess(advisor);
                         break;
@@ -268,6 +269,7 @@ public class LoginSystem {
         } else {
             incorrectAttemptsAdvisor++;
             System.out.println("\nWrong Password!");
+            loggerSystem.getLogger().log(Level.WARNING, "Wrong password attempted to ID: " + advisor.getStaffID());
 
             if (incorrectAttemptsAdvisor == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
@@ -321,12 +323,20 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Approved courses access by: " + studentAffairsStaff.getStaffID());
+
                         printApprovedCourses();
                         System.out.println();
                         break;
                     case 2:
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Student information update by: " + studentAffairsStaff.getStaffID());
+
                         // Daha sonra doldurulacak
                     case 3:
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Access to student informations by: " + studentAffairsStaff.getStaffID());
                         System.out.println("\nEnter StudentID: ");
                         String studentID = scanner.nextLine();
                         Student student = (Student) getUserWithId(studentID, "Student");
@@ -339,7 +349,8 @@ public class LoginSystem {
                         break;
                     case 4:
                         System.out.println("\nYou have logged out succesfully.");
-                                                loggerSystem.getLogger().log(Level.INFO, "Successfull log out by: " + studentAffairsStaff.getStaffID());
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Successfull log out by: " + studentAffairsStaff.getStaffID());
 
                         return;
                     default:
@@ -349,6 +360,8 @@ public class LoginSystem {
         } else {
             incorrectAttemptsStaff++;
             System.out.println("\nWrong Password!");
+            loggerSystem.getLogger().log(Level.WARNING,
+                    "Wrong password attempted to ID: " + studentAffairsStaff.getStaffID());
 
             if (incorrectAttemptsStaff == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
