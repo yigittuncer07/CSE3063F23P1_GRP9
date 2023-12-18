@@ -565,6 +565,7 @@ public class LoginSystem {
     }
 
     private void draftApprovalProcess(Advisor advisor) {
+        
         Student student;
         if (advisor.getDrafts().isEmpty()) {
             System.out.println("No drafts to approve currently");
@@ -584,14 +585,20 @@ public class LoginSystem {
                 if (advisorInput.equals("yes")) {
                     course.approve();
                     student.approve();
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Draft course approved by: " + advisor.getStaffID()+ "from ID: " + student.getStudentId());
                 } else if (advisorInput.equals("no")) {
                     // Dont do anything here
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Draft course rejected by: " + advisor.getStaffID()+ "from ID: " + student.getStudentId());
                 } else {
                     System.out.println("Unkown input!");
                 }
             }
 
             System.out.println("draft for student " + student.getStudentId() + " complete");
+            loggerSystem.getLogger().log(Level.INFO,
+                                "Draf completed by: " + advisor.getStaffID());
         }
         advisor.processDrafts();
         // advisor.clearDrafts();
