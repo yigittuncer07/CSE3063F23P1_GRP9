@@ -64,7 +64,7 @@ public class LoginSystem {
                 default:
                     System.out.println("Invalid input!");
                     loggerSystem.getLogger().log(Level.SEVERE,
-                        "Invalid input entered.");
+                            "Invalid input entered.");
             }
             System.out.println("");
         }
@@ -267,7 +267,7 @@ public class LoginSystem {
                     default:
                         System.out.println("\nInvalid input!\n");
                         loggerSystem.getLogger().log(Level.SEVERE,
-                        "Invalid input entered.");
+                                "Invalid input entered.");
                 }
             }
         } else {
@@ -360,7 +360,7 @@ public class LoginSystem {
                     default:
                         System.out.println("\nInvalid input!\n");
                         loggerSystem.getLogger().log(Level.SEVERE,
-                        "Invalid input entered.");
+                                "Invalid input entered.");
                 }
             }
         } else {
@@ -565,7 +565,7 @@ public class LoginSystem {
     }
 
     private void draftApprovalProcess(Advisor advisor) {
-        
+
         Student student;
         if (advisor.getDrafts().isEmpty()) {
             System.out.println("No drafts to approve currently");
@@ -586,19 +586,21 @@ public class LoginSystem {
                     course.approve();
                     student.approve();
                     loggerSystem.getLogger().log(Level.INFO,
-                                "Draft course approved by: " + advisor.getStaffID()+ "from ID: " + student.getStudentId());
+                            "Draft course approved by: " + advisor.getStaffID() + "from ID: " + student.getStudentId());
                 } else if (advisorInput.equals("no")) {
                     // Dont do anything here
                     loggerSystem.getLogger().log(Level.INFO,
-                                "Draft course rejected by: " + advisor.getStaffID()+ "from ID: " + student.getStudentId());
+                            "Draft course rejected by: " + advisor.getStaffID() + "from ID: " + student.getStudentId());
                 } else {
                     System.out.println("Unkown input!");
+                    loggerSystem.getLogger().log(Level.SEVERE,
+                            "Invalid input entered.");
                 }
             }
 
             System.out.println("draft for student " + student.getStudentId() + " complete");
             loggerSystem.getLogger().log(Level.INFO,
-                                "Draf completed by: " + advisor.getStaffID());
+                    "Draf completed by: " + advisor.getStaffID());
         }
         advisor.processDrafts();
         // advisor.clearDrafts();
@@ -608,6 +610,9 @@ public class LoginSystem {
     private void controlYourCourses(Lecturer lecturer) {
 
         assignStudentsToCourses();
+
+        loggerSystem.getLogger().log(Level.INFO,
+                "Control courses access by: " + lecturer.getStaffID());
 
         while (true) {
             System.out.println("\nThese are the courses you give.");
@@ -636,12 +641,20 @@ public class LoginSystem {
 
                 switch (actionChoice) {
                     case 1:
+
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Course information access by: " + lecturer.getStaffID());
+
                         getCourseInformationFromLecturer(lecturer, lecturer.getCourseInstances().get(choice));
                         break;
                     case 2:
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Student graded by: " + lecturer.getStaffID());
                         gradeStudent(lecturer.getCourseInstances().get(choice));
                         break;
                     case 3:
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Pass and fail access by: " + lecturer.getStaffID());
                         passOrFailStudent(lecturer.getCourseInstances().get(choice));
                         break;
                     case 4:
@@ -650,7 +663,7 @@ public class LoginSystem {
                     default:
                         System.out.println("\nInvalid input!\n");
                         loggerSystem.getLogger().log(Level.SEVERE,
-                        "Invalid input entered.");
+                                "Invalid input entered.");
                 }
             } else {
                 System.out.println("\nInvalid input!\n");
@@ -710,7 +723,7 @@ public class LoginSystem {
                             } else {
                                 System.out.println("\nInvalid input!\n");
                                 loggerSystem.getLogger().log(Level.SEVERE,
-                        "Invalid input entered.");
+                                        "Invalid input entered.");
                             }
                         }
                         break;
@@ -732,14 +745,14 @@ public class LoginSystem {
                             } else {
                                 System.out.println("\nInvalid input!\n");
                                 loggerSystem.getLogger().log(Level.SEVERE,
-                        "Invalid input entered.");
+                                        "Invalid input entered.");
                             }
                         }
                         break;
                     } else {
                         System.out.println("\nInvalid input!\n");
                         loggerSystem.getLogger().log(Level.SEVERE,
-                        "Invalid input entered.");
+                                "Invalid input entered.");
                     }
                 }
             } else {
@@ -798,7 +811,7 @@ public class LoginSystem {
                     } else {
                         System.out.println("\nInvalid input!\n");
                         loggerSystem.getLogger().log(Level.SEVERE,
-                        "Invalid input entered.");
+                                "Invalid input entered.");
                     }
                 }
 
