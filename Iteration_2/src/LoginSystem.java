@@ -675,6 +675,8 @@ public class LoginSystem {
 
     // This method is used for passing or failing a student.
     private void passOrFailStudent(CourseInstance course) {
+        loggerSystem.getLogger().log(Level.INFO,
+                                "Course pass or fail acces to courseCode: " + course.getCourseCode());
 
         while (true) {
             System.out.println("\nCourse Name: " + course.getCourseName() + "\tCourse Code: " + course.getCourseCode());
@@ -712,6 +714,9 @@ public class LoginSystem {
                         while (true) {
                             String confirmation = scanner.nextLine();
                             if (confirmation.equals("confirm")) {
+                                loggerSystem.getLogger().log(Level.INFO,
+                                "Course passed successfully courseCode: " + course.getCourseCode());
+
                                 markCourse.setIsCompleted(true);
                                 course.getRegisteredStudents().remove(choice);
                                 System.out.println(
@@ -728,11 +733,15 @@ public class LoginSystem {
                         }
                         break;
                     } else if (passingCondition.equals("fail")) {
+
                         System.out.println(
                                 "Enter \"confirm\" to confirm your decision, or \"cancel\" to cancel your decision");
                         while (true) {
                             String confirmation = scanner.nextLine();
                             if (confirmation.equals("confirm")) {
+                                loggerSystem.getLogger().log(Level.INFO,
+                                "Course failed successfully courseCode: " + course.getCourseCode());
+
                                 markCourse.setIsCompleted(false);
                                 tempStudents.get(choice).getRegisteredCourses().remove(index);
                                 course.getRegisteredStudents().remove(choice);
@@ -806,6 +815,9 @@ public class LoginSystem {
                                 .convertHundredToGano(givenGrade);
                         course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade()
                                 .convertHundredToLetterGrade(givenGrade);
+                                loggerSystem.getLogger().log(Level.INFO,
+                                "Grade successfully updated courseCode: " + course.getCourseCode());
+
                         System.out.println("Grade updated succesfully! GANO and letter grade updated automatically!");
                         break;
                     } else {
