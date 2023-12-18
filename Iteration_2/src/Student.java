@@ -6,6 +6,7 @@ public class Student extends User {
     private Transcript transcript;
     private Draft draft = new Draft();
     private long year;
+    private boolean isApproved;
 
     private ArrayList<Course> registeredCourses = new ArrayList<>();
     // private ArrayList<Course> approvedCourses = new ArrayList<>();
@@ -55,6 +56,13 @@ public class Student extends User {
         return studentId;
     }
 
+    public boolean isApproved(){
+        return isApproved;
+    }
+
+    public void approve(){
+        isApproved=true;
+    }
     public Advisor getAdvisor() {
         return advisor;
     }

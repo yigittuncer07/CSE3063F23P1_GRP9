@@ -254,19 +254,34 @@ public class LoginSystem {
             System.out.println("\nWelcome " + studentAffairsStaff.getName() + " " + studentAffairsStaff.getLastName());
             while (true) {
                 System.out.println("Choose your action you will like to perform.");
-                System.out.println("    Enter 1 to see the information that needs to be updated in the system.");
-
-                System.out.println("    Enter 2 to logout.");
+                System.out.println("    Enter 1 to open approved courses that needs to be updated in the system.");
+                System.out.println("    Enter 2 to update student information");
+                System.out.println("    Enter 3 to open student informations");
+                System.out.println("    Enter 4 to logout.");
                 System.out.print("Enter action : ");
 
                 int choice = intInput();
-
+                
                 switch (choice) {
                     case 1:
-                        System.out.println(studentAffairsStaff.getWorkingField());
-                        // printApprovedCourses();
+                        printApprovedCourses();
+                        System.out.println();
                         break;
                     case 2:
+                       // Daha sonra doldurulacak
+                    case 3:
+                    System.out.println("\nEnter StudentID: ");
+                    String studentID = scanner.nextLine();
+                    Student student = (Student) getUserWithId(studentID, "Student");
+                     if (student == null) {
+                     System.out.println("\nStudent with StudentID " + studentID + " is not found!");
+                     }
+                    else {
+                     System.out.println(student.getInfo());
+                     System.out.println();
+                    }
+                    break;
+                    case 4:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
@@ -296,7 +311,7 @@ public class LoginSystem {
         System.out.println("\nWelcome to registration!");
 
         System.out.println(
-                "\nCommands:\n-\"add\" coursecode to add to draft\n-\"remove\" coursecode to remove from draft\\n-\"submit\" to submit for approval\n-\"exit\" to save draft and exit\n-\"clear\" to clear draft and exit\n-\"commands\" to see commands\n");
+                "\nCommands:\n-\"add\" coursecode to add to draft\n-\"remove\" coursecode to remove from draft\n-\"submit\" to submit for approval\n-\"exit\" to save draft and exit\n-\"clear\" to clear draft and exit\n-\"commands\" to see commands\n");
 
         ArrayList<Course> eligableCourses = student.getEligableCourses(jsonFileManager.getCourses());
         Advisor advisor = (Advisor) getUserWithId(student.getAdvisor().getStaffID(), "Advisor");
@@ -445,29 +460,18 @@ public class LoginSystem {
         return input;
     }
 
-    // private void printApprovedCourses(Student student) {
-    // System.out.println("\nApproved Courses for \n" + student.getInfo());
-    // ArrayList<Course> approvedCourses = student.getApprovedCourses();
-
-    // if (approvedCourses.isEmpty()) {
-    // System.out.println("No approved courses.");
-    // } else {
-    // for (Course course : approvedCourses) {
-    // System.out.println("Course name to be added to the system =" +
-    // course.getCourseName() + " Course Code= "
-    // + course.getCourseCode());
-    // }
-    // }
-    // System.out.println();
-    // }
-
-    // private void printApprovedCourses() {
-    // for (Student student : jsonFileManager.getStudents()) {
-    // if (!student.getApprovedCourses().isEmpty()) {
-    // printApprovedCourses(student);
-    // }
-    // }
-    // }
+     private void printApprovedCourses() {
+      for(Course course : jsonFileManager.getCourses()){
+        for (Student student : jsonFileManager.getStudents()) {
+             if (course.isApproved() &&student.isApproved()) {
+                System.out.println("\nApproved Courses for \n" + student.getName() + " " +student.getLastName());
+                System.out.println("Course name to be added to the system =" +
+                    course.getCourseName() + " Course Code= "
+                    + course.getCourseCode());
+                    }
+                }
+            }
+        }    
 
     private void draftApprovalProcess(Advisor advisor) {
         Student student;
@@ -488,6 +492,7 @@ public class LoginSystem {
 
                 if (advisorInput.equals("yes")) {
                     course.approve();
+                    student.approve();
                 } else if (advisorInput.equals("no")) {
                     // Dont do anything here
                 } else {
