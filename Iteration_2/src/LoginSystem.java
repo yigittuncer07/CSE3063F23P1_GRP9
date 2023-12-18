@@ -3,11 +3,13 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class LoginSystem {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
+    private static final LoggerSystem loggerSystem = new LoggerSystem();
     private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
     private int incorrectAttemptsStudent = 0;
     private int incorrectAttemptsLecturer = 0;
@@ -18,15 +20,21 @@ public class LoginSystem {
 
     public void startSystem() {
 
+        loggerSystem.getLogger().log(Level.INFO, "System started successfully.");
+
         init();
 
         executorService.schedule(() -> {
+            loggerSystem.getLogger().log(Level.SEVERE, "System warned user.");
             System.out.println("Program will exit after 100 seconds!");
         }, 100, TimeUnit.SECONDS);
 
         executorService.schedule(() -> {
+            loggerSystem.getLogger().log(Level.SEVERE, "System has timed out.");
             System.out.println("The system has timed out, please log in again.");
+            loggerSystem.getLogger().log(Level.SEVERE, "System exit successfully.");
             System.exit(0);
+
         }, 200, TimeUnit.SECONDS);
 
         while (true) {
@@ -51,6 +59,7 @@ public class LoginSystem {
                 case 5:
                     System.out.println("\nSystem closed succesfully.\n");
                     jsonFileManager.writeAllDataToJSON();
+                    loggerSystem.getLogger().log(Level.INFO, "System exit succesfully.");
                     System.exit(0);
                 default:
                     System.out.println("Invalid input!");
@@ -61,6 +70,8 @@ public class LoginSystem {
 
     private void studentLogin() {
 
+        loggerSystem.getLogger().log(Level.INFO, "User selected student to login.");
+
         System.out.println("\nEnter your StudentID: ");
         String studentID = scanner.nextLine();
         System.out.println("Enter your Password: ");
@@ -70,10 +81,14 @@ public class LoginSystem {
 
         if (student == null) {
             System.out.println("\nStudent with StudentID " + studentID + " is not found!");
+            loggerSystem.getLogger().log(Level.SEVERE, "Null Student exception.");
             return;
         }
 
         if (student.getPassword().equals(password)) {
+
+            loggerSystem.getLogger().log(Level.INFO,
+                    "Successfull login by: " + student.getName() + " " + student.getLastName());
 
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
@@ -87,28 +102,38 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
+                        loggerSystem.getLogger().log(Level.INFO, "Transcript access.");
+
                         System.out.println("\nThis is your transcript.\n");
                         System.out.println(student.getTranscript());
                         break;
                     case 2:
+                        loggerSystem.getLogger().log(Level.INFO, "New registration session started.");
                         registrationProcess(student);
                         break;
                     case 3:
+                        loggerSystem.getLogger().log(Level.INFO, "Successfull log out by: " + student.getStudentId());
                         System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
+                        loggerSystem.getLogger().log(Level.INFO, "Invalid input tried.");
                         System.out.println("\nInvalid input!\n");
                 }
             }
         } else {
             incorrectAttemptsStudent++;
             System.out.println("\nWrong Password!");
+            loggerSystem.getLogger().log(Level.WARNING, "Wrong password attempted to ID: " + student.getStudentId());
 
             if (incorrectAttemptsStudent == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                loggerSystem.getLogger().log(Level.WARNING, student.getStudentId() + " ID account locked.");
+
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
                 } catch (InterruptedException e) {
+                    loggerSystem.getLogger().log(Level.SEVERE, "Interrupted Exception.");
+
                     e.printStackTrace();
                 }
                 // Reset attempts after timeout
@@ -118,6 +143,7 @@ public class LoginSystem {
     }
 
     private void lecturerLogin() {
+        loggerSystem.getLogger().log(Level.INFO, "User selected lecturer to login.");
 
         System.out.println("\nEnter your StaffID: ");
         String staffID = scanner.nextLine();
@@ -128,6 +154,7 @@ public class LoginSystem {
 
         if (lecturer == null) {
             System.out.println("\nLecturer with StaffID " + staffID + " is not found!");
+            loggerSystem.getLogger().log(Level.SEVERE, "Null Student exception.");
             return;
         }
 
@@ -146,27 +173,40 @@ public class LoginSystem {
                 switch (choice) {
                     case 1:
                         System.out.println(lecturer.getProfession());
+                        loggerSystem.getLogger().log(Level.INFO, "Profession access.");
+
                         break;
                     case 2:
                         controlYourCourses(lecturer);
+                        loggerSystem.getLogger().log(Level.INFO, "Course control by:" + lecturer.getStaffID());
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
+                        loggerSystem.getLogger().log(Level.INFO, "Successfull log out by: " + lecturer.getStaffID());
+
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.INFO, "Invalid input tried.");
+
                 }
             }
         } else {
             incorrectAttemptsLecturer++;
             System.out.println("\nWrong Password!");
+            loggerSystem.getLogger().log(Level.WARNING, "Wrong password attempted to ID: " + lecturer.getStaffID());
 
             if (incorrectAttemptsLecturer == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                loggerSystem.getLogger().log(Level.WARNING, lecturer.getStaffID() + " ID account locked.");
+
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
                 } catch (InterruptedException e) {
+                    loggerSystem.getLogger().log(Level.SEVERE, "Interrupted Exception.");
+
                     e.printStackTrace();
+
                 }
                 // Reset attempts after timeout
                 incorrectAttemptsLecturer = 0;
@@ -177,6 +217,7 @@ public class LoginSystem {
     }
 
     private void advisorLogin() {
+        loggerSystem.getLogger().log(Level.INFO, "User selected advisor to login. ");
 
         System.out.println("\nEnter your StaffID: ");
         String staffID = scanner.nextLine();
@@ -222,10 +263,15 @@ public class LoginSystem {
 
             if (incorrectAttemptsAdvisor == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                loggerSystem.getLogger().log(Level.WARNING, advisor.getStaffID() + " ID account locked.");
+
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
                 } catch (InterruptedException e) {
+                    loggerSystem.getLogger().log(Level.SEVERE, "Interrupted Exception.");
+
                     e.printStackTrace();
+
                 }
                 // Reset attempts after timeout
                 incorrectAttemptsAdvisor = 0;
@@ -236,6 +282,7 @@ public class LoginSystem {
     }
 
     private void studentAffairsStaffLogin() {
+        loggerSystem.getLogger().log(Level.INFO, "User selected student affairs staff to login.");
 
         System.out.println("\nEnter your StaffID: ");
         String staffID = scanner.nextLine();
@@ -261,26 +308,25 @@ public class LoginSystem {
                 System.out.print("Enter action : ");
 
                 int choice = intInput();
-                
+
                 switch (choice) {
                     case 1:
                         printApprovedCourses();
                         System.out.println();
                         break;
                     case 2:
-                       // Daha sonra doldurulacak
+                        // Daha sonra doldurulacak
                     case 3:
-                    System.out.println("\nEnter StudentID: ");
-                    String studentID = scanner.nextLine();
-                    Student student = (Student) getUserWithId(studentID, "Student");
-                     if (student == null) {
-                     System.out.println("\nStudent with StudentID " + studentID + " is not found!");
-                     }
-                    else {
-                     System.out.println(student.getInfo());
-                     System.out.println();
-                    }
-                    break;
+                        System.out.println("\nEnter StudentID: ");
+                        String studentID = scanner.nextLine();
+                        Student student = (Student) getUserWithId(studentID, "Student");
+                        if (student == null) {
+                            System.out.println("\nStudent with StudentID " + studentID + " is not found!");
+                        } else {
+                            System.out.println(student.getInfo());
+                            System.out.println();
+                        }
+                        break;
                     case 4:
                         System.out.println("\nYou have logged out succesfully.");
                         return;
@@ -294,9 +340,13 @@ public class LoginSystem {
 
             if (incorrectAttemptsStaff == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                loggerSystem.getLogger().log(Level.WARNING, studentAffairsStaff.getStaffID() + " ID account locked.");
+
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
                 } catch (InterruptedException e) {
+                    loggerSystem.getLogger().log(Level.SEVERE, "Interrupted Exception.");
+
                     e.printStackTrace();
                 }
                 // Reset attempts after timeout
@@ -460,18 +510,18 @@ public class LoginSystem {
         return input;
     }
 
-     private void printApprovedCourses() {
-      for(Course course : jsonFileManager.getCourses()){
-        for (Student student : jsonFileManager.getStudents()) {
-             if (course.isApproved() &&student.isApproved()) {
-                System.out.println("\nApproved Courses for \n" + student.getName() + " " +student.getLastName());
-                System.out.println("Course name to be added to the system =" +
-                    course.getCourseName() + " Course Code= "
-                    + course.getCourseCode());
-                    }
+    private void printApprovedCourses() {
+        for (Course course : jsonFileManager.getCourses()) {
+            for (Student student : jsonFileManager.getStudents()) {
+                if (course.isApproved() && student.isApproved()) {
+                    System.out.println("\nApproved Courses for \n" + student.getName() + " " + student.getLastName());
+                    System.out.println("Course name to be added to the system =" +
+                            course.getCourseName() + " Course Code= "
+                            + course.getCourseCode());
                 }
             }
-        }    
+        }
+    }
 
     private void draftApprovalProcess(Advisor advisor) {
         Student student;
@@ -720,7 +770,8 @@ public class LoginSystem {
             for (CourseInstance courseInstance : lecturer.getCourseInstances()) {
                 for (Student student : jsonFileManager.getStudents()) {
                     for (Course course : student.getRegisteredCourses()) {
-                        if (courseInstance.getCourseCode().equals(course.getCourseCode()) && !course.isCompleted() && !hasStudent(courseInstance.getRegisteredStudents(), student)) {
+                        if (courseInstance.getCourseCode().equals(course.getCourseCode()) && !course.isCompleted()
+                                && !hasStudent(courseInstance.getRegisteredStudents(), student)) {
                             courseInstance.getRegisteredStudents().add(student);
                         }
                     }
@@ -731,7 +782,7 @@ public class LoginSystem {
     }
 
     private boolean hasStudent(ArrayList<Student> students, Student student) {
-        for (Student student1 : students ) {
+        for (Student student1 : students) {
             if (student1.getStudentId().equals(student.getStudentId())) {
                 return true;
             }
