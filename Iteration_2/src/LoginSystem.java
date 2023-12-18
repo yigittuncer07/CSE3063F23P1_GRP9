@@ -228,6 +228,8 @@ public class LoginSystem {
 
         if (advisor == null) {
             System.out.println("\nAdvisor with StaffID " + staffID + " is not found!");
+            loggerSystem.getLogger().log(Level.SEVERE, "Null Advisor exception.");
+
             return;
         }
 
@@ -246,11 +248,17 @@ public class LoginSystem {
                 switch (choice) {
                     case 1:
                         System.out.println(advisor.getProfession());
+                        loggerSystem.getLogger().log(Level.INFO, "Profession access.");
+
                         break;
                     case 2:
+                        loggerSystem.getLogger().log(Level.INFO, "Draf approval process started.");
+
                         draftApprovalProcess(advisor);
                         break;
                     case 3:
+                        loggerSystem.getLogger().log(Level.INFO, "Successfull log out by: " + advisor.getStaffID());
+
                         System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
@@ -293,6 +301,8 @@ public class LoginSystem {
 
         if (studentAffairsStaff == null) {
             System.out.println("\nStudent affairs staff with StaffID " + staffID + " is not found!");
+            loggerSystem.getLogger().log(Level.SEVERE, "Null Student Affairs Staff exception.");
+
             return;
         }
 
@@ -329,6 +339,8 @@ public class LoginSystem {
                         break;
                     case 4:
                         System.out.println("\nYou have logged out succesfully.");
+                                                loggerSystem.getLogger().log(Level.INFO, "Successfull log out by: " + studentAffairsStaff.getStaffID());
+
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
