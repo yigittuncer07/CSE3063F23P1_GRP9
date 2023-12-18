@@ -63,6 +63,8 @@ public class LoginSystem {
                     System.exit(0);
                 default:
                     System.out.println("Invalid input!");
+                    loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
             }
             System.out.println("");
         }
@@ -264,6 +266,8 @@ public class LoginSystem {
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                 }
             }
         } else {
@@ -330,12 +334,12 @@ public class LoginSystem {
                         System.out.println();
                         break;
                     case 2:
-                    loggerSystem.getLogger().log(Level.INFO,
+                        loggerSystem.getLogger().log(Level.INFO,
                                 "Student information update by: " + studentAffairsStaff.getStaffID());
 
                         // Daha sonra doldurulacak
                     case 3:
-                    loggerSystem.getLogger().log(Level.INFO,
+                        loggerSystem.getLogger().log(Level.INFO,
                                 "Access to student informations by: " + studentAffairsStaff.getStaffID());
                         System.out.println("\nEnter StudentID: ");
                         String studentID = scanner.nextLine();
@@ -355,6 +359,8 @@ public class LoginSystem {
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                 }
             }
         } else {
@@ -429,6 +435,8 @@ public class LoginSystem {
                         if (course.getCourseCode().equals(courseCode)) {
                             course.setStudent(student);
                             draft.addCourse(course);
+                            loggerSystem.getLogger().log(Level.INFO,
+                                    "Course added draft successfully by: " + student.getStudentId());
                             isCourseFound = true;
                         }
                     }
@@ -453,18 +461,26 @@ public class LoginSystem {
             } else if (studentInput.equals("submit")) {
                 student.sendDraftToAdvisor(advisor);
                 System.out.println("\nDraft sent for advisor approval\n");
+                loggerSystem.getLogger().log(Level.INFO,
+                        "Draft sent by: " + student.getStudentId() + "to Advisor ID " + advisor.getStaffID());
                 return;
             } else if (studentInput.equals("commands")) {
                 System.out.println(
                         "\nCommands:\n-\"add\" coursecode to add to draft\n-\"remove\" coursecode to remove from draft\\n-\"submit\" to submit for approval\n-\"exit\" to save draft and exit\n-\"clear\" to clear draft and exit\n-\"commands\" to see commands\n");
             } else if (studentInput.equals("exit")) {
                 System.out.println("\nDraft saved and exited.\n");
+                loggerSystem.getLogger().log(Level.INFO,
+                        "Draft saved by: " + student.getStudentId());
                 return;
             } else if (studentInput.equals("clear")) {
                 draft.clearDraft();
                 System.out.println("\nDraft cleared.\n");
+                loggerSystem.getLogger().log(Level.INFO,
+                        "Draft cleared by: " + student.getStudentId());
                 return;
             } else {
+                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                 System.out.println("INVALID INPUT");
             }
         }
@@ -626,9 +642,13 @@ public class LoginSystem {
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                 }
             } else {
                 System.out.println("\nInvalid input!\n");
+                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
             }
         }
     }
@@ -682,6 +702,8 @@ public class LoginSystem {
                                 break;
                             } else {
                                 System.out.println("\nInvalid input!\n");
+                                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                             }
                         }
                         break;
@@ -702,15 +724,21 @@ public class LoginSystem {
                                 break;
                             } else {
                                 System.out.println("\nInvalid input!\n");
+                                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                             }
                         }
                         break;
                     } else {
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                     }
                 }
             } else {
                 System.out.println("\nInvalid input!\n");
+                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
             }
         }
     }
@@ -762,11 +790,15 @@ public class LoginSystem {
                         break;
                     } else {
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                     }
                 }
 
             } else {
                 System.out.println("\nInvalid input!\n");
+                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
             }
         }
 
