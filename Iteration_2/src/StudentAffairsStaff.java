@@ -36,6 +36,9 @@ public class StudentAffairsStaff extends Staff {
                 + this.getEmail();
     }
 
+    public void studentUpdate(Student updatedStudent, String studentId){
+        updatedStudent.setStudentId(studentId);
+    }
     /**
      * Retrieves the working field of the student affairs staff.
      *
@@ -45,6 +48,10 @@ public class StudentAffairsStaff extends Staff {
         return workingField;
     }
 
+    /**
+     * Retrieves the working field of the student affairs staff.
+     *
+     * @return The working field.
     /**
      * Sets the working field of the student affairs staff.
      *
