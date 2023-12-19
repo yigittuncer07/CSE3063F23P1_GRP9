@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CourseInstance {
 
-    private final long maxNumberStudents = 30;
+    private final long maxNumberStudents = 50;
 
     private String courseCode = "";
     private String courseName = "";
