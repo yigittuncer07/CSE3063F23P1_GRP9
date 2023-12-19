@@ -5,24 +5,7 @@
     "password": "emre123",
     "address": "Konya, Turkey",
     "advisorId": "160222",
-    "registeredCourses": [
-        {
-            "courseName": "Sociology",
-            "credits": 3,
-            "courseCode": "SOC100",
-            "grade": 90.0,
-            "isCompleted": true,
-            "courseLecturer": "160222"
-        },
-        {
-            "courseName": "Environmental Science",
-            "credits": 4,
-            "courseCode": "ENVSCI202",
-            "grade": 68.0,
-            "isCompleted": true,
-            "courseLecturer": "160555"
-        }
-    ],
+    "registeredCourses": [],
     "birthDate": "29:03:07.345+0300",
     "year": 2,
     "email": "emrekaya@gmail.com",

@@ -5,24 +5,7 @@
     "password": "elif456",
     "address": "Bursa, Turkey",
     "advisorId": "160222",
-    "registeredCourses": [
-        {
-            "courseName": "Literature",
-            "credits": 3,
-            "courseCode": "LIT101",
-            "grade": 88.0,
-            "isCompleted": true,
-            "courseLecturer": "160222"
-        },
-        {
-            "courseName": "Art History",
-            "credits": 4,
-            "courseCode": "ARTH202",
-            "grade": 70.0,
-            "isCompleted": true,
-            "courseLecturer": "160111"
-        }
-    ],
+    "registeredCourses": [],
     "birthDate": "04:02:05.932+0300",
     "year": 1,
     "email": "elifyilmaz@gmail.com",

@@ -5,24 +5,7 @@
     "password": "zeynep123",
     "address": "Adana, Turkey",
     "advisorId": "160222",
-    "registeredCourses": [
-        {
-            "courseName": "History",
-            "credits": 3,
-            "courseCode": "HIST101",
-            "grade": 72.0,
-            "isCompleted": true,
-            "courseLecturer": "160111"
-        },
-        {
-            "courseName": "Psychology",
-            "credits": 5,
-            "courseCode": "PSYCH202",
-            "grade": 64.0,
-            "isCompleted": false,
-            "courseLecturer": "160111"
-        }
-    ],
+    "registeredCourses": [],
     "birthDate": "21:11:04.789+0300",
     "year": 3,
     "email": "zeynepyildiz@gmail.com",

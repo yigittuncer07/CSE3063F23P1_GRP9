@@ -5,24 +5,7 @@
     "password": "xyz123",
     "address": "İzmir, Turkey",
     "advisorId": "160222",
-    "registeredCourses": [
-        {
-            "courseName": "Biology",
-            "credits": 3,
-            "courseCode": "BIO101",
-            "grade": 55.0,
-            "isCompleted": true,
-            "courseLecturer": "160222"
-        },
-        {
-            "courseName": "Statistics",
-            "credits": 4,
-            "courseCode": "STAT202",
-            "grade": 82.0,
-            "isCompleted": false,
-            "courseLecturer": "160555"
-        }
-    ],
+    "registeredCourses": [],
     "birthDate": "12:08:03.567+0300",
     "year": 2,
     "email": "mehmetdemir@gmail.com",

@@ -1,28 +1,11 @@
 {
     "studentId": "151222",
     "firstName": "Zehra",
-    "lastName": "�\u2021etin",
+    "lastName": "Cetin",
     "password": "zehra123",
     "address": "Samsun, Turkey",
     "advisorId": "160333",
-    "registeredCourses": [
-        {
-            "courseName": "Geography",
-            "credits": 3,
-            "courseCode": "GEOG101",
-            "grade": 85.0,
-            "isCompleted": true,
-            "courseLecturer": "160111"
-        },
-        {
-            "courseName": "Sustainable Development",
-            "credits": 4,
-            "courseCode": "SUSDEV202",
-            "grade": 70.0,
-            "isCompleted": true,
-            "courseLecturer": "160333"
-        }
-    ],
+    "registeredCourses": [],
     "birthDate": "25:01:10.678+0300",
     "year": 2,
     "email": "zehracetin@gmail.com",
