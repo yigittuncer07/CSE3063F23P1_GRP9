@@ -334,6 +334,8 @@ public class LoginSystem {
                         System.out.println();
                         break;
                     case 2:
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Student Affairs Staff accessed update student by: " + studentAffairsStaff.getStaffID());
                     System.out.println("\nEnter StudentID: ");
                     String studentID1 = scanner.nextLine();
                     Student student1= (Student) getUserWithId(studentID1, "Student");
