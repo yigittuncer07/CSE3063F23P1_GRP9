@@ -3,11 +3,13 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class LoginSystem {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final JSONFileManager jsonFileManager = new JSONFileManager();
+    private static final LoggerSystem loggerSystem = new LoggerSystem();
     private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
     private int incorrectAttemptsStudent = 0;
     private int incorrectAttemptsLecturer = 0;
@@ -18,15 +20,21 @@ public class LoginSystem {
 
     public void startSystem() {
 
+        loggerSystem.getLogger().log(Level.INFO, "System started successfully.");
+
         init();
 
         executorService.schedule(() -> {
+            loggerSystem.getLogger().log(Level.SEVERE, "System warned user.");
             System.out.println("Program will exit after 100 seconds!");
         }, 100, TimeUnit.SECONDS);
 
         executorService.schedule(() -> {
+            loggerSystem.getLogger().log(Level.SEVERE, "System has timed out.");
             System.out.println("The system has timed out, please log in again.");
+            loggerSystem.getLogger().log(Level.SEVERE, "System exit successfully.");
             System.exit(0);
+
         }, 200, TimeUnit.SECONDS);
 
         while (true) {
@@ -51,15 +59,20 @@ public class LoginSystem {
                 case 5:
                     System.out.println("\nSystem closed succesfully.\n");
                     jsonFileManager.writeAllDataToJSON();
+                    loggerSystem.getLogger().log(Level.INFO, "System exit succesfully.");
                     System.exit(0);
                 default:
                     System.out.println("Invalid input!");
+                    loggerSystem.getLogger().log(Level.SEVERE,
+                            "Invalid input entered.");
             }
             System.out.println("");
         }
     }
 
     private void studentLogin() {
+
+        loggerSystem.getLogger().log(Level.INFO, "User selected student to login.");
 
         System.out.println("\nEnter your StudentID: ");
         String studentID = scanner.nextLine();
@@ -70,10 +83,14 @@ public class LoginSystem {
 
         if (student == null) {
             System.out.println("\nStudent with StudentID " + studentID + " is not found!");
+            loggerSystem.getLogger().log(Level.SEVERE, "Null Student exception.");
             return;
         }
 
         if (student.getPassword().equals(password)) {
+
+            loggerSystem.getLogger().log(Level.INFO,
+                    "Successfull login by: " + student.getName() + " " + student.getLastName());
 
             System.out.println("\nWelcome " + student.getName() + " " + student.getLastName());
             while (true) {
@@ -87,28 +104,38 @@ public class LoginSystem {
 
                 switch (choice) {
                     case 1:
+                        loggerSystem.getLogger().log(Level.INFO, "Transcript access.");
+
                         System.out.println("\nThis is your transcript.\n");
                         System.out.println(student.getTranscript());
                         break;
                     case 2:
+                        loggerSystem.getLogger().log(Level.INFO, "New registration session started.");
                         registrationProcess(student);
                         break;
                     case 3:
+                        loggerSystem.getLogger().log(Level.INFO, "Successfull log out by: " + student.getStudentId());
                         System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
+                        loggerSystem.getLogger().log(Level.INFO, "Invalid input tried.");
                         System.out.println("\nInvalid input!\n");
                 }
             }
         } else {
             incorrectAttemptsStudent++;
             System.out.println("\nWrong Password!");
+            loggerSystem.getLogger().log(Level.WARNING, "Wrong password attempted to ID: " + student.getStudentId());
 
             if (incorrectAttemptsStudent == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                loggerSystem.getLogger().log(Level.WARNING, student.getStudentId() + " ID account locked.");
+
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
                 } catch (InterruptedException e) {
+                    loggerSystem.getLogger().log(Level.SEVERE, "Interrupted Exception.");
+
                     e.printStackTrace();
                 }
                 // Reset attempts after timeout
@@ -118,6 +145,7 @@ public class LoginSystem {
     }
 
     private void lecturerLogin() {
+        loggerSystem.getLogger().log(Level.INFO, "User selected lecturer to login.");
 
         System.out.println("\nEnter your StaffID: ");
         String staffID = scanner.nextLine();
@@ -128,6 +156,7 @@ public class LoginSystem {
 
         if (lecturer == null) {
             System.out.println("\nLecturer with StaffID " + staffID + " is not found!");
+            loggerSystem.getLogger().log(Level.SEVERE, "Null Student exception.");
             return;
         }
 
@@ -146,27 +175,40 @@ public class LoginSystem {
                 switch (choice) {
                     case 1:
                         System.out.println(lecturer.getProfession());
+                        loggerSystem.getLogger().log(Level.INFO, "Profession access.");
+
                         break;
                     case 2:
                         controlYourCourses(lecturer);
+                        loggerSystem.getLogger().log(Level.INFO, "Course control by:" + lecturer.getStaffID());
                         break;
                     case 3:
                         System.out.println("\nYou have logged out succesfully.");
+                        loggerSystem.getLogger().log(Level.INFO, "Successfull log out by: " + lecturer.getStaffID());
+
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.INFO, "Invalid input tried.");
+
                 }
             }
         } else {
             incorrectAttemptsLecturer++;
             System.out.println("\nWrong Password!");
+            loggerSystem.getLogger().log(Level.WARNING, "Wrong password attempted to ID: " + lecturer.getStaffID());
 
             if (incorrectAttemptsLecturer == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                loggerSystem.getLogger().log(Level.WARNING, lecturer.getStaffID() + " ID account locked.");
+
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
                 } catch (InterruptedException e) {
+                    loggerSystem.getLogger().log(Level.SEVERE, "Interrupted Exception.");
+
                     e.printStackTrace();
+
                 }
                 // Reset attempts after timeout
                 incorrectAttemptsLecturer = 0;
@@ -177,6 +219,7 @@ public class LoginSystem {
     }
 
     private void advisorLogin() {
+        loggerSystem.getLogger().log(Level.INFO, "User selected advisor to login. ");
 
         System.out.println("\nEnter your StaffID: ");
         String staffID = scanner.nextLine();
@@ -187,6 +230,8 @@ public class LoginSystem {
 
         if (advisor == null) {
             System.out.println("\nAdvisor with StaffID " + staffID + " is not found!");
+            loggerSystem.getLogger().log(Level.SEVERE, "Null Advisor exception.");
+
             return;
         }
 
@@ -205,27 +250,42 @@ public class LoginSystem {
                 switch (choice) {
                     case 1:
                         System.out.println(advisor.getProfession());
+                        loggerSystem.getLogger().log(Level.INFO, "Profession access.");
+
                         break;
                     case 2:
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Draft approval process started by: " + advisor.getStaffID());
+
                         draftApprovalProcess(advisor);
                         break;
                     case 3:
+                        loggerSystem.getLogger().log(Level.INFO, "Successfull log out by: " + advisor.getStaffID());
+
                         System.out.println("\nYou have logged out succesfully.");
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                                "Invalid input entered.");
                 }
             }
         } else {
             incorrectAttemptsAdvisor++;
             System.out.println("\nWrong Password!");
+            loggerSystem.getLogger().log(Level.WARNING, "Wrong password attempted to ID: " + advisor.getStaffID());
 
             if (incorrectAttemptsAdvisor == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                loggerSystem.getLogger().log(Level.WARNING, advisor.getStaffID() + " ID account locked.");
+
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
                 } catch (InterruptedException e) {
+                    loggerSystem.getLogger().log(Level.SEVERE, "Interrupted Exception.");
+
                     e.printStackTrace();
+
                 }
                 // Reset attempts after timeout
                 incorrectAttemptsAdvisor = 0;
@@ -236,6 +296,7 @@ public class LoginSystem {
     }
 
     private void studentAffairsStaffLogin() {
+        loggerSystem.getLogger().log(Level.INFO, "User selected student affairs staff to login.");
 
         System.out.println("\nEnter your StaffID: ");
         String staffID = scanner.nextLine();
@@ -246,6 +307,8 @@ public class LoginSystem {
 
         if (studentAffairsStaff == null) {
             System.out.println("\nStudent affairs staff with StaffID " + staffID + " is not found!");
+            loggerSystem.getLogger().log(Level.SEVERE, "Null Student Affairs Staff exception.");
+
             return;
         }
 
@@ -261,13 +324,21 @@ public class LoginSystem {
                 System.out.print("Enter action : ");
 
                 int choice = intInput();
-                
+
                 switch (choice) {
                     case 1:
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Approved courses access by: " + studentAffairsStaff.getStaffID());
+
                         printApprovedCourses();
                         System.out.println();
                         break;
                     case 2:
+
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Student information update by: " + studentAffairsStaff.getStaffID());
+
+
                     System.out.println("\nEnter StudentID: ");
                     String studentID1 = scanner.nextLine();
                     Student student1= (Student) getUserWithId(studentID1, "Student");
@@ -280,34 +351,47 @@ public class LoginSystem {
                      student1.setStudentId(updateStudentID);;
                     }
                       break;
+
                     case 3:
-                    System.out.println("\nEnter StudentID: ");
-                    String studentID = scanner.nextLine();
-                    Student student = (Student) getUserWithId(studentID, "Student");
-                     if (student == null) {
-                     System.out.println("\nStudent with StudentID " + studentID + " is not found!");
-                     }
-                    else {
-                     System.out.println(student.getInfo());
-                     System.out.println();
-                    }
-                    break;
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Access to student informations by: " + studentAffairsStaff.getStaffID());
+                        System.out.println("\nEnter StudentID: ");
+                        String studentID = scanner.nextLine();
+                        Student student = (Student) getUserWithId(studentID, "Student");
+                        if (student == null) {
+                            System.out.println("\nStudent with StudentID " + studentID + " is not found!");
+                        } else {
+                            System.out.println(student.getInfo());
+                            System.out.println();
+                        }
+                        break;
                     case 4:
                         System.out.println("\nYou have logged out succesfully.");
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Successfull log out by: " + studentAffairsStaff.getStaffID());
+
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                                "Invalid input entered.");
                 }
             }
         } else {
             incorrectAttemptsStaff++;
             System.out.println("\nWrong Password!");
+            loggerSystem.getLogger().log(Level.WARNING,
+                    "Wrong password attempted to ID: " + studentAffairsStaff.getStaffID());
 
             if (incorrectAttemptsStaff == maxAttempts) {
                 System.out.println("Too many incorrect attempts. Account locked for " + timeoutSeconds + " seconds.");
+                loggerSystem.getLogger().log(Level.WARNING, studentAffairsStaff.getStaffID() + " ID account locked.");
+
                 try {
                     Thread.sleep(timeoutSeconds * 1000);
                 } catch (InterruptedException e) {
+                    loggerSystem.getLogger().log(Level.SEVERE, "Interrupted Exception.");
+
                     e.printStackTrace();
                 }
                 // Reset attempts after timeout
@@ -365,6 +449,8 @@ public class LoginSystem {
                         if (course.getCourseCode().equals(courseCode)) {
                             course.setStudent(student);
                             draft.addCourse(course);
+                            loggerSystem.getLogger().log(Level.INFO,
+                                    "Course added draft successfully by: " + student.getStudentId());
                             isCourseFound = true;
                         }
                     }
@@ -389,18 +475,26 @@ public class LoginSystem {
             } else if (studentInput.equals("submit")) {
                 student.sendDraftToAdvisor(advisor);
                 System.out.println("\nDraft sent for advisor approval\n");
+                loggerSystem.getLogger().log(Level.INFO,
+                        "Draft sent by: " + student.getStudentId() + " to Advisor ID " + advisor.getStaffID());
                 return;
             } else if (studentInput.equals("commands")) {
                 System.out.println(
                         "\nCommands:\n-\"add\" coursecode to add to draft\n-\"remove\" coursecode to remove from draft\\n-\"submit\" to submit for approval\n-\"exit\" to save draft and exit\n-\"clear\" to clear draft and exit\n-\"commands\" to see commands\n");
             } else if (studentInput.equals("exit")) {
                 System.out.println("\nDraft saved and exited.\n");
+                loggerSystem.getLogger().log(Level.INFO,
+                        "Draft saved by: " + student.getStudentId());
                 return;
             } else if (studentInput.equals("clear")) {
                 draft.clearDraft();
                 System.out.println("\nDraft cleared.\n");
+                loggerSystem.getLogger().log(Level.INFO,
+                        "Draft cleared by: " + student.getStudentId());
                 return;
             } else {
+                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
                 System.out.println("INVALID INPUT");
             }
         }
@@ -471,20 +565,21 @@ public class LoginSystem {
         return input;
     }
 
-     private void printApprovedCourses() {
-      for(Course course : jsonFileManager.getCourses()){
-        for (Student student : jsonFileManager.getStudents()) {
-             if (course.isApproved() &&student.isApproved()) {
-                System.out.println("\nApproved Courses for \n" + student.getName() + " " +student.getLastName());
-                System.out.println("Course name to be added to the system =" +
-                    course.getCourseName() + " Course Code= "
-                    + course.getCourseCode());
-                    }
+    private void printApprovedCourses() {
+        for (Course course : jsonFileManager.getCourses()) {
+            for (Student student : jsonFileManager.getStudents()) {
+                if (course.isApproved() && student.isApproved()) {
+                    System.out.println("\nApproved Courses for \n" + student.getName() + " " + student.getLastName());
+                    System.out.println("Course name to be added to the system =" +
+                            course.getCourseName() + " Course Code= "
+                            + course.getCourseCode());
                 }
             }
-        }    
+        }
+    }
 
     private void draftApprovalProcess(Advisor advisor) {
+
         Student student;
         if (advisor.getDrafts().isEmpty()) {
             System.out.println("No drafts to approve currently");
@@ -504,14 +599,22 @@ public class LoginSystem {
                 if (advisorInput.equals("yes")) {
                     course.approve();
                     student.approve();
+                    loggerSystem.getLogger().log(Level.INFO,
+                            "Draft course approved by: " + advisor.getStaffID() + " from ID: " + student.getStudentId());
                 } else if (advisorInput.equals("no")) {
                     // Dont do anything here
+                    loggerSystem.getLogger().log(Level.INFO,
+                            "Draft course rejected by: " + advisor.getStaffID() + " from ID: " + student.getStudentId());
                 } else {
                     System.out.println("Unkown input!");
+                    loggerSystem.getLogger().log(Level.SEVERE,
+                            "Invalid input entered.");
                 }
             }
 
             System.out.println("draft for student " + student.getStudentId() + " complete");
+            loggerSystem.getLogger().log(Level.INFO,
+                    "Draft completed by: " + advisor.getStaffID());
         }
         advisor.processDrafts();
         // advisor.clearDrafts();
@@ -521,6 +624,9 @@ public class LoginSystem {
     private void controlYourCourses(Lecturer lecturer) {
 
         assignStudentsToCourses();
+
+        loggerSystem.getLogger().log(Level.INFO,
+                "Control courses access by: " + lecturer.getStaffID());
 
         while (true) {
             System.out.println("\nThese are the courses you give.");
@@ -549,12 +655,20 @@ public class LoginSystem {
 
                 switch (actionChoice) {
                     case 1:
+
+                        loggerSystem.getLogger().log(Level.INFO,
+                                "Course information access by: " + lecturer.getStaffID());
+
                         getCourseInformationFromLecturer(lecturer, lecturer.getCourseInstances().get(choice));
                         break;
                     case 2:
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Student graded by: " + lecturer.getStaffID());
                         gradeStudent(lecturer.getCourseInstances().get(choice));
                         break;
                     case 3:
+                    loggerSystem.getLogger().log(Level.INFO,
+                                "Pass and fail access by: " + lecturer.getStaffID());
                         passOrFailStudent(lecturer.getCourseInstances().get(choice));
                         break;
                     case 4:
@@ -562,15 +676,21 @@ public class LoginSystem {
                         return;
                     default:
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                                "Invalid input entered.");
                 }
             } else {
                 System.out.println("\nInvalid input!\n");
+                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
             }
         }
     }
 
     // This method is used for passing or failing a student.
     private void passOrFailStudent(CourseInstance course) {
+        loggerSystem.getLogger().log(Level.INFO,
+                                "Course pass or fail acces to courseCode: " + course.getCourseCode());
 
         while (true) {
             System.out.println("\nCourse Name: " + course.getCourseName() + "\tCourse Code: " + course.getCourseCode());
@@ -608,6 +728,9 @@ public class LoginSystem {
                         while (true) {
                             String confirmation = scanner.nextLine();
                             if (confirmation.equals("confirm")) {
+                                loggerSystem.getLogger().log(Level.INFO,
+                                "Course passed successfully courseCode: " + course.getCourseCode());
+
                                 markCourse.setIsCompleted(true);
                                 course.getRegisteredStudents().remove(choice);
                                 System.out.println(
@@ -618,15 +741,21 @@ public class LoginSystem {
                                 break;
                             } else {
                                 System.out.println("\nInvalid input!\n");
+                                loggerSystem.getLogger().log(Level.SEVERE,
+                                        "Invalid input entered.");
                             }
                         }
                         break;
                     } else if (passingCondition.equals("fail")) {
+
                         System.out.println(
                                 "Enter \"confirm\" to confirm your decision, or \"cancel\" to cancel your decision");
                         while (true) {
                             String confirmation = scanner.nextLine();
                             if (confirmation.equals("confirm")) {
+                                loggerSystem.getLogger().log(Level.INFO,
+                                "Course failed successfully courseCode: " + course.getCourseCode());
+
                                 markCourse.setIsCompleted(false);
                                 tempStudents.get(choice).getRegisteredCourses().remove(index);
                                 course.getRegisteredStudents().remove(choice);
@@ -638,15 +767,21 @@ public class LoginSystem {
                                 break;
                             } else {
                                 System.out.println("\nInvalid input!\n");
+                                loggerSystem.getLogger().log(Level.SEVERE,
+                                        "Invalid input entered.");
                             }
                         }
                         break;
                     } else {
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                                "Invalid input entered.");
                     }
                 }
             } else {
                 System.out.println("\nInvalid input!\n");
+                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
             }
         }
     }
@@ -694,15 +829,22 @@ public class LoginSystem {
                                 .convertHundredToGano(givenGrade);
                         course.getRegisteredStudents().get(choice).getRegisteredCourses().get(index).getGrade()
                                 .convertHundredToLetterGrade(givenGrade);
+                                loggerSystem.getLogger().log(Level.INFO,
+                                "Grade successfully updated courseCode: " + course.getCourseCode());
+
                         System.out.println("Grade updated succesfully! GANO and letter grade updated automatically!");
                         break;
                     } else {
                         System.out.println("\nInvalid input!\n");
+                        loggerSystem.getLogger().log(Level.SEVERE,
+                                "Invalid input entered.");
                     }
                 }
 
             } else {
                 System.out.println("\nInvalid input!\n");
+                loggerSystem.getLogger().log(Level.SEVERE,
+                        "Invalid input entered.");
             }
         }
 
@@ -731,7 +873,8 @@ public class LoginSystem {
             for (CourseInstance courseInstance : lecturer.getCourseInstances()) {
                 for (Student student : jsonFileManager.getStudents()) {
                     for (Course course : student.getRegisteredCourses()) {
-                        if (courseInstance.getCourseCode().equals(course.getCourseCode()) && !course.isCompleted() && !hasStudent(courseInstance.getRegisteredStudents(), student)) {
+                        if (courseInstance.getCourseCode().equals(course.getCourseCode()) && !course.isCompleted()
+                                && !hasStudent(courseInstance.getRegisteredStudents(), student)) {
                             courseInstance.getRegisteredStudents().add(student);
                         }
                     }
@@ -742,7 +885,7 @@ public class LoginSystem {
     }
 
     private boolean hasStudent(ArrayList<Student> students, Student student) {
-        for (Student student1 : students ) {
+        for (Student student1 : students) {
             if (student1.getStudentId().equals(student.getStudentId())) {
                 return true;
             }
