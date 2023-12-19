@@ -469,6 +469,10 @@ public class LoginSystem {
                 }
 
             } else if (studentInput.equals("submit")) {
+                if (draft.isEmpty()) {
+                    System.out.println("Cannot submit empty draft!\n");
+                    return;
+                }
                 student.sendDraftToAdvisor(advisor);
                 System.out.println("\nDraft sent for advisor approval\n");
                 loggerSystem.getLogger().log(Level.INFO,
