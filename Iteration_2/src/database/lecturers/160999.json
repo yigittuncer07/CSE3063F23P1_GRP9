@@ -1,12 +1,12 @@
 {
-    "lecturerId": "160888",
-    "profession": "Social Skills",
-    "firstName": "Eda",
-    "lastName": "Büyük",
+    "lecturerId": "160999",
+    "profession": "Network",
+    "firstName": "Feride",
+    "lastName": "Doğan",
     "password": "111111",
     "address": "Antalya, Turkey",
     "department": "SOCIAL SKILLS",
     "birthDate": "13:03:96.454+0530",
-    "email": "edabuyuk@gmail.com",
+    "email": "feridedogan@gmail.com",
     "ssn": "01010101010"
 }
