@@ -79,10 +79,6 @@ public class Student extends User {
         return year;
     }
 
-    // public ArrayList<Course> getApprovedCourses() {
-    // return approvedCourses;
-    // }
-
     public void setTranscript(Transcript transcript) {
         this.transcript = transcript;
     }
