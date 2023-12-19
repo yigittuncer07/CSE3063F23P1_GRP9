@@ -334,11 +334,6 @@ public class LoginSystem {
                         System.out.println();
                         break;
                     case 2:
-
-                        loggerSystem.getLogger().log(Level.INFO,
-                                "Student information update by: " + studentAffairsStaff.getStaffID());
-
-
                     System.out.println("\nEnter StudentID: ");
                     String studentID1 = scanner.nextLine();
                     Student student1= (Student) getUserWithId(studentID1, "Student");
@@ -348,9 +343,10 @@ public class LoginSystem {
                     else {
                    System.out.println("\nEnter new StudentID: ");
                       String updateStudentID = scanner.nextLine();
-                     student1.setStudentId(updateStudentID);;
+                      studentAffairsStaff.studentUpdate(student1, updateStudentID);
+                      System.out.println("Changes updated");
                     }
-                      break;
+                    break;
 
                     case 3:
                         loggerSystem.getLogger().log(Level.INFO,
