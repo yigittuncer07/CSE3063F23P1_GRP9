@@ -33,6 +33,7 @@ public class LoginSystem {
             loggerSystem.getLogger().log(Level.SEVERE, "System has timed out.");
             System.out.println("The system has timed out, please log in again.");
             loggerSystem.getLogger().log(Level.SEVERE, "System exit successfully.");
+            jsonFileManager.writeAllDataToJSON();
             System.exit(0);
 
         }, 200, TimeUnit.SECONDS);
