@@ -22,18 +22,38 @@ def save_courses_to_json():
     for item in courses:
         item.to_json_file()
         
+def get_user_with_id(id):
+    for item in users:
+        if item.get_user_id() == id:
+            return item
+    return None
+
 def get_users_from_json():
     print("get all from json called")
     
 
 def student_login():
     
-    student_input = input("enter student id: ")
-    student_input = input("enter password: ")
+    student_id_input = input("enter student id: ")
+    student = get_user_with_id(student_id_input)
+    if (student == None):
+        print("\033[91mNo such user!\033[0m")
+        exit() # this shouldnt exit but should prompt again for inptut
+
+    student_password_input = input("enter password: ")
+    
+    if (student.get_password() == student_password_input):
+        print(f"welcome {student.get_name()}")
+    else:
+        print("\033[91mWrong Password!\033[0m")
+        exit() # this shouldnt exit but should prompt again for inptut
+
     
 def staff_login():
     student_input = input("enter staff id: ")
     student_input = input("enter password: ")
+    
+
     
 
 advisor = Advisor()
@@ -95,14 +115,9 @@ if user_input == "1":
 elif user_input == "2":
     advisor_login()
 elif user_input ==  "3":
-    # print(student2.get_info())
-    save_users_to_json()
+    save_users_to_json() 
     save_courses_to_json()
     exit()
 else:
     printf("invalid input!")
     
-
-
-
-# print(course2.get_info())
