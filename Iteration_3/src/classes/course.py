@@ -1,3 +1,5 @@
+import json
+
 class Course:
     def __init__(
         self,
@@ -35,3 +37,19 @@ class Course:
             f"Students Enrolled: {', '.join([student.get_name() for student in self.students]) if self.students else 'None'}"
         )
         return course_info
+    
+    def to_json_file(self):
+        filename = f"database/courses/{self.course_code}.json"
+        with open(filename, 'w') as json_file:
+            json.dump(self.get_info(), json_file, indent=2)
+        return filename
+
+    @classmethod
+    def from_json_file(cls, user_id):
+        filename = f"{user_id}.json"
+        if os.path.exists(filename):
+            with open(filename, 'r') as json_file:
+                student_data = json.load(json_file)
+                return cls(**student_data)
+        else:
+            raise FileNotFoundError(f"File {filename} does not exist.")     
