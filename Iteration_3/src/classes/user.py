@@ -19,4 +19,10 @@ class User(ABC):
     @abstractmethod
     def from_json_file(cls, user_id):
         pass
+    
+    def get_user_id(self):
+        return self.user_id
+    
+    def get_password(self):
+        return self.password
 
