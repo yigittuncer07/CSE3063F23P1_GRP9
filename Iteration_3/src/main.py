@@ -9,9 +9,19 @@ from classes.student import Student
 from classes.transcript import Transcript
 import json
 
+# GLOBAL VARIABLES
 users = []
 courses = []
 
+def print_info(message):
+    print("\n\033[92m" + message + "\033[0m")
+
+def print_error(message):
+    print("\n\033[91m" + message + "\033[0m")
+
+def print_commands(message):
+    print("\n\033[93m" + message + "\033[0m")
+    
 def save_users_to_json():
     print("save all to file called")
     for item in users:
@@ -31,84 +41,77 @@ def get_user_with_id(id):
 def get_users_from_json():
     print("get all from json called")
     
-
 def student_login():
-    
     student_id_input = input("enter student id: ")
     student = get_user_with_id(student_id_input)
     if (student == None):
-        print("\033[91mNo such user!\033[0m")
+        print_error(f"no user with userID  {student_id_input}")
         exit() # this shouldnt exit but should prompt again for inptut
 
     student_password_input = input("enter password: ")
     
     if (student.get_password() == student_password_input):
-        print(f"welcome {student.get_name()}")
+        print_info(f"welcome {student.get_name()}")
     else:
-        print("\033[91mWrong Password!\033[0m")
+        print_error("\033[91mWrong Password!\033[0m")
         exit() # this shouldnt exit but should prompt again for inptut
-
-    
+  
 def staff_login():
-    student_input = input("enter staff id: ")
-    student_input = input("enter password: ")
+    pass
     
-
+def init():
     
+    advisor = Advisor()
+    lecturer = Lecturer()
+    student0 = Student(user_id="150111", name="Yigit Tuncer", password="111", email="yigittuncer@marun.edu.tr")
+    student1 = Student(user_id="150222", name="Kerem Ozkan", password="111", email="keremozkan@marun.edu.tr")
+    student2 = Student(user_id="150333", name="Ceren Ozge", password="111", email="cerenozge@marun.edu.tr")
+    student3 = Student(user_id="150444", name="Cem Mazlum", password="111", email="cemmazlum@marun.edu.tr")
+    
+    students = []
+    students.append(student0)
+    students.append(student1)
+    students.append(student2)
+    students.append(student3)
 
-advisor = Advisor()
-lecturer = Lecturer()
-student0 = Student(user_id="150111", name="Yigit Tuncer", password="111", email="yigittuncer@marun.edu.tr")
-student1 = Student(user_id="150222", name="Kerem Ozkan", password="111", email="keremozkan@marun.edu.tr")
-student2 = Student(user_id="150333", name="Ceren Ozge", password="111", email="cerenozge@marun.edu.tr")
-student3 = Student(user_id="150444", name="Cem Mazlum", password="111", email="cemmazlum@marun.edu.tr")
+    course0 = Course("CSE101", "Intro to Rust Programming")
+    course1 = Course("CSE201", "Intermediate Rust Programming")
 
-students = []
-students.append(student0)
-students.append(student1)
-students.append(student2)
-students.append(student3)
+    prerequisites = []
+    prerequisites.append(course0)
+    prerequisites.append(course1)
 
-course0 = Course("CSE101", "Intro to Rust Programming")
-course1 = Course("CSE201", "Intermediate Rust Programming")
+    course2 = Course(
+        "CSE301", "Advanced Rust Programming", lecturer, students, prerequisites, 4, 2
+    )
 
-prerequisites = []
-prerequisites.append(course0)
-prerequisites.append(course1)
+    courses.append(course0)
+    courses.append(course1)
+    courses.append(course2)
 
-course2 = Course(
-    "CSE301", "Advanced Rust Programming", lecturer, students, prerequisites, 4, 2
-)
+    draft = Draft()
+    grade = Grade()
+    transcript = Transcript()
+    student_affairs_staff = Student_Affairs_Staff()
 
-courses.append(course0)
-courses.append(course1)
-courses.append(course2)
+    users.append(student0)
+    users.append(student1)
+    users.append(student2)
+    users.append(student3)
+    users.append(lecturer)
+    users.append(advisor)
+    users.append(student_affairs_staff)
 
-draft = Draft()
-grade = Grade()
-transcript = Transcript()
-student_affairs_staff = Student_Affairs_Staff()
-
-users.append(student0)
-users.append(student1)
-users.append(student2)
-users.append(student3)
-users.append(lecturer)
-users.append(advisor)
-users.append(student_affairs_staff)
-
-
-
-
-
-print("\033[94mWELCOME TO BYS\033[0m")
-print("\033[93m1-> student login\n2-> staff login\n3-> exit\033[0m")
-
-user_input = input("")
+# MAIN PROCESS
+init()
+print_info("WELCOME TO BYS")
+print_commands("1-> student login\n2-> staff login\n3-> exit")
+user_input = input("==> ")
 
 while (not user_input in ["1","2","3"]):
-    user_input = input("\033[93m1-> student login 2-> staff login 3-> exit\n\033[0m")
-
+    print_error("invalid input!")
+    print_commands("1-> student login\n2-> staff login\n3-> exit")
+    user_input = input("==> ")
 
 if user_input == "1":
     student_login()
@@ -118,6 +121,3 @@ elif user_input ==  "3":
     save_users_to_json() 
     save_courses_to_json()
     exit()
-else:
-    printf("invalid input!")
-    
