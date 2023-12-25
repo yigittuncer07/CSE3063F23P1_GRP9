@@ -32,6 +32,9 @@ class Course:
     
     def get_prerequisites(self):
         return self.prerequisites
+    
+    def get_course_name(self):
+        return self.course_name
 
     def get_info(self):
         course_info = (
