@@ -8,10 +8,19 @@ from classes.student_affairs_staff import Student_Affairs_Staff
 from classes.student import Student
 from classes.transcript import Transcript
 import json
+import logging
 
 # GLOBAL VARIABLES
 users = []
 courses = []
+
+# LOGGING CONFIG
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler('logfile.log')
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 def print_info(message):
     print("\n\033[92m" + message + "\033[0m")
@@ -23,12 +32,12 @@ def print_commands(message):
     print("\n\033[93m" + message + "\033[0m")
     
 def save_users_to_json():
-    print("save all to file called")
+    logger.info("save students to file called")
     for item in users:
         item.to_json_file()
         
 def save_courses_to_json():
-    print("save courses called")
+    logger.info("save courses to file called")
     for item in courses:
         item.to_json_file()
         
@@ -42,19 +51,25 @@ def get_users_from_json():
     print("get all from json called")
     
 def student_login():
+    
     student_id_input = input("enter student id: ")
     student = get_user_with_id(student_id_input)
-    if (student == None):
-        print_error(f"no user with userID  {student_id_input}")
-        exit() # this shouldnt exit but should prompt again for inptut
+    
+    while (student == None or not isinstance(student, Student)):
+        print_error(f"no student with studentID  {student_id_input}")
+        student_id_input = input("enter student id: ")
+        student = get_user_with_id(student_id_input)
 
     student_password_input = input("enter password: ")
     
-    if (student.get_password() == student_password_input):
-        print_info(f"welcome {student.get_name()}")
-    else:
+    if (student.get_password() != student_password_input):
         print_error("\033[91mWrong Password!\033[0m")
-        exit() # this shouldnt exit but should prompt again for inptut
+        return
+    
+    print_info(f"Welcome {student.get_name()}")
+    print_commands("1-> see transcript\n2->register to a course\n3->")
+
+        
   
 def staff_login():
     pass
