@@ -1,5 +1,6 @@
 import json
 
+
 class Course:
     def __init__(
         self,
@@ -9,7 +10,7 @@ class Course:
         students=None,
         prerequisites=None,
         credits=None,
-        year=None,
+        year=0,
     ):
         self.course_code = course_code
         self.course_name = course_name
@@ -22,9 +23,15 @@ class Course:
     def enroll_student(self, student):
         if student not in self.students:
             self.students.append(student)
-            
+
     def get_course_code(self):
         return self.course_code
+    
+    def get_course_year(self):
+        return self.year
+    
+    def get_prerequisites(self):
+        return self.prerequisites
 
     def get_info(self):
         course_info = (
@@ -37,10 +44,10 @@ class Course:
             f"Students Enrolled: {', '.join([student.get_name() for student in self.students]) if self.students else 'None'}"
         )
         return course_info
-    
+
     def to_json_file(self):
         filename = f"database/courses/{self.course_code}.json"
-        with open(filename, 'w') as json_file:
+        with open(filename, "w") as json_file:
             json.dump(self.get_info(), json_file, indent=2)
         return filename
 
@@ -48,8 +55,8 @@ class Course:
     def from_json_file(cls, user_id):
         filename = f"{user_id}.json"
         if os.path.exists(filename):
-            with open(filename, 'r') as json_file:
+            with open(filename, "r") as json_file:
                 student_data = json.load(json_file)
                 return cls(**student_data)
         else:
-            raise FileNotFoundError(f"File {filename} does not exist.")     
+            raise FileNotFoundError(f"File {filename} does not exist.")
