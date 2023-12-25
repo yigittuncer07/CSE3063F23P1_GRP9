@@ -1,2 +1,25 @@
 class Transcript:
-    pass
+    def __init__(self, gano=None, grades=None):
+        self.gano = gano
+        self.grades = grades
+    
+    def get_completed_courses(self):
+        completed_courses = []
+        for grade in self.grades:
+            if grade.is_grade_passing():
+                completed_courses.append(grade.get_course_code())
+        return completed_courses
+    
+    def get_info(self):
+        info_str = f"GANO: {self.gano}\n"
+        
+        completed_courses = self.get_completed_courses()
+        if completed_courses:
+            info_str += "Completed Courses:\n"
+            for course_code in completed_courses:
+                info_str += f"- {course_code}\n"
+        else:
+            info_str += "No completed courses.\n"
+
+        return info_str
+        
