@@ -90,11 +90,32 @@ def student_login():
             print_title("TRANSCRIPT")
             print_info(student.get_transcript().get_info())
         elif user_input == "2":
+            
             print_title("COURSE REGISTRATION")
             eligable_courses = student.get_eligible_courses(courses)
-            print_info("Eligable Courses:")
-            for course in eligable_courses:
-                print(course.get_course_code())
+            
+            while True:
+                print_info("Eligable Courses:")
+                for course in eligable_courses:
+                    print(course.get_course_code() + " " + course.get_course_name())
+                    
+                print_commands("add \"course\" -> add to draft\nremove \"course\" -> remove from draft\nsubmit -> send draft to advisor for approval\nexit -> save draft and exit")
+                user_input = input("==> ")
+                
+                if (user_input.startswith("add")):
+                    pass
+                elif (user_input.startswith("remove")):
+                    pass
+                elif (user_input.startswith("submit")):
+                    pass
+                elif (user_input.startswith("exit")):
+                    print_info("draft saved!")
+                    return
+                else:
+                    print_error("Invalid Input!")
+
+            
+            
         elif user_input == "3":
             return
   
@@ -130,6 +151,9 @@ def init():
     
     course0 = Course("CSE101", "Intro to Rust Programming")
     course1 = Course("CSE201", "Intermediate Rust Programming")
+    course3 = Course("IAC", "Interior Architecture with AI")
+    course4 = Course("CSE401", "Final Project")
+
 
     prerequisites = []
     prerequisites.append(course0)
@@ -142,6 +166,9 @@ def init():
     courses.append(course0)
     courses.append(course1)
     courses.append(course2)
+    courses.append(course3)
+    courses.append(course4)
+
 
     draft = Draft()
     grade = Grade()
@@ -171,6 +198,6 @@ while True:
     if user_input == "1":
         student_login()
     elif user_input == "2":
-        advisor_login()
+        staff_login()
     elif user_input ==  "3":
         system_exit()
