@@ -1,14 +1,16 @@
 from .staff import Staff
 import json
 
-
 class Lecturer(Staff):
-    def __init__(self, user_id=None):
-        self.user_id = user_id
+    def __init__(self, user_id=None, name=None, password=None, email=None, department=None, field=None):
+        super().__init__(user_id,name,password,email,department)
+        self.field = field
         
 
     def get_info(self):
-        return self.user_id
+        staff_info = super().get_info()
+        lecturer_info = f"\nField: {self.field}"
+        return staff_info + lecturer_info
     
     def to_json_file(self):
         filename = f"database/lecturers/{self.user_id}.json"

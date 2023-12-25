@@ -1,11 +1,15 @@
-from .staff import Staff
+from .lecturer import Lecturer
 import json
 
-class Advisor(Staff):
-    pass
+class Advisor(Lecturer):
+    def __init__(self, user_id=None, name=None, password=None, email=None, department=None, field=None, students=None):
+        super().__init__(user_id,name,password,email,department,field)
+        self.students = students
 
     def get_info(self):
-        return "affection"
+        user_info = super().get_info()
+        advisor_info = f"\nField: {self.field}\nStudents: {self.students}"
+        return user_info + advisor_info
         
     def to_json_file(self):
         filename = f"database/advisors/{self.user_id}.json"
