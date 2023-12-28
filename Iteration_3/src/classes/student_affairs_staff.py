@@ -6,9 +6,16 @@ class Student_Affairs_Staff(Staff):
         super().__init__(user_id,name,password,email,department)
         self.students = students
 
+    @staticmethod
+    def get_list_info(list):
+        all_info = ""
+        for item in list:
+            all_info += item.get_info()
+        return all_info
+
     def get_info(self):
         user_info = super().get_info()
-        lecturer_info = f"\nStudents: {self.students}"
+        lecturer_info = f"\nStudents: {self.get_list_info(self.students)}"
         return user_info + lecturer_info
 
     def to_json_file(self):

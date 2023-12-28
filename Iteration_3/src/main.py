@@ -81,7 +81,7 @@ def student_login():
     student_password_input = input("enter password: ")
 
     if student.get_password() != student_password_input:
-        print_error("\033[91mWrong Password!\033[0m")
+        print_error("Wrong Password!")
         return
 
     print_info(f"Welcome {student.get_name()}")
@@ -97,28 +97,72 @@ def student_login():
 
         if user_input == "1":
             print_title("TRANSCRIPT")
-            print_info(student.get_transcript().get_info())
+            if (student.get_transcript() == None):
+                print_error("transcript not found! contact student affairs")
+            else:    
+                print_info(student.get_transcript().get_info())
         elif user_input == "2":
             print_title("COURSE REGISTRATION")
             eligable_courses = student.get_eligible_courses(courses)
+            draft = student.get_draft()
+            advisor = student.get_advisor()
 
             while True:
                 print_info("Eligable Courses:")
-                for course in eligable_courses:
-                    print(course.get_course_code() + " " + course.get_course_name())
+                if len(eligable_courses) == 0:
+                    print("no eligable courses")
+                else:
+                    for course in eligable_courses:
+                        print(course.get_course_code() + " " + course.get_course_name())
+                    
+                print_info("Current Draft:")
+                for course in draft.get_courses():
+                    print(course.get_course_code())
 
                 print_commands(
                     'add "course" -> add to draft\nremove "course" -> remove from draft\nsubmit -> send draft to advisor for approval\nexit -> save draft and exit'
                 )
                 user_input = input("==> ")
+                user_input = user_input.split()
+                if user_input[0] == "add":
+                    course_found = False
+                    for course in eligable_courses:
+                        if course.get_course_code() == user_input[1]:
+                            if draft.add_to_draft(course):
+                                print_info("course added")
+                                eligable_courses.remove(course)
+                            else:
+                                print_error("course couldnt be added!")
+                            course_found = True
+                            
+                    if not course_found:
+                        print_error("no such course!")
 
-                if user_input.startswith("add"):
-                    pass
-                elif user_input.startswith("remove"):
-                    pass
-                elif user_input.startswith("submit"):
-                    pass
-                elif user_input.startswith("exit"):
+                elif user_input[0] == "remove":
+                    course_found = False
+
+                    for course in draft.get_courses():
+                        if course.get_course_code() == user_input[1]:
+                            course_found = True
+                            if draft.remove_from_draft(course):
+                                print_info("course removed")
+                                eligable_courses.append(course)
+                            else:
+                                print_error("course couldnt be removed")
+
+                    if not course_found:
+                        print_error("no such course in draft!")
+
+                elif user_input[0] == "submit":
+                    if (len(draft.get_courses()) == 0):
+                        print_error("cannot send empty draft!")
+                    else:
+                        if advisor.add_draft(draft):
+                            print_info("draft updated")
+                        else:
+                            print_info("draft sent for approval")                    
+
+                elif user_input[0] == "exit":
                     print_info("draft saved!")
                     return
                 else:
@@ -130,7 +174,19 @@ def student_login():
 
 def staff_login():
     print_title("STAFF LOGIN")
+    staff_id_input = input("enter staff id: ")
+    staff = get_user_with_id(staff_id_input)
 
+    while staff == None or not isinstance(staff, Staff):
+        print_error(f"no staff with staffId  {staff_id_input}")
+        staff_id_input = input("enter staff id: ")
+        staff = get_user_with_id(staff_id_input)
+
+    staff_password_input = input("enter password: ")
+
+    if staff.get_password() != staff_password_input:
+        print_error("Wrong Password!")
+        return
 
 def init():
     grade0 = Grade("CSE101", "AA", "98", True)
@@ -152,18 +208,19 @@ def init():
         department="science",
         field="applied mathematics",
     )
-
     student0 = Student(
         user_id="150111",
         name="Yigit Tuncer",
         password="111",
         email="yigittuncer@marun.edu.tr",
+        year=2,
     )
     student1 = Student(
         user_id="150031",
         name="Kerem Demirel",
         password="111",
         email="keremozkan@marun.edu.tr",
+        year=3,
     )
     student2 = Student(
         user_id="150333",
@@ -178,6 +235,7 @@ def init():
         name="Cem Mazlum",
         password="111",
         email="cemmazlum@marun.edu.tr",
+        year=3,
     )
 
     students = []
@@ -233,7 +291,10 @@ def init():
     users.append(lecturer)
     users.append(advisor)
     users.append(student_affairs_staff)
-
+    
+    for student in students:
+        student.set_advisor(advisor)
+        
 
 # MAIN PROCESS
 init()
