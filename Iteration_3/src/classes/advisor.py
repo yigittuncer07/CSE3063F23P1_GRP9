@@ -12,12 +12,11 @@ class Advisor(Lecturer):
         department=None,
         field=None,
         students=None,
-        drafts= [],
+        drafts=[],
     ):
         super().__init__(user_id, name, password, email, department, field)
         self.students = students
         self.drafts = drafts
-
 
     # returns true if draft was appended
     def add_draft(self, draft_sent):
@@ -26,7 +25,7 @@ class Advisor(Lecturer):
                 draft = draft_sent
                 return True
         self.drafts.append(draft_sent)
-        return False  
+        return False
 
     @staticmethod
     def get_list_info(list):
@@ -37,9 +36,7 @@ class Advisor(Lecturer):
 
     def get_info(self):
         user_info = super().get_info()
-        advisor_info = (
-            f"\nField: {self.field}\nStudents: {self.get_list_info(self.students)}\nDrafts: {self.get_list_info(self.students)}"
-        )
+        advisor_info = f"\nField: {self.field}\nStudents: {self.get_list_info(self.students)}\nDrafts: {self.get_list_info(self.students)}"
         return user_info + advisor_info
 
     def to_json_file(self):

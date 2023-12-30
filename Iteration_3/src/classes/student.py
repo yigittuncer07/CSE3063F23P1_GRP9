@@ -31,10 +31,10 @@ class Student(User):
 
     def get_draft(self):
         return self.draft
-    
+
     def set_advisor(self, advisor):
         self.advisor = advisor
-    
+
     def get_advisor(self):
         return self.advisor
 
@@ -50,11 +50,11 @@ class Student(User):
 
     def is_course_eligible(self, course):
         logger.info(f"is course eligable called for course {course.get_course_code()}")
-        
+
         # check if already in draft
-        if course in self.draft.get_courses(): 
+        if course in self.draft.get_courses():
             return False
-        
+
         # check year prerequisite
         if course.get_course_year() > self.year:
             logger.info(

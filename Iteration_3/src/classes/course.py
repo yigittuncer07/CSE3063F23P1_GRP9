@@ -26,13 +26,13 @@ class Course:
 
     def get_course_code(self):
         return self.course_code
-    
+
     def get_course_year(self):
         return self.year
-    
+
     def get_prerequisites(self):
         return self.prerequisites
-    
+
     def get_course_name(self):
         return self.course_name
 
