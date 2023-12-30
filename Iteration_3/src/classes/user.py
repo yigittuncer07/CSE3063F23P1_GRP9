@@ -26,3 +26,6 @@ class User(ABC):
 
     def get_password(self):
         return self.password
+    
+    def get_name(self):
+        return self.name

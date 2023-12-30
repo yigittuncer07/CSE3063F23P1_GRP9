@@ -76,6 +76,8 @@ def student_login():
     while student == None or not isinstance(student, Student):
         print_error(f"no student with studentID  {student_id_input}")
         student_id_input = input("enter student id: ")
+        if student_id_input == "":
+            return
         student = get_user_with_id(student_id_input)
 
     student_password_input = input("enter password: ")
@@ -84,6 +86,7 @@ def student_login():
         print_error("Wrong Password!")
         return
 
+    print_title("STUDENT INTERFACE")
     print_info(f"Welcome {student.get_name()}")
 
     while True:
@@ -97,9 +100,9 @@ def student_login():
 
         if user_input == "1":
             print_title("TRANSCRIPT")
-            if (student.get_transcript() == None):
+            if student.get_transcript() == None:
                 print_error("transcript not found! contact student affairs")
-            else:    
+            else:
                 print_info(student.get_transcript().get_info())
         elif user_input == "2":
             print_title("COURSE REGISTRATION")
@@ -114,7 +117,7 @@ def student_login():
                 else:
                     for course in eligable_courses:
                         print(course.get_course_code() + " " + course.get_course_name())
-                    
+
                 print_info("Current Draft:")
                 for course in draft.get_courses():
                     print(course.get_course_code())
@@ -134,7 +137,7 @@ def student_login():
                             else:
                                 print_error("course couldnt be added!")
                             course_found = True
-                            
+
                     if not course_found:
                         print_error("no such course!")
 
@@ -154,13 +157,13 @@ def student_login():
                         print_error("no such course in draft!")
 
                 elif user_input[0] == "submit":
-                    if (len(draft.get_courses()) == 0):
+                    if len(draft.get_courses()) == 0:
                         print_error("cannot send empty draft!")
                     else:
                         if advisor.add_draft(draft):
                             print_info("draft updated")
                         else:
-                            print_info("draft sent for approval")                    
+                            print_info("draft sent for approval")
 
                 elif user_input[0] == "exit":
                     print_info("draft saved!")
@@ -180,6 +183,8 @@ def staff_login():
     while staff == None or not isinstance(staff, Staff):
         print_error(f"no staff with staffId  {staff_id_input}")
         staff_id_input = input("enter staff id: ")
+        if staff_id_input == "":
+            return
         staff = get_user_with_id(staff_id_input)
 
     staff_password_input = input("enter password: ")
@@ -187,6 +192,55 @@ def staff_login():
     if staff.get_password() != staff_password_input:
         print_error("Wrong Password!")
         return
+
+    if isinstance(staff, Lecturer):
+        if isinstance(staff, Advisor):
+            # Implement Advisor interface
+            print_title("ADVISOR INTERFACE")
+            print_info(f"Welcome {staff.get_name()}")
+            while True:
+                print_commands("1-> exit")
+                user_input = input("==> ")
+                
+                while not user_input in ["1"]:
+                    print_error("invalid input!")
+                    print_commands("1->exit")
+                    user_input = input("==> ")
+                
+                if user_input == "1":
+                    return
+        else:
+            # Implement Lecturer interface
+            print_title("LECTURER INTERFACE")
+            print_info(f"Welcome {staff.get_name()}")
+            while True:
+                print_commands("1-> exit")
+                user_input = input("==> ")
+                
+                while not user_input in ["1"]:
+                    print_error("invalid input!")
+                    print_commands("1->exit")
+                    user_input = input("==> ")
+                    
+                if user_input == "1":
+                    return
+                
+    elif isinstance(staff, Student_Affairs_Staff):
+        # Implement Student Affairs Staff interface
+        print_title("STUDENT AFFAIRS INTERFACE")
+        print_info(f"Welcome {staff.get_name()}")
+        
+        while True:
+            print_commands("1-> exit")
+            user_input = input("==> ")  
+            
+            while not user_input in ["1"]:
+                print_error("invalid input!")
+                print_commands("1->exit")
+                user_input = input("==> ")
+                
+            if user_input == "1":
+                return
 
 def init():
     grade0 = Grade("CSE101", "AA", "98", True)
@@ -246,7 +300,7 @@ def init():
 
     advisor = Advisor(
         user_id="150555",
-        name="",
+        name="Nazmi Emir Arslan",
         password="111",
         email="emirarslan@marun.edu.tr",
         department="science",
@@ -291,10 +345,10 @@ def init():
     users.append(lecturer)
     users.append(advisor)
     users.append(student_affairs_staff)
-    
+
     for student in students:
         student.set_advisor(advisor)
-        
+
 
 # MAIN PROCESS
 init()
