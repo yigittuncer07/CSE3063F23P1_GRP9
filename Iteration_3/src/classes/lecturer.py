@@ -16,9 +16,14 @@ class Lecturer(Staff):
         self.field = field
 
     def get_info(self):
-        staff_info = super().get_info()
-        lecturer_info = f"\nField: {self.field}"
-        return staff_info + lecturer_info
+        return (
+            f"user_id: {self.user_id}\n"
+            f"name: {self.name}\n"
+            f"password: {self.password}\n"
+            f"email: {self.email}\n"
+            f"department: {self.department}\n"
+            f"field: {self.field}"
+        )
 
     def to_json_file(self):
         filename = f"database/lecturers/{self.user_id}.json"

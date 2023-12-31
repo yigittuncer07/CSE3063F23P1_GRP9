@@ -9,6 +9,14 @@ class Staff(User, ABC):
         super().__init__(user_id, name, password, email)
         self.department = department
 
+    def get_department(self):
+        return self.department
+
     def get_info(self):
-        info_str = f"User ID: {self.user_id}\nName: {self.name}\nPassword: {self.password}\nEmail: {self.email}\nDepartment: {self.department}"
-        return info_str
+        return (
+            f"user_id: {self.user_id}\n"
+            f"name: {self.name}\n"
+            f"password: {self.password}\n"
+            f"email: {self.email}\n"
+            f"department: {self.department}"
+        )

@@ -17,15 +17,22 @@ class Student_Affairs_Staff(Staff):
 
     @staticmethod
     def get_list_info(list):
+        if len(list) == 0:
+            return ""
         all_info = ""
         for item in list:
             all_info += item.get_info()
         return all_info
 
     def get_info(self):
-        user_info = super().get_info()
-        lecturer_info = f"\nStudents: {self.get_list_info(self.students)}"
-        return user_info + lecturer_info
+        return (
+            f"user_id: {self.user_id}\n"
+            f"name: {self.name}\n"
+            f"password: {self.password}\n"
+            f"email: {self.email}\n"
+            f"department: {self.department}\n"
+            f"students: {self.students}"
+        )
 
     def to_json_file(self):
         filename = f"database/student_affairs_staff/{self.user_id}.json"

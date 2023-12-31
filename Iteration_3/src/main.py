@@ -103,7 +103,7 @@ def student_login():
             if student.get_transcript() == None:
                 print_error("transcript not found! contact student affairs")
             else:
-                print_info(student.get_transcript().get_info())
+                print_info(student.get_transcript().to_string())
         elif user_input == "2":
             print_title("COURSE REGISTRATION")
             eligable_courses = student.get_eligible_courses(courses)
@@ -201,12 +201,12 @@ def staff_login():
             while True:
                 print_commands("1-> exit")
                 user_input = input("==> ")
-                
+
                 while not user_input in ["1"]:
                     print_error("invalid input!")
                     print_commands("1->exit")
                     user_input = input("==> ")
-                
+
                 if user_input == "1":
                     return
         else:
@@ -216,31 +216,32 @@ def staff_login():
             while True:
                 print_commands("1-> exit")
                 user_input = input("==> ")
-                
+
                 while not user_input in ["1"]:
                     print_error("invalid input!")
                     print_commands("1->exit")
                     user_input = input("==> ")
-                    
+
                 if user_input == "1":
                     return
-                
+
     elif isinstance(staff, Student_Affairs_Staff):
         # Implement Student Affairs Staff interface
         print_title("STUDENT AFFAIRS INTERFACE")
         print_info(f"Welcome {staff.get_name()}")
-        
+
         while True:
             print_commands("1-> exit")
-            user_input = input("==> ")  
-            
+            user_input = input("==> ")
+
             while not user_input in ["1"]:
                 print_error("invalid input!")
                 print_commands("1->exit")
                 user_input = input("==> ")
-                
+
             if user_input == "1":
                 return
+
 
 def init():
     grade0 = Grade("CSE101", "AA", "98", True)
@@ -267,6 +268,7 @@ def init():
         name="Yigit Tuncer",
         password="111",
         email="yigittuncer@marun.edu.tr",
+        transcript=Transcript(),
         year=2,
     )
     student1 = Student(
@@ -274,6 +276,7 @@ def init():
         name="Kerem Demirel",
         password="111",
         email="keremozkan@marun.edu.tr",
+        transcript=Transcript(),
         year=3,
     )
     student2 = Student(
@@ -288,6 +291,7 @@ def init():
         user_id="150444",
         name="Cem Mazlum",
         password="111",
+        transcript=Transcript(),
         email="cemmazlum@marun.edu.tr",
         year=3,
     )
@@ -308,10 +312,13 @@ def init():
         students=students,
     )
 
-    course0 = Course("CSE101", "Intro to Rust Programming")
-    course1 = Course("CSE201", "Intermediate Rust Programming")
-    course3 = Course("IAC", "Interior Architecture with AI")
-    course4 = Course("CSE401", "Final Project")
+    for student in students:
+        student.set_advisor(advisor)
+
+    course0 = Course(course_code="CSE101",course_name="Intro to Rust Programming", lecturer=lecturer)
+    course1 = Course(course_code="CSE201",course_name="Intermediate Rust Programming", lecturer=lecturer)
+    course3 = Course(course_code="IAC",course_name="Interior Architecture with AI", lecturer=lecturer)
+    course4 = Course(course_code="CSE401",course_name="Final Project")
 
     prerequisites = []
     prerequisites.append(course0)

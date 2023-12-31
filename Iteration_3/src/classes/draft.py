@@ -1,5 +1,5 @@
 class Draft:
-    def __init__(self, student=[], courses=[]):
+    def __init__(self, student=None, courses=[]):
         self.student = student
         self.courses = courses
 
@@ -23,3 +23,15 @@ class Draft:
 
     def get_student(self):
         return self.student
+
+    @staticmethod
+    def get_list_info(list):
+        if len(list) == 0:
+            return ""
+        all_info = ""
+        for item in list:
+            all_info += item.get_info()
+        return all_info
+
+    def get_info(self):
+        return f"\nstudent: {self.student}\ncourses: {self.courses}"

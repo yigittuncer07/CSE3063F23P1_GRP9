@@ -9,6 +9,18 @@ class User(ABC):
         self.password = password
         self.email = email
 
+    def get_user_id(self):
+        return self.user_id
+
+    def get_password(self):
+        return self.password
+
+    def get_name(self):
+        return self.name
+
+    def get_email(self):
+        return self.email
+
     @abstractmethod
     def get_info(self):
         pass
@@ -20,12 +32,3 @@ class User(ABC):
     @abstractmethod
     def from_json_file(cls, user_id):
         pass
-
-    def get_user_id(self):
-        return self.user_id
-
-    def get_password(self):
-        return self.password
-    
-    def get_name(self):
-        return self.name

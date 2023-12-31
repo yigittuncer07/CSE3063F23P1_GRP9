@@ -1,5 +1,5 @@
 class Transcript:
-    def __init__(self, gano=None, grades=None):
+    def __init__(self, gano=0, grades=[]):
         self.gano = gano
         self.grades = grades
 
@@ -10,7 +10,7 @@ class Transcript:
                 completed_courses.append(grade.get_course_code())
         return completed_courses
 
-    def get_info(self):
+    def to_string(self):
         info_str = f"GANO: {self.gano}\n"
 
         completed_courses = self.get_completed_courses()
@@ -22,3 +22,6 @@ class Transcript:
             info_str += "No completed courses.\n"
 
         return info_str
+
+    def get_info(self):
+        return f"gano: {self.gano}\ngrades: {self.self.grades}"

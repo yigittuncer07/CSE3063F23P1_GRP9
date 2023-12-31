@@ -11,7 +11,7 @@ class Advisor(Lecturer):
         email=None,
         department=None,
         field=None,
-        students=None,
+        students=[],
         drafts=[],
     ):
         super().__init__(user_id, name, password, email, department, field)
@@ -29,15 +29,24 @@ class Advisor(Lecturer):
 
     @staticmethod
     def get_list_info(list):
+        if len(list) == 0:
+            return ""
         all_info = ""
         for item in list:
             all_info += item.get_info()
         return all_info
 
     def get_info(self):
-        user_info = super().get_info()
-        advisor_info = f"\nField: {self.field}\nStudents: {self.get_list_info(self.students)}\nDrafts: {self.get_list_info(self.students)}"
-        return user_info + advisor_info
+        return (
+            f"user_id: {self.user_id}\n"
+            f"name: {self.name}\n"
+            f"password: {self.password}\n"
+            f"email: {self.email}\n"
+            f"department: {self.department}\n"
+            f"field: {self.field}\n"
+            f"students: {self.students}\n"
+            f"drafts: {self.drafts}"
+        )
 
     def to_json_file(self):
         filename = f"database/advisors/{self.user_id}.json"

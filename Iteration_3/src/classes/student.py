@@ -44,10 +44,6 @@ class Student(User):
     def get_transcript(self):
         return self.transcript
 
-    def get_info(self):
-        user_info = super().get_info()
-        return f"user_id: {self.user_id}\nname: {self.name}\nemail: {self.email}"
-
     def is_course_eligible(self, course):
         logger.info(f"is course eligable called for course {course.get_course_code()}")
 
@@ -87,6 +83,17 @@ class Student(User):
             if self.is_course_eligible(course):
                 eligible_courses.append(course)
         return eligible_courses
+
+    def get_info(self):
+        return (
+            f"user_id: {self.user_id}\n"
+            f"name: {self.name}\n"
+            f"password: {self.password}\n"
+            f"email: {self.email}\n"
+            f"transcript: {self.transcript}\n"
+            f"year: {self.year}\n"
+            f"advisor: {self.advisor}"
+        )
 
     def to_json_file(self):
         filename = f"database/students/{self.user_id}.json"

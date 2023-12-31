@@ -7,15 +7,15 @@ class Course:
         course_code=None,
         course_name=None,
         lecturer=None,
-        students=None,
-        prerequisites=None,
+        students=[],
+        prerequisites=[],
         credits=None,
         year=0,
     ):
         self.course_code = course_code
         self.course_name = course_name
         self.lecturer = lecturer
-        self.students = students if students is not None else []
+        self.students = students
         self.prerequisites = prerequisites
         self.credits = credits
         self.year = year
@@ -36,17 +36,17 @@ class Course:
     def get_course_name(self):
         return self.course_name
 
+    @staticmethod
+    def get_list_info(list):
+        if len(list) == 0:
+            return ""
+        all_info = ""
+        for item in list:
+            all_info += item.get_info()
+        return all_info
+
     def get_info(self):
-        course_info = (
-            f"Course Code: {self.course_code}\n"
-            f"Course Name: {self.course_name}\n"
-            f"Lecturer: {self.lecturer.get_info() if self.lecturer else 'None'}\n"
-            f"Credits: {self.credits}\n"
-            f"Year: {self.year}\n"
-            f"Prerequisites: {', '.join([prerequisite.get_course_code() for prerequisite in self.prerequisites]) if self.prerequisites else 'None'}\n"
-            f"Students Enrolled: {', '.join([student.get_name() for student in self.students]) if self.students else 'None'}"
-        )
-        return course_info
+        return f"course_code: {self.course_code}\course_name: {self.course_name}\nlecturer: {self.lecturer}\nstudents: {self.students}\nprerequisites: {self.prerequisites}\ncredits: {self.credits}\nyear: {self.year}"
 
     def to_json_file(self):
         filename = f"database/courses/{self.course_code}.json"
