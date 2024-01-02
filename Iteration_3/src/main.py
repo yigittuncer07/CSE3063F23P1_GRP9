@@ -238,7 +238,7 @@ def staff_login():
                             user_input = input("==> ")
 
                         if user_input == "1":                               
-                            draft_approval_process(Advisor)
+                            draft_approval_process(staff)
 
                         if user_input == "2":
                             return
@@ -394,31 +394,29 @@ def init():
 
 def draft_approval_process(advisor):
                                 
-    if not Advisor.draft:
-        print("No drafts to approve currently")
+    if not advisor.get_drafts():
+        print_error("No drafts to approve currently")
         return
 
-    print("\nPlease proceed with this draft:\n")
+    print_info("\nPlease proceed with this draft:\n")
     
-    for draft in advisor.super().__init__.drafts:
-        student = get_user_with_id(draft.student.student_id, "Student")
-        print(student.get_info() + "\nStudentID: " + str(student.student_id) + "\n\nCourses:")
+    for draft in advisor.get_drafts():
+        student = draft.get_student()
+        print(student.get_name() + "\n" + student.get_user_id() + "\n\nCourses:")
 
-        for course in draft.courses:
+        for course in draft.get_courses():
             print(course.course_name + " " + course.course_code)
             advisor_input = input("Do you approve of this course? (yes/no): ")
 
             if advisor_input.lower() == "yes":
-
-                print.info(f"Draft course approved by: {advisor.staff_id} from ID: {student.student_id}")
+                course.enroll_student(student)
+                print_info("student enrolled to course")
             elif advisor_input.lower() == "no":
-                print.info(f"Draft course rejected by: {advisor.staff_id} from ID: {student.student_id}")
+                print_info("course rejected")
             else:
-                print("Unknown input!")
-                print.error("Invalid input entered.")
+                print_error("Invalid input entered.")
 
-        print(f"Draft for student {student.student_id} complete")
-        print.info(f"Draft completed by: {advisor.staff_id}")
+        print_info("Draft completed")
 
 # MAIN PROCESS
 init()
