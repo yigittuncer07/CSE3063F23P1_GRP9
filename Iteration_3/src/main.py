@@ -219,12 +219,41 @@ def staff_login():
 
                         while not user_input in ["1", "2"]:
                             print_error("invalid input!")
-                            print_commands("1-> view pending drafts\n2-> exit")
+                            print_commands("1-> evaluate pending drafts\n2-> exit")
                             user_input = input("==> ")
 
                         if user_input == "1":
-                            return
-                    
+                            def draft_approval_process(advisor):
+
+                                if not advisor.drafts:
+                                    print("No drafts to approve currently")
+                                    return
+
+                                print("\nPlease proceed with this draft:\n")
+                                
+                                for draft in advisor.drafts:
+                                    student = get_user_with_id(draft.student.student_id, "Student")
+                                    print(student.get_info() + "\nStudentID: " + str(student.student_id) + "\n\nCourses:")
+
+                                    for course in draft.courses:
+                                        print(course.course_name + " " + course.course_code)
+                                        advisor_input = input("Do you approve of this course? (yes/no): ")
+
+                                        if advisor_input.lower() == "yes":
+                                            course.approve()
+                                            student.approve()
+                                            print.info(f"Draft course approved by: {advisor.staff_id} from ID: {student.student_id}")
+                                        elif advisor_input.lower() == "no":
+                                            print.info(f"Draft course rejected by: {advisor.staff_id} from ID: {student.student_id}")
+                                        else:
+                                            print("Unknown input!")
+                                            print.error("Invalid input entered.")
+
+                                    print(f"Draft for student {student.student_id} complete")
+                                    print.info(f"Draft completed by: {advisor.staff_id}")
+                                
+                            draft_approval_process(Advisor)
+
                         if user_input == "2":
                             return
         else:
