@@ -9,10 +9,12 @@ from classes.student import Student
 from classes.transcript import Transcript
 import json
 import logging
+import time
 
 # GLOBAL VARIABLES
 users = []
 courses = []
+incorrect_attempts = 0
 
 # LOGGING CONFIG
 logger = logging.getLogger()
@@ -67,7 +69,6 @@ def get_user_with_id(id):
 def get_users_from_json():
     print("get all from json called")
 
-
 def student_login():
     print_title("STUDENT LOGIN")
     student_id_input = input("enter student id: ")
@@ -81,10 +82,17 @@ def student_login():
         student = get_user_with_id(student_id_input)
 
     student_password_input = input("enter password: ")
-
+    global incorrect_attempts
     if student.get_password() != student_password_input:
         print_error("Wrong Password!")
-        return
+        incorrect_attempts += 1
+        if incorrect_attempts == 3:
+            print_error("Maximum password attempts reached. Please wait for 10 seconds.")
+            time.sleep(10)  # Pause the program for 10 seconds
+            incorrect_attempts = 0  # Reset the incorrect attempts counter
+
+        if incorrect_attempts <= 3:
+            return
 
     print_title("STUDENT INTERFACE")
     print_info(f"Welcome {student.get_name()}")
@@ -188,10 +196,17 @@ def staff_login():
         staff = get_user_with_id(staff_id_input)
 
     staff_password_input = input("enter password: ")
-
+    global incorrect_attempts
     if staff.get_password() != staff_password_input:
         print_error("Wrong Password!")
-        return
+        incorrect_attempts += 1
+        if incorrect_attempts == 3:
+            print_error("Maximum password attempts reached. Please wait for 10 seconds.")
+            time.sleep(10)  # Pause the program for 10 seconds
+            incorrect_attempts = 0  # Reset the incorrect attempts counter
+
+        if incorrect_attempts <= 3:
+            return
 
     if isinstance(staff, Lecturer):
         if isinstance(staff, Advisor):
@@ -222,36 +237,7 @@ def staff_login():
                             print_commands("1-> evaluate pending drafts\n2-> exit")
                             user_input = input("==> ")
 
-                        if user_input == "1":
-                            def draft_approval_process(advisor):
-
-                                if not advisor.drafts:
-                                    print("No drafts to approve currently")
-                                    return
-
-                                print("\nPlease proceed with this draft:\n")
-                                
-                                for draft in advisor.drafts:
-                                    student = get_user_with_id(draft.student.student_id, "Student")
-                                    print(student.get_info() + "\nStudentID: " + str(student.student_id) + "\n\nCourses:")
-
-                                    for course in draft.courses:
-                                        print(course.course_name + " " + course.course_code)
-                                        advisor_input = input("Do you approve of this course? (yes/no): ")
-
-                                        if advisor_input.lower() == "yes":
-                                            course.approve()
-                                            student.approve()
-                                            print.info(f"Draft course approved by: {advisor.staff_id} from ID: {student.student_id}")
-                                        elif advisor_input.lower() == "no":
-                                            print.info(f"Draft course rejected by: {advisor.staff_id} from ID: {student.student_id}")
-                                        else:
-                                            print("Unknown input!")
-                                            print.error("Invalid input entered.")
-
-                                    print(f"Draft for student {student.student_id} complete")
-                                    print.info(f"Draft completed by: {advisor.staff_id}")
-                                
+                        if user_input == "1":                               
                             draft_approval_process(Advisor)
 
                         if user_input == "2":
@@ -349,6 +335,7 @@ def init():
     students.append(student2)
     students.append(student3)
 
+    drafts = []
     advisor = Advisor(
         user_id="150555",
         name="Nazmi Emir Arslan",
@@ -357,6 +344,8 @@ def init():
         department="science",
         field="statistician",
         students=students,
+        drafts=drafts
+        
     )
 
     for student in students:
@@ -403,6 +392,33 @@ def init():
     for student in students:
         student.set_advisor(advisor)
 
+def draft_approval_process(advisor):
+                                
+    if not Advisor.draft:
+        print("No drafts to approve currently")
+        return
+
+    print("\nPlease proceed with this draft:\n")
+    
+    for draft in advisor.super().__init__.drafts:
+        student = get_user_with_id(draft.student.student_id, "Student")
+        print(student.get_info() + "\nStudentID: " + str(student.student_id) + "\n\nCourses:")
+
+        for course in draft.courses:
+            print(course.course_name + " " + course.course_code)
+            advisor_input = input("Do you approve of this course? (yes/no): ")
+
+            if advisor_input.lower() == "yes":
+
+                print.info(f"Draft course approved by: {advisor.staff_id} from ID: {student.student_id}")
+            elif advisor_input.lower() == "no":
+                print.info(f"Draft course rejected by: {advisor.staff_id} from ID: {student.student_id}")
+            else:
+                print("Unknown input!")
+                print.error("Invalid input entered.")
+
+        print(f"Draft for student {student.student_id} complete")
+        print.info(f"Draft completed by: {advisor.staff_id}")
 
 # MAIN PROCESS
 init()
