@@ -199,16 +199,34 @@ def staff_login():
             print_title("ADVISOR INTERFACE")
             print_info(f"Welcome {staff.get_name()}")
             while True:
-                print_commands("1-> exit")
+                print_commands("1-> student registrations\n2-> exit")
                 user_input = input("==> ")
-
-                while not user_input in ["1"]:
+    
+                while not user_input in ["1", "2"]:
                     print_error("invalid input!")
                     print_commands("1->exit")
                     user_input = input("==> ")
 
-                if user_input == "1":
+                if user_input == "2":
                     return
+                
+                if user_input == "1":
+                    print_title("STUDENT REGISTRATIONS")
+
+                    while True:
+                        print_commands("1-> evaluate pending drafts\n2-> exit")
+                        user_input = input("==> ")
+
+                        while not user_input in ["1", "2"]:
+                            print_error("invalid input!")
+                            print_commands("1-> view pending drafts\n2-> exit")
+                            user_input = input("==> ")
+
+                        if user_input == "1":
+                            return
+                    
+                        if user_input == "2":
+                            return
         else:
             # Implement Lecturer interface
             print_title("LECTURER INTERFACE")

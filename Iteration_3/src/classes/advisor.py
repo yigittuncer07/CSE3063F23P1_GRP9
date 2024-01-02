@@ -1,3 +1,4 @@
+import os
 from .lecturer import Lecturer
 import json
 
