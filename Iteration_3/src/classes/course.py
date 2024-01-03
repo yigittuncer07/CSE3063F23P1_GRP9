@@ -47,7 +47,7 @@ class Course:
         return all_info
 
     def get_info(self):
-        return f"course_code: {self.course_code}course_name: {self.course_name}\nlecturer: {self.lecturer}\nstudents: {self.students}\nprerequisites: {self.prerequisites}\ncredits: {self.credits}\nyear: {self.year}"
+        return f"course_code: {self.course_code}\course_name: {self.course_name}\nlecturer: {self.lecturer}\nstudents: {self.students}\nprerequisites: {self.prerequisites}\ncredits: {self.credits}\nyear: {self.year}"
 
     def get_course_information(self): # Used for printing the course information
         # Basic inforamtion
