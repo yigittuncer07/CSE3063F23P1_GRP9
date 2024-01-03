@@ -411,7 +411,25 @@ def staff_login():
                             print("No registered courses.")
 
             elif user_input== "2":
-                return
+                # Yeni öğrenci numarasını belirleme işlemi
+                student_id = input("Enter the new student ID: ")
+                student = get_user_with_id(student_id)
+
+                while student is not None:
+                    print_error(f"Student ID {student_id} is already in use. Please choose another one.")
+                    student_id = input("Enter the new student ID: ")
+                    student = get_user_with_id(student_id)
+
+            # Önceki öğrenci numarasını güncelleme işlemi
+                previous_student_id = input("Enter the previous student ID to update: ")
+                previous_student = get_user_with_id(previous_student_id)
+
+                if previous_student is not None and isinstance(previous_student, Student):
+                    previous_student.user_id = student_id  # Öğrenci numarasını doğrudan güncelle
+                    print_info(f"Student ID updated. New student ID: {student_id}")
+                else:
+                    print_error(f"No student found with the previous ID: {previous_student_id}")
+
             
             elif user_input == "3":
                 return
