@@ -1,1 +1,9 @@
-"user_id: 150333\nname: Ceren Ozge\npassword: 111\nemail: cerenozge@marun.edu.tr\ntranscript: <classes.transcript.Transcript object at 0x000001C96C169F60>\nyear: 3\nadvisor: <classes.advisor.Advisor object at 0x000001C96C16AE30>"
+
+{
+    "studentId": "150333",
+    "Name": "Ceren Ozge",
+    "password": "888888",
+    "year": 2,
+    "email": "herosluna@gmail.com"
+}
+

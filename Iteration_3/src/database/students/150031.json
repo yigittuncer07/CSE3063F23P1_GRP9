@@ -1,1 +1,9 @@
-"user_id: 150031\nname: Kerem Demirel\npassword: 111\nemail: keremozkan@marun.edu.tr\ntranscript: <classes.transcript.Transcript object at 0x000001C96C16BE20>\nyear: 3\nadvisor: <classes.advisor.Advisor object at 0x000001C96C16AE30>"
+
+{
+    "studentId": "150031",
+    "Name": "Hasan Pekedis",
+    "password": "123456",
+    "year": 3,
+    "email": "hasanpekedis@gmail.com"
+}
+
