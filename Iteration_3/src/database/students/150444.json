@@ -4,6 +4,10 @@
     "Name": "Cem Kayan",
     "password": "1234567",
     "year": 4,
-    "email": "kayan@gmail.com"
+    "transcript": [],
+
+    "email": "kayan@gmail.com",
+    "draft": []
+
 }
 
