@@ -29,6 +29,9 @@ class Student(User):
         self.year = year
         self.advisor = advisor
         self.draft = Draft(student=self)
+        
+    def add_grade_to_transcript(self, grade):
+        self.transcript.add_grade(grade)
 
     def get_draft(self):
         return self.draft

@@ -69,6 +69,7 @@ def get_user_with_id(id):
 def get_users_from_json():
     print("get all from json called")
 
+
 def student_login():
     print_title("STUDENT LOGIN")
     student_id_input = input("enter student id: ")
@@ -87,7 +88,9 @@ def student_login():
         print_error("Wrong Password!")
         incorrect_attempts += 1
         if incorrect_attempts == 3:
-            print_error("Maximum password attempts reached. Please wait for 10 seconds.")
+            print_error(
+                "Maximum password attempts reached. Please wait for 10 seconds."
+            )
             time.sleep(10)  # Pause the program for 10 seconds
             incorrect_attempts = 0  # Reset the incorrect attempts counter
 
@@ -181,7 +184,19 @@ def student_login():
 
         elif user_input == "3":
             return
+        
+def get_lecturer_courses(lecturer):
+    lecturer_courses = []
+    for course in courses:
+        if lecturer.get_user_id() == course.get_lecturer().get_user_id():
+            lecturer_courses.append(course)
+    return lecturer_courses
 
+def get_course_with_id(id):
+    for course in courses:
+        if course.get_course_code() == id:
+            return course
+    return None
 
 def staff_login():
     print_title("STAFF LOGIN")
@@ -201,7 +216,9 @@ def staff_login():
         print_error("Wrong Password!")
         incorrect_attempts += 1
         if incorrect_attempts == 3:
-            print_error("Maximum password attempts reached. Please wait for 10 seconds.")
+            print_error(
+                "Maximum password attempts reached. Please wait for 10 seconds."
+            )
             time.sleep(10)  # Pause the program for 10 seconds
             incorrect_attempts = 0  # Reset the incorrect attempts counter
 
@@ -216,7 +233,7 @@ def staff_login():
             while True:
                 print_commands("1-> student registrations\n2-> exit")
                 user_input = input("==> ")
-    
+
                 while not user_input in ["1", "2"]:
                     print_error("invalid input!")
                     print_commands("1->exit")
@@ -224,104 +241,98 @@ def staff_login():
 
                 if user_input == "2":
                     return
-                
+
                 if user_input == "1":
                     print_title("STUDENT REGISTRATIONS")
                     draft_approval_process(staff)
 
-                        
         else:
-            # Implement Lecturer interface
             print_title("LECTURER INTERFACE")
             print_info(f"Welcome {staff.get_name()}")
-            while True: # Main options for the Lecturer
-                print_commands("1-> to see your information\n2-> to control the courses you teach\n3-> exit")
+            while True: 
+                print_commands("1-> see your information\n2-> evaluate students in courses you teach\n3-> exit")
                 user_input = input("==> ")
 
-                while not user_input in ["1", "2", "3"]: # Loop in case of an invalid input
+                while not user_input in ["1","2","3"]:  
                     print_error("invalid input!")
-                    print_commands("1-> to see your information\n2-> to control the courses you teach\n3-> exit")
+                    print_commands("1-> see your information\n2-> evaluate students in courses you teach\n3-> exit")
                     user_input = input("==> ")
 
-                if user_input == "1": # Show lecturer their information
-                    print (staff.get_info())
-                elif user_input == "2": # Place where the lecturer can perform actions on the courses they give
-                    givenCourses = []
-                    for item in courses: # Find the courses the lecturer attends to
-                        if staff == item.lecturer:
-                            givenCourses.append(item)
-
-                    while True: # Looping the actions until user wants to quit
-                        print_commands("Choose a course you want to perform an action on") # Showing the courses they give
-                        for item in givenCourses:
-                            print(str(givenCourses.index(item)) + "-> " + item.get_course_code() + ": " + item.get_course_name())
-                        print(str(givenCourses.__len__()) + "-> return")
+                if user_input == "1":
+                    print_title("LECTURER INFO")  
+                    print_info(staff.get_info())
+                elif (user_input == "2"): 
+                    print_title("EVALUATE COURSES")
+                    lecturer_courses = get_lecturer_courses(staff)
+                    if len(lecturer_courses) == 0:
+                        print_error("no courses!")
+                        break
+                    while True:  
+                        print_info("Choose a course code you want to evaluate or enter \"exit\" to return") 
+                        for course in lecturer_courses:
+                            print(course.get_course_code() + " " + course.get_course_name())
+                                
                         user_input = input("==> ")
                         
-                        while not user_input.isdigit() or not int(user_input) in range(0, givenCourses.__len__() + 1): # Loop in case of an invalid input
-                            print_error("invalid input!")
-                            print_commands("Choose a course you want to perform an action on")
-                            for item in givenCourses:
-                                print(str(givenCourses.index(item)) + "-> " + item.get_course_code() + ": " + item.get_course_name())
-                            print(str(givenCourses.__len__()) + "-> return")
-                            user_input = input("==> ")
-
-                        if int(user_input) == givenCourses.__len__(): # Return value is entered
+                        chosen_course = get_course_with_id(user_input)
+                        
+                        if (user_input == "exit"):
                             break
-                        else: # Course has been chosen
-                            while True: # Looping until user wants to return
-                                chosenCourse = givenCourses[int(user_input)] # Showing which options they have to perform on the chosen course
-                                print_commands("You have chosen the course -> " + chosenCourse.get_course_code() + ": " + chosenCourse.get_course_name())
-                                print("0-> get course information\n1-> grade a student\n2-> pass/fail a student\n3-> choose another course or return")
+                        elif chosen_course == None:
+                            print_error("No such course!")
+                            break
+                        
+                        while True:
+                            print_title(chosen_course.get_course_code())
+                            print_commands("0-> get course information\n1-> grade a student\n2-> return")
+                            user_input_2 = input("==> ")
+
+                            while not user_input_2 in ["0","1","2"]:
+                                print_error("invalid input!")
+                                print_commands("0-> get course information\n1-> grade a student\n2-> return")
                                 user_input_2 = input("==> ")
 
-                                while not user_input_2 in ["0", "1", "2"]: # Loop in case of an invalid input
-                                    print_error("invalid input!")
-                                    print_commands("You have chosen the course -> " + chosenCourse.get_course_code() + ": " + chosenCourse.get_course_name())
-                                    print("0-> get course information\n1-> grade a student\n2-> choose another course or return")
-                                    user_input_2 = input("==> ")
-
-                                if user_input_2 == "0": # User wants information about the course
-                                    print(chosenCourse.get_course_information())
-                                elif user_input_2 == "1": # User wants to grade a student
-                                    foundStudents = []
-                                    foundGrades = []
-                                    for itemStudent in users:
-                                        if isinstance(itemStudent, Student):
-                                            for itemCourse in itemStudent.get_transcript().get_grades():
-                                                if (itemCourse.get_course_code() == chosenCourse.get_course_code()) and (not itemCourse.is_grade_passing()):
-                                                    foundStudents.append(itemStudent)
-                                                    foundGrades.append(itemCourse)
+                            if (user_input_2 == "0"):
+                                print(chosen_course.get_course_information())
+                                
+                            elif (user_input_2 == "1"):
+                                course_students = chosen_course.get_students()
+                                if len(course_students) == 0:
+                                        print_error("no students to grade!")
+                                        break
+                                while True:
                                     
-                                    while True:
-                                        print_commands("Choose a student you want to grade:")
-                                        for index in range(0, foundStudents.__len__()):
-                                            print(str(index) + "-> StudentID: " + foundStudents[index].get_user_id() + " Name: " + foundStudents[index].get_name())
-                                        print(str(foundStudents.__len__()) + "-> to return")
-                                        choice = input("==> ")
+                                    print_info("Choose a student id you want to grade or enter \"exit\" to return:")
+                                    
+                                    for student in course_students:
+                                        print_info(student.get_user_id() + " " + student.get_name())
                                         
-                                        while not choice.isdigit() or not int(choice) in range(0, foundStudents.__len__() + 1): # Loop in case of an invalid input
-                                            print_error("invalid input!")
-                                            print_commands("Choose a student you want to grade:")
-                                            for index in range(0, foundStudents.__len__()):
-                                                print(str(index) + "-> StudentID: " + foundStudents[index].get_user_id() + " Name: " + foundStudents[index].get_name())
-                                            print(str(foundStudents.__len__()) + "-> to return")
-                                            choice = input("==> ")
+                                    user_input_3 = input("==> ")
+                                    
+                                    student = get_user_with_id(user_input_3)
+                                    
+                                    if user_input_3 == "exit":
+                                        print_error("exiting")
+                                        break 
+                                    elif student == None:
+                                        print_error("no such student!")
+                                        break
+                                        
+                                    grade_input = input("Enter a grade between 0-100: ")
 
-                                        if int(choice) == foundStudents.__len__():
-                                            break
-                                        else:
-                                            print_commands("You have chosen student the student -> StudentID: " + foundStudents[int(choice)].get_user_id() + " Name: " + foundStudents[int(choice)].get_name())
-                                            gradeOutOfHunderd = input("Enter a grade between 0-100: ")
-
-                                            while not gradeOutOfHunderd.isdigit() or not (0 <= int(gradeOutOfHunderd) <= 100):
-                                                print_error("invalid input!")
-                                                gradeOutOfHunderd = input("Enter a grade between 0-100: ")
-                                            
-                                            foundGrades[int(choice)].number_grade = gradeOutOfHunderd
-                                elif user_input_2 == "2": # User wants to choose another course or return
-                                    break
-                elif user_input == "3": # Return to the BYS screen
+                                    while (not grade_input.isdigit() or not (0 <= int(grade_input) <= 100)):
+                                        print_error("invalid grade!")
+                                        grade_input = input("Enter a grade between 0-100: ")
+                                    
+                                    grade = Grade(course_code=chosen_course.get_course_code(), number_grade=grade_input, is_passed=True)
+                                    student.add_grade_to_transcript(grade)
+                                    
+                                    print_info(student.get_name() + "'s grade set to " + grade_input)
+                                    course.remove_student(student)
+                                    
+                            elif (user_input_2 == "2"):
+                                break
+                elif user_input == "3":
                     return
 
     elif isinstance(staff, Student_Affairs_Staff):
@@ -410,17 +421,27 @@ def init():
         department="science",
         field="statistician",
         students=students,
-        drafts=drafts
-        
+        drafts=drafts,
     )
 
     for student in students:
         student.set_advisor(advisor)
 
-    course0 = Course(course_code="CSE101",course_name="Intro to Rust Programming", lecturer=lecturer)
-    course1 = Course(course_code="CSE201",course_name="Intermediate Rust Programming", lecturer=lecturer)
-    course3 = Course(course_code="IAC",course_name="Interior Architecture with AI", lecturer=lecturer)
-    course4 = Course(course_code="CSE401",course_name="Final Project")
+    course0 = Course(
+        course_code="CSE101", course_name="Intro to Rust Programming", lecturer=lecturer
+    )
+    course1 = Course(
+        course_code="CSE201",
+        course_name="Intermediate Rust Programming",
+        lecturer=lecturer,
+    )
+    course3 = Course(
+        course_code="IAC",
+        course_name="Interior Architecture with AI",
+        lecturer=lecturer,
+    )
+    course3.enroll_student(student2)
+    course4 = Course(course_code="CSE401", course_name="Final Project", lecturer=lecturer)
 
     prerequisites = []
     prerequisites.append(course0)
@@ -458,14 +479,14 @@ def init():
     for student in students:
         student.set_advisor(advisor)
 
+
 def draft_approval_process(advisor):
-                                
     if not advisor.get_drafts():
         print_error("No drafts to approve currently")
         return
 
     print_info("\nPlease proceed with this draft:\n")
-    
+
     for draft in advisor.get_drafts():
         student = draft.get_student()
         print(student.get_name() + "\n" + student.get_user_id() + "\n\nCourses:")
@@ -483,6 +504,7 @@ def draft_approval_process(advisor):
                 print_error("Invalid input entered.")
 
         print_info("Draft completed")
+
 
 # MAIN PROCESS
 init()
