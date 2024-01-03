@@ -266,7 +266,7 @@ def staff_login():
                     while True:
                         print_commands("Choose a course you want to perform an action on")
                         for item in givenCourses:
-                            print(str(givenCourses.index(item)) + "-> course_name: " + item.get_course_name() + "\n    course_code: " + item.get_course_code() + "\n")
+                            print(str(givenCourses.index(item)) + "-> " + item.get_course_code() + ": " + item.get_course_name())
                         print(str(givenCourses.__len__()) + "-> return")
                         user_input = input("==> ")
                         
@@ -274,11 +274,33 @@ def staff_login():
                             print_error("invalid input!")
                             print_commands("Choose a course you want to perform an action on")
                             for item in givenCourses:
-                                print(str(givenCourses.index(item)) + "-> course_name: " + item.get_course_name() + "\n    course_code: " + item.get_course_code() + "\n")
+                                print(str(givenCourses.index(item)) + "-> " + item.get_course_code() + ": " + item.get_course_name())
                             print(str(givenCourses.__len__()) + "-> return")
                             user_input = input("==> ")
 
-                        break
+                        if int(user_input) == givenCourses.__len__():
+                            break
+                        else:
+                            while True:
+                                chosenCourse = givenCourses[int(user_input)]
+                                print_commands("You have chosen the course -> " + chosenCourse.get_course_code() + ": " + chosenCourse.get_course_name())
+                                print("0-> get course information\n1-> grade a student\n2-> pass/fail a student\n3-> choose another course or return")
+                                user_input = input("==> ")
+
+                                while not user_input in ["0", "1", "2", "3"]:
+                                    print_error("invalid input!")
+                                    print_commands("You have chosen the course -> " + chosenCourse.get_course_code() + ": " + chosenCourse.get_course_name())
+                                    print("0-> get course information\n1-> grade a student\n2-> pass/fail a student\n3-> choose another course or return")
+                                    user_input = input("==> ")
+
+                                if user_input == "0":
+                                    print("You have chosen option 0")
+                                elif user_input == "1":
+                                    print("You have chosen option 1")
+                                elif user_input == "2":
+                                    print("You have chosen option 2")
+                                elif user_input == "3":
+                                    break
                 elif user_input == "3":
                     return
 
