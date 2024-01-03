@@ -10,6 +10,7 @@ from classes.transcript import Transcript
 import json
 import logging
 import time
+import os
 
 # GLOBAL VARIABLES
 users = []
@@ -68,6 +69,53 @@ def get_user_with_id(id):
 
 def get_users_from_json():
     print("get all from json called")
+
+
+
+def get_courses_from_json():
+    print("get all courses from json called")
+    for filename in os.listdir('database/courses'):
+        if filename.endswith('.json'):
+            file_path = os.path.join('database/courses', filename)
+
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+
+                prerequisitesJSON = data["prerequisite"]
+                prerequisites_array = []
+
+
+                for prerequisite in prerequisitesJSON:
+                    prerequisite_course = Course(course_code=prerequisite)
+                    prerequisites_array.append(prerequisite_course)
+
+                studentsJSON = data["students"]
+                student_array = []
+                for student in studentsJSON:
+                    course_student = Student(user_id=student)
+                    student_array.append(course_student)
+
+
+
+
+                course = Course(
+                    course_code=data["courseCode"],
+                    course_name=data["courseName"],
+                    
+                    lecturer=Lecturer(
+                        user_id=data["courseLecturer"]
+                    ),
+                    
+                    students= student_array,
+                    prerequisites=prerequisites_array,
+                    credits=data["credits"],
+                    year=data["year"],
+                )
+
+                courses.append(course)
+
+
+
 
 
 def student_login():
