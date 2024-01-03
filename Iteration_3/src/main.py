@@ -514,7 +514,6 @@ def draft_approval_process(advisor):
 
             if advisor_input.lower() == "yes":
                 course.enroll_student(student)
-                student.register_course(course)
                 print_info("student enrolled to course")
             elif advisor_input.lower() == "no":
                 print_info("course rejected")
