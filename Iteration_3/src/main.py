@@ -294,7 +294,7 @@ def staff_login():
                                     user_input = input("==> ")
 
                                 if user_input == "0": # User wants information about the course
-                                    print("You have chosen option 0")
+                                    print(chosenCourse.get_course_information())
                                 elif user_input == "1": # User wants to grade a student
                                     print("You have chosen option 1")
                                 elif user_input == "2": # User wants to pass/fail a student

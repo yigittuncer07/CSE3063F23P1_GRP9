@@ -49,6 +49,23 @@ class Course:
     def get_info(self):
         return f"course_code: {self.course_code}\ncourse_name: {self.course_name}\nlecturer: {self.lecturer}\nstudents: {self.students}\nprerequisites: {self.prerequisites}\ncredits: {self.credits}\nyear: {self.year}"
 
+    def get_course_information(self): # Used for printing the course information
+        # Basic inforamtion
+        temp = f"course_code: {self.course_code}\ncourse_name: {self.course_name}\ncredits: {self.credits}\nyear: {self.year}\nprerequisites:"
+        # Checking for prerequisites
+        if self.prerequisites.__len__() == 0:
+            temp += "\n              -> no prerequisite!"
+        for item in self.prerequisites:
+            temp += "\n              -> course_code: " + item.get_course_code() + " course_name: " + item.get_course_name()
+        # Basic lecturer information
+        temp += "\nlecturer: \n         -> name: " + self.lecturer.get_name() + "\n            email: " + self.lecturer.get_email() + "\n            department: " + self.lecturer.get_department()  + "\n            field: " + self.lecturer.get_field() + "\nstudents: "
+        # Checking for students
+        if self.students.__len__() == 0:
+            temp += "\n         -> no students!"
+        for item in self.students:
+            temp += "\n         -> name: " + item.get_name() + " studentID: " + item.get_user_id() + " email: " + item.get_email()
+        return temp
+
     def to_json_file(self):
         filename = f"database/courses/{self.course_code}.json"
         with open(filename, "w") as json_file:
