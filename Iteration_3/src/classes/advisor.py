@@ -18,6 +18,9 @@ class Advisor(Lecturer):
         super().__init__(user_id, name, password, email, department, field)
         self.students = students
         self.drafts = drafts
+    
+    def get_drafts(self):
+        return self.drafts
 
     # returns true if draft was appended
     def add_draft(self, draft_sent):
