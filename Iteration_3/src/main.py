@@ -246,31 +246,31 @@ def staff_login():
             # Implement Lecturer interface
             print_title("LECTURER INTERFACE")
             print_info(f"Welcome {staff.get_name()}")
-            while True:
+            while True: # Main options for the Lecturer
                 print_commands("1-> to see your information\n2-> to control the courses you teach\n3-> exit")
                 user_input = input("==> ")
 
-                while not user_input in ["1", "2", "3"]:
+                while not user_input in ["1", "2", "3"]: # Loop in case of an invalid input
                     print_error("invalid input!")
                     print_commands("1-> to see your information\n2-> to control the courses you teach\n3-> exit")
                     user_input = input("==> ")
 
-                if user_input == "1":
+                if user_input == "1": # Show lecturer their information
                     print (staff.get_info())
-                elif user_input == "2":
+                elif user_input == "2": # Place where the lecturer can perform actions on the courses they give
                     givenCourses = []
-                    for item in courses:
+                    for item in courses: # Find the courses the lecturer attends to
                         if staff == item.lecturer:
                             givenCourses.append(item)
 
-                    while True:
-                        print_commands("Choose a course you want to perform an action on")
+                    while True: # Looping the actions until user wants to quit
+                        print_commands("Choose a course you want to perform an action on") # Showing the courses they give
                         for item in givenCourses:
                             print(str(givenCourses.index(item)) + "-> " + item.get_course_code() + ": " + item.get_course_name())
                         print(str(givenCourses.__len__()) + "-> return")
                         user_input = input("==> ")
                         
-                        while not user_input.isdigit() or not int(user_input) in range(0, givenCourses.__len__() + 1):
+                        while not user_input.isdigit() or not int(user_input) in range(0, givenCourses.__len__() + 1): # Loop in case of an invalid input
                             print_error("invalid input!")
                             print_commands("Choose a course you want to perform an action on")
                             for item in givenCourses:
@@ -278,30 +278,30 @@ def staff_login():
                             print(str(givenCourses.__len__()) + "-> return")
                             user_input = input("==> ")
 
-                        if int(user_input) == givenCourses.__len__():
+                        if int(user_input) == givenCourses.__len__(): # Return value is entered
                             break
-                        else:
-                            while True:
-                                chosenCourse = givenCourses[int(user_input)]
+                        else: # Course has been chosen
+                            while True: # Looping until user wants to return
+                                chosenCourse = givenCourses[int(user_input)] # Showing which options they have to perform on the chosen course
                                 print_commands("You have chosen the course -> " + chosenCourse.get_course_code() + ": " + chosenCourse.get_course_name())
                                 print("0-> get course information\n1-> grade a student\n2-> pass/fail a student\n3-> choose another course or return")
                                 user_input = input("==> ")
 
-                                while not user_input in ["0", "1", "2", "3"]:
+                                while not user_input in ["0", "1", "2", "3"]: # Loop in case of an invalid input
                                     print_error("invalid input!")
                                     print_commands("You have chosen the course -> " + chosenCourse.get_course_code() + ": " + chosenCourse.get_course_name())
                                     print("0-> get course information\n1-> grade a student\n2-> pass/fail a student\n3-> choose another course or return")
                                     user_input = input("==> ")
 
-                                if user_input == "0":
+                                if user_input == "0": # User wants information about the course
                                     print("You have chosen option 0")
-                                elif user_input == "1":
+                                elif user_input == "1": # User wants to grade a student
                                     print("You have chosen option 1")
-                                elif user_input == "2":
+                                elif user_input == "2": # User wants to pass/fail a student
                                     print("You have chosen option 2")
-                                elif user_input == "3":
+                                elif user_input == "3": # User wants to choose another course or return
                                     break
-                elif user_input == "3":
+                elif user_input == "3": # Return to the BYS screen
                     return
 
     elif isinstance(staff, Student_Affairs_Staff):
