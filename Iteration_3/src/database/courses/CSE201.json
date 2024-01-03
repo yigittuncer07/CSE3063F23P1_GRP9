@@ -1,1 +1,1 @@
-"course_code: CSE201\\course_name: Intermediate Rust Programming\nlecturer: <classes.lecturer.Lecturer object at 0x00000229922C64A0>\nstudents: []\nprerequisites: []\ncredits: None\nyear: 0"
+"course_code: CSE201\\course_name: Intermediate Rust Programming\nlecturer: <classes.lecturer.Lecturer object at 0x000001C96C16ADA0>\nstudents: [<classes.student.Student object at 0x000001C96C16A5C0>]\nprerequisites: []\ncredits: None\nyear: 0"

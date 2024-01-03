@@ -28,6 +28,12 @@ class Course:
     def remove_student(self, student):
         if student in self.students:
             self.students.remove(student)
+            
+    def has_student(self, user_id):
+        for student in self.students:
+            if student.get_user_id() == user_id:
+                return True
+        return False
 
     def get_course_code(self):
         return self.course_code

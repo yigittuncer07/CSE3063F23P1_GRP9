@@ -39,8 +39,14 @@ class Student(User):
             f"User ID: {self.user_id}\n"
             f"Email: {self.email}\n"
             f"Year: {self.year}\n"
-            f"Registered Courses: {', '.join(course.get_course_code() for course in self.registered_courses)}"
-        )    
+        )
+    
+    def get_registered_courses(self, courses):
+        enrolled_courses = []
+        for course in courses:
+            if course.has_student(self.user_id):
+                enrolled_courses.append(course)
+        return enrolled_courses
       
     def get_draft(self):
         return self.draft

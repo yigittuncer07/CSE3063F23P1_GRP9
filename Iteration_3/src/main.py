@@ -354,8 +354,8 @@ def staff_login():
                 for student in users:
                     if isinstance(student, Student):
                         print_info(f"\nStudent ID: {student.get_user_id()}\nName: {student.get_name()}")
-                        registered_courses = student.get_registered_courses()
-                        if registered_courses:
+                        registered_courses = student.get_registered_courses(courses)
+                        if len(registered_courses) != 0:
                             print("Registered Courses:")
                             for course in registered_courses:
                                 print(f"{course.get_course_code()}: {course.get_course_name()}")
