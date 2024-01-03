@@ -227,21 +227,9 @@ def staff_login():
                 
                 if user_input == "1":
                     print_title("STUDENT REGISTRATIONS")
+                    draft_approval_process(staff)
 
-                    while True:
-                        print_commands("1-> evaluate pending drafts\n2-> exit")
-                        user_input = input("==> ")
-
-                        while not user_input in ["1", "2"]:
-                            print_error("invalid input!")
-                            print_commands("1-> evaluate pending drafts\n2-> exit")
-                            user_input = input("==> ")
-
-                        if user_input == "1":                               
-                            draft_approval_process(staff)
-
-                        if user_input == "2":
-                            return
+                        
         else:
             # Implement Lecturer interface
             print_title("LECTURER INTERFACE")
