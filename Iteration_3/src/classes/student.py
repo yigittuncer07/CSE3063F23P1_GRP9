@@ -29,10 +29,19 @@ class Student(User):
         self.year = year
         self.advisor = advisor
         self.draft = Draft(student=self)
-        
+
     def add_grade_to_transcript(self, grade):
         self.transcript.add_grade(grade)
-
+        
+    def get_student_info(self):  
+        return (
+            f"Name: {self.name}\n"
+            f"User ID: {self.user_id}\n"
+            f"Email: {self.email}\n"
+            f"Year: {self.year}\n"
+            f"Registered Courses: {', '.join(course.get_course_code() for course in self.registered_courses)}"
+        )    
+      
     def get_draft(self):
         return self.draft
 
@@ -51,7 +60,7 @@ class Student(User):
     def is_course_eligible(self, course):
         logger.info(f"is course eligable called for course {course.get_course_code()}")
 
-        # check if already in draft
+        # check if already in draf
         if course in self.draft.get_courses():
             return False
 

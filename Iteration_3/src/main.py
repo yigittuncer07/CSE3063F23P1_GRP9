@@ -341,16 +341,33 @@ def staff_login():
         print_info(f"Welcome {staff.get_name()}")
 
         while True:
-            print_commands("1-> exit")
-            user_input = input("==> ")
+            print_commands("1-> See Registered Courses for Students\n2-> Change student number\n3-> Exit")
+            user_input = input(" Please choose your action ==>")
 
-            while not user_input in ["1"]:
+            while not user_input in ["1","2","3"]:
                 print_error("invalid input!")
-                print_commands("1->exit")
-                user_input = input("==> ")
+                print_commands("1-> See Registered Courses for Students\n2-> Change student number\n3-> Exit")
+                user_input = input(" Please choose your action ==>")
 
             if user_input == "1":
+                print_title("REGISTERED COURSES FOR STUDENTS")
+                for student in users:
+                    if isinstance(student, Student):
+                        print_info(f"\nStudent ID: {student.get_user_id()}\nName: {student.get_name()}")
+                        registered_courses = student.get_registered_courses()
+                        if registered_courses:
+                            print("Registered Courses:")
+                            for course in registered_courses:
+                                print(f"{course.get_course_code()}: {course.get_course_name()}")
+                        else:
+                            print("No registered courses.")
+
+            elif user_input== "2":
                 return
+            
+            elif user_input == "3":
+                return
+
 
 
 def init():
@@ -497,6 +514,7 @@ def draft_approval_process(advisor):
 
             if advisor_input.lower() == "yes":
                 course.enroll_student(student)
+                student.register_course(course)
                 print_info("student enrolled to course")
             elif advisor_input.lower() == "no":
                 print_info("course rejected")
