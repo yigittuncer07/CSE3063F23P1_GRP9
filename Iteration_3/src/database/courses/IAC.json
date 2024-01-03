@@ -1,1 +1,16 @@
-"course_code: IAC\\course_name: Interior Architecture with AI\nlecturer: <classes.lecturer.Lecturer object at 0x000001C96C16ADA0>\nstudents: [<classes.student.Student object at 0x000001C96C16A5C0>]\nprerequisites: []\ncredits: None\nyear: 0"
+{
+    "courseName": "Interior Architecture with AI",
+    "credits": 2,
+    "courseCode": "IAC",
+    "prerequisite": [],
+    "students": [],
+
+    "year": 0,
+    "courseLecturer": "160666"
+}
+
+
+
+
+
+

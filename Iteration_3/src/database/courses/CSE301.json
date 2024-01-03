@@ -1,1 +1,10 @@
-"course_code: CSE301\\course_name: Advanced Rust Programming\nlecturer: <classes.lecturer.Lecturer object at 0x000001C96C16ADA0>\nstudents: [<classes.student.Student object at 0x000001C96C169F90>, <classes.student.Student object at 0x000001C96C16A590>, <classes.student.Student object at 0x000001C96C16A5C0>, <classes.student.Student object at 0x000001C96C16ADD0>]\nprerequisites: [<classes.course.Course object at 0x000001C96C16AE60>, <classes.course.Course object at 0x000001C96C16AE90>]\ncredits: 12\nyear: 2"
+{
+    "courseName": "Database Systems",
+    "credits": 8,
+    "courseCode": "CSE301",
+    "prerequisite": ["CSE300"],
+    "students": [],
+
+    "year": 3,
+    "courseLecturer": "160555"
+}

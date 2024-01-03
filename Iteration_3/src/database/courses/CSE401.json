@@ -1,1 +1,10 @@
-"course_code: CSE401\\course_name: Final Project\nlecturer: <classes.lecturer.Lecturer object at 0x000001C96C16ADA0>\nstudents: [<classes.student.Student object at 0x000001C96C16A5C0>]\nprerequisites: []\ncredits: None\nyear: 0"
+{
+    "courseName": "Engineering Project",
+    "credits": 10,
+    "courseCode": "CSE401",
+    "prerequisite": ["CSE400"],
+    "students": [],
+
+    "year": 4,
+    "courseLecturer": "160666"
+}

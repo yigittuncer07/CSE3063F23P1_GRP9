@@ -1,1 +1,9 @@
-"course_code: CSE101\\course_name: Intro to Rust Programming\nlecturer: <classes.lecturer.Lecturer object at 0x000001C96C16ADA0>\nstudents: [<classes.student.Student object at 0x000001C96C16A5C0>]\nprerequisites: []\ncredits: None\nyear: 0"
+{
+    "courseName": "Computer Programming",
+    "credits": 6,
+    "courseCode": "CSE101",
+    "prerequisite": [],
+    "students": [],
+    "year": 1,
+    "courseLecturer": "160555"
+}
