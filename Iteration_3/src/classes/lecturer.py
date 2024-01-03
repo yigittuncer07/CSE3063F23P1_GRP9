@@ -16,6 +16,9 @@ class Lecturer(Staff):
         super().__init__(user_id, name, password, email, department)
         self.field = field
 
+    def get_field(self):
+        return self.field
+
     def get_info(self):
         return (
             f"user_id: {self.user_id}\n"
