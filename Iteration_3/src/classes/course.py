@@ -29,13 +29,6 @@ class Course:
         if student in self.students:
             self.students.remove(student)
             
-    def set_students(self, students):
-        self.students.clear()
-        self.students = students
-        
-    def set_lecturer(self, lecturer):
-        self.lecturer = lecturer
-            
     def has_student(self, user_id):
         for student in self.students:
             if student.get_user_id() == user_id:
@@ -126,7 +119,8 @@ class Course:
 
         json_data = json.dumps(course_dict, indent=2)
 
-        filename = os.path.join("database/courses", f"{self.course_code}.json")
+        filename = f"database/courses/{self.course_code}.json"
+
 
         with open(filename, 'w') as json_file:
             json_file.write(json_data)
