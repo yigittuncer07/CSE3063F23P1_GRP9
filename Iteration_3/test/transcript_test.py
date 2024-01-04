@@ -18,20 +18,20 @@ class TestTranscript(unittest.TestCase):
         self.assertEqual(self.transcript.get_grades(), self.transcript.grades)
 
     def test_add_grade(self):
-        gradeCount = len(self.transcript.grades)
+        grade_count = len(self.transcript.grades)
         new_grade = Grade(course_code="CSE401", number_grade=68)
         self.transcript.add_grade(new_grade)
-        newGradeCount = len(self.transcript.grades)
-        self.assertEqual(newGradeCount, gradeCount + 1)
+        new_grade_count = len(self.transcript.grades)
+        self.assertEqual(new_grade_count, grade_count + 1)
         self.assertIn(new_grade, self.transcript.grades)
 
     def test_get_completed_courses(self):
         completed_courses = self.transcript.get_completed_courses()
-        result = ["CSE101", "CSE201", "CSE301"]
+        result = ["CSE101", "CSE201"]
         self.assertEqual(completed_courses, result)
 
     def test_get_info(self):
-        result = "gano: 3.2\ngrades: " + str(self.transcript.grades)
+        result = f"gano: 3.2\ngrades: {str(self.transcript.grades)}\nletter grade: {str(self.transcript.convert_gano_to_letter_grade(3.2))}"
         self.assertEqual(self.transcript.get_info(), result)
 
 

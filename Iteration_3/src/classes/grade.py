@@ -13,6 +13,39 @@ class Grade:
     def is_grade_passing(self):
         return self.is_passed
 
+    def convert_hundred_to_gano(hundred_not):
+        if hundred_not < 0 or hundred_not > 100:
+            raise ValueError("Grade must be between 0 and 100")
+    
+        result = hundred_not / 25
+    
+        formatted_result = "{:.2f}".format(result)
+    
+        gano = float(formatted_result.replace(",", "."))
+    
+        return gano
+    
+    def convert_hundred_to_letter_grade(self, hundred):
+        gano = self.convert_hundred_to_gano(hundred)
+        if 4.00 >= gano > 3.50:
+            self.letter_grade = "AA"
+        elif 3.50 >= gano > 3.00:
+            self.letter_grade = "BA"
+        elif 3.00 >= gano > 2.50:
+            self.letter_grade = "BB"
+        elif 2.50 >= gano > 2.00:
+            self.letter_grade = "CB"
+        elif 2.00 >= gano > 1.50:
+            self.letter_grade = "CC"
+        elif 1.50 >= gano > 1.00:
+            self.letter_grade = "DC"
+        elif 1.00 >= gano > 0.50:
+            self.letter_grade = "DD"
+        elif 0.50 >= gano > 0.00:
+            self.letter_grade = "FD"
+        else:
+            self.letter_grade = "FF"
+
     def get_info(self):
         return (
             f"course_code: {self.course_code}\n"
