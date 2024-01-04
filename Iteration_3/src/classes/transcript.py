@@ -30,4 +30,4 @@ class Transcript:
         return info_str
 
     def get_info(self):
-        return f"gano: {self.gano}\ngrades: {self.self.grades}"
+        return f"gano: {self.gano}\ngrades: {self.grades}"
