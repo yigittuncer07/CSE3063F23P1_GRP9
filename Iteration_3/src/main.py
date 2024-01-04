@@ -27,8 +27,8 @@ logger.addHandler(file_handler)
 
 
 def system_exit():
-    save_users_to_json()
-    save_courses_to_json()
+    # save_users_to_json()
+    # save_courses_to_json()
     exit()
 
 
@@ -67,7 +67,6 @@ def get_user_with_id(id):
     return None
 
 
-
 def get_users_from_json():
     print("get all from json called")
 
@@ -75,14 +74,10 @@ def get_users_from_json():
     for filename in os.listdir('database/students'):
         if filename.endswith('.json'):
             file_path = os.path.join('database/students', filename)
-
             with open(file_path, 'r') as file:
                 data = json.load(file)
-
                 gradeJSON = data["grades"]
                 grade_array = []
-
-
                 for grade in gradeJSON:
                     grade_object = Grade(course_code=grade["courseCode"],
                                   number_grade=grade["numberGrade"],
@@ -168,52 +163,53 @@ def get_users_from_json():
 
                 users.append(student_affair_staff)
 
-#Advisor JSON
-for filename in os.listdir('database/advisors'):
-        if filename.endswith('.json'):
-            file_path = os.path.join('database/advisors', filename)
 
-            with open(file_path, 'r') as file:
-                data = json.load(file)
+    #Advisor JSON
+    for filename in os.listdir('database/advisors'):
+            if filename.endswith('.json'):
+                file_path = os.path.join('database/advisors', filename)
 
-                studentJSON = data["students"]
-                student_array = []
+                with open(file_path, 'r') as file:
+                    data = json.load(file)
 
-
-                for std in studentJSON:
-                    student_object = Student(user_id=std)
-                    
-                    student_array.append(student_object)
-
-                draftJSON = data["drafts"]
-                draft_array = []
-
-                for drft in draftJSON:
-                    draft_courseJSON = drft["courseCode"]
-                    draft_course_array = []
+                    studentJSON = data["students"]
+                    student_array = []
 
 
-                    for dcj in draft_courseJSON:
-                        draft_course_object = Course(course_code=dcj)
+                    for std in studentJSON:
+                        student_object = Student(user_id=std)
                         
-                        draft_course_array.append(draft_course_object)
-                    
-                    draft_object = Draft(student=drft["studentId"],courses=draft_course_array)
-                    draft_array.append(draft_object)
+                        student_array.append(student_object)
+
+                    draftJSON = data["drafts"]
+                    draft_array = []
+
+                    for drft in draftJSON:
+                        draft_courseJSON = ["courseCode"]
+                        draft_course_array = []
 
 
-                advisor = Advisor(user_id=data["lecturerId"],
-                                    field=data["field"],
-                                    name=data["Name"],
-                                    password=data["password"],
-                                    department=data["department"],
-                                    email=data["email"],
-                                    students= student_array,
-                                    drafts=draft_array
+                        for dcj in draft_courseJSON:
+                            draft_course_object = Course(course_code=dcj)
+                            
+                            draft_course_array.append(draft_course_object)
+                        
+                        draft_object = Draft(student=drft["studentId"],courses=draft_course_array)
+                        draft_array.append(draft_object)
 
-                )
 
-                users.append(advisor)
+                    advisor = Advisor(user_id=data["lecturerId"],
+                                        field=data["field"],
+                                        name=data["Name"],
+                                        password=data["password"],
+                                        department=data["department"],
+                                        email=data["email"],
+                                        students= student_array,
+                                        drafts=draft_array
+
+                    )
+
+                    users.append(advisor)
 
 
 def get_courses_from_json():
@@ -259,9 +255,6 @@ def get_courses_from_json():
                 courses.append(course)
 
 
-
-
-
 def student_login():
     print_title("STUDENT LOGIN")
     student_id_input = input("enter student id: ")
@@ -293,12 +286,12 @@ def student_login():
     print_info(f"Welcome {student.get_name()}")
 
     while True:
-        print_commands("1-> see transcript\n2-> register to a course\n3-> exit")
+        print_commands("1-> see transcript\n2-> register to a course\n3-> see current courses\n4-> exit")
         user_input = input("==> ")
 
-        while not user_input in ["1", "2", "3"]:
+        while not user_input in ["1", "2", "3","4"]:
             print_error("invalid input!")
-            print_commands("1-> see transcript\n2-> register to a course\n3-> exit")
+            print_commands("1-> see transcript\n2-> register to a course\n3-> see current courses\n4-> exit")
             user_input = input("==> ")
 
         if user_input == "1":
@@ -380,9 +373,19 @@ def student_login():
                     return
                 else:
                     print_error("Invalid Input!")
-
         elif user_input == "3":
+            print_title("REGISTERED COURSES") 
+            registered_courses = student.get_registered_courses(courses)
+            if len(registered_courses) == 0:
+                print_error("no registered courses!")
+            else:
+                for course in registered_courses:
+                    print_info(course.get_course_code() + " " + course.get_course_name())
+            
+
+        elif user_input == "4":
             return
+ 
         
 def get_lecturer_courses(lecturer):
     lecturer_courses = []
@@ -391,11 +394,13 @@ def get_lecturer_courses(lecturer):
             lecturer_courses.append(course)
     return lecturer_courses
 
+
 def get_course_with_id(id):
     for course in courses:
         if course.get_course_code() == id:
             return course
     return None
+
 
 def staff_login():
     print_title("STAFF LOGIN")
@@ -435,7 +440,7 @@ def staff_login():
 
                 while not user_input in ["1", "2"]:
                     print_error("invalid input!")
-                    print_commands("1->exit")
+                    print_commands("1-> student registrations\n2-> exit")
                     user_input = input("==> ")
 
                 if user_input == "2":
@@ -586,134 +591,6 @@ def staff_login():
                 return
 
 
-
-def init():
-    grade0 = Grade("CSE101", "AA", "98", True)
-    grade1 = Grade("CSE201", "AA", "99", True)
-    grade2 = Grade("CSE301", "AA", "100", True)
-
-    grades = []
-    grades.append(grade0)
-    grades.append(grade1)
-    grades.append(grade2)
-
-    transcript = Transcript(3.98, grades)
-
-    lecturer = Lecturer(
-        user_id="160111",
-        name="Talip Demirel",
-        password="111",
-        email="talipdemirel@marun.edu.tr",
-        department="science",
-        field="applied mathematics",
-    )
-    student0 = Student(
-        user_id="150111",
-        name="Yigit Tuncer",
-        password="111",
-        email="yigittuncer@marun.edu.tr",
-        transcript=Transcript(),
-        year=2,
-    )
-    student1 = Student(
-        user_id="150031",
-        name="Kerem Demirel",
-        password="111",
-        email="keremozkan@marun.edu.tr",
-        transcript=Transcript(),
-        year=3,
-    )
-    student2 = Student(
-        user_id="150333",
-        name="Ceren Ozge",
-        password="111",
-        email="cerenozge@marun.edu.tr",
-        transcript=transcript,
-        year=3,
-    )
-    student3 = Student(
-        user_id="150444",
-        name="Cem Mazlum",
-        password="111",
-        transcript=Transcript(),
-        email="cemmazlum@marun.edu.tr",
-        year=3,
-    )
-
-    students = []
-    students.append(student0)
-    students.append(student1)
-    students.append(student2)
-    students.append(student3)
-
-    drafts = []
-    advisor = Advisor(
-        user_id="150555",
-        name="Nazmi Emir Arslan",
-        password="111",
-        email="emirarslan@marun.edu.tr",
-        department="science",
-        field="statistician",
-        students=students,
-        drafts=drafts,
-    )
-
-    for student in students:
-        student.set_advisor(advisor)
-
-    course0 = Course(
-        course_code="CSE101", course_name="Intro to Rust Programming", lecturer=lecturer
-    )
-    course1 = Course(
-        course_code="CSE201",
-        course_name="Intermediate Rust Programming",
-        lecturer=lecturer,
-    )
-    course3 = Course(
-        course_code="IAC",
-        course_name="Interior Architecture with AI",
-        lecturer=lecturer,
-    )
-    course3.enroll_student(student2)
-    course4 = Course(course_code="CSE401", course_name="Final Project", lecturer=lecturer)
-
-    prerequisites = []
-    prerequisites.append(course0)
-    prerequisites.append(course1)
-
-    course2 = Course(
-        "CSE301", "Advanced Rust Programming", lecturer, students, prerequisites, 12, 2
-    )
-
-    courses.append(course0)
-    courses.append(course1)
-    courses.append(course2)
-    courses.append(course3)
-    courses.append(course4)
-
-    draft = Draft(student=student2)
-
-    student_affairs_staff = Student_Affairs_Staff(
-        user_id="160222",
-        name="Hasan Pekedis",
-        password="111",
-        email="hasanpekedis@marun.edu.tr",
-        department="engineering",
-        students=students,
-    )
-
-    users.append(student0)
-    users.append(student1)
-    users.append(student2)
-    users.append(student3)
-    users.append(lecturer)
-    users.append(advisor)
-    users.append(student_affairs_staff)
-
-    for student in students:
-        student.set_advisor(advisor)
-
-
 def draft_approval_process(advisor):
     if not advisor.get_drafts():
         print_error("No drafts to approve currently")
@@ -740,8 +617,11 @@ def draft_approval_process(advisor):
         print_info("Draft completed")
 
 
+get_users_from_json()
+get_courses_from_json()
+for user in users:
+    print(user)
 # MAIN PROCESS
-init()
 while True:
     print_title("BYS")
     print_commands("1-> student login\n2-> staff login\n3-> exit")
@@ -758,3 +638,11 @@ while True:
         staff_login()
     elif user_input == "3":
         system_exit()
+
+
+# add clears to draft
+# to_json ve from_json artik deprecated mi
+# initi nasil yapcaz
+# ozan ve ardayi bicaklasam mi acep
+# draft student string olarak mi tutuyor
+#  
