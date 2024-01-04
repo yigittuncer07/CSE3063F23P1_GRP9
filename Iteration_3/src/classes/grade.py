@@ -13,11 +13,11 @@ class Grade:
     def is_grade_passing(self):
         return self.is_passed
 
-    def convert_hundred_to_gano(hundred_not):
-        if hundred_not < 0 or hundred_not > 100:
+    def convert_hundred_to_gano(self, hundred_not):
+        if int(hundred_not) < 0 or int(hundred_not) > 100:
             raise ValueError("Grade must be between 0 and 100")
 
-        result = hundred_not / 25
+        result = int(hundred_not) / 25
 
         formatted_result = "{:.2f}".format(result)
 
