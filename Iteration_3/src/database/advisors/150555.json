@@ -1,1 +1,21 @@
-"user_id: 150555\nname: Nazmi Emir Arslan\npassword: 111\nemail: emirarslan@marun.edu.tr\ndepartment: science\nfield: statistician\nstudents: [<classes.student.Student object at 0x000001C96C169F90>, <classes.student.Student object at 0x000001C96C16A590>, <classes.student.Student object at 0x000001C96C16A5C0>, <classes.student.Student object at 0x000001C96C16ADD0>]\ndrafts: []"
+{
+    "lecturerId": "150555",
+    "field": "applied mathematics",
+    "Name": "Nazmi Emir Arslan",
+    "password": "111111",
+    "department": "CSE",
+    "email": "nazmi@gmail.com",
+    "students": ["150031", "150111"],
+    "drafts": [
+        {
+            "studentId": "150031",
+            "courseCode": ["301", "CSE101"]
+        },
+        {
+            "studentId": "150025",
+            "courseCode": ["TEST1", "TEST2"]
+        }
+    ]
+
+
+}
