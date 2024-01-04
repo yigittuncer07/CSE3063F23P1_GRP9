@@ -27,8 +27,8 @@ logger.addHandler(file_handler)
 
 
 def system_exit():
-    save_users_to_json()
-    save_courses_to_json()
+    # save_users_to_json()
+    # save_courses_to_json()
     exit()
 
 
@@ -67,7 +67,6 @@ def get_user_with_id(id):
     return None
 
 
-
 def get_users_from_json():
     print("get all from json called")
 
@@ -75,14 +74,10 @@ def get_users_from_json():
     for filename in os.listdir('database/students'):
         if filename.endswith('.json'):
             file_path = os.path.join('database/students', filename)
-
             with open(file_path, 'r') as file:
                 data = json.load(file)
-
                 gradeJSON = data["grades"]
                 grade_array = []
-
-
                 for grade in gradeJSON:
                     grade_object = Grade(course_code=grade["courseCode"],
                                   number_grade=grade["numberGrade"],
@@ -169,52 +164,52 @@ def get_users_from_json():
                 users.append(student_affair_staff)
 
 
-#Advisor JSON
-for filename in os.listdir('database/advisors'):
-        if filename.endswith('.json'):
-            file_path = os.path.join('database/advisors', filename)
+    #Advisor JSON
+    for filename in os.listdir('database/advisors'):
+            if filename.endswith('.json'):
+                file_path = os.path.join('database/advisors', filename)
 
-            with open(file_path, 'r') as file:
-                data = json.load(file)
+                with open(file_path, 'r') as file:
+                    data = json.load(file)
 
-                studentJSON = data["students"]
-                student_array = []
-
-
-                for std in studentJSON:
-                    student_object = Student(user_id=std)
-                    
-                    student_array.append(student_object)
-
-                draftJSON = data["drafts"]
-                draft_array = []
-
-                for drft in draftJSON:
-                    draft_courseJSON = ["courseCode"]
-                    draft_course_array = []
+                    studentJSON = data["students"]
+                    student_array = []
 
 
-                    for dcj in draft_courseJSON:
-                        draft_course_object = Course(course_code=dcj)
+                    for std in studentJSON:
+                        student_object = Student(user_id=std)
                         
-                        draft_course_array.append(draft_course_object)
-                    
-                    draft_object = Draft(student=drft["studentId"],courses=draft_course_array)
-                    draft_array.append(draft_object)
+                        student_array.append(student_object)
+
+                    draftJSON = data["drafts"]
+                    draft_array = []
+
+                    for drft in draftJSON:
+                        draft_courseJSON = ["courseCode"]
+                        draft_course_array = []
 
 
-                advisor = Advisor(user_id=data["lecturerId"],
-                                    field=data["field"],
-                                    name=data["Name"],
-                                    password=data["password"],
-                                    department=data["department"],
-                                    email=data["email"],
-                                    students= student_array,
-                                    drafts=draft_array
+                        for dcj in draft_courseJSON:
+                            draft_course_object = Course(course_code=dcj)
+                            
+                            draft_course_array.append(draft_course_object)
+                        
+                        draft_object = Draft(student=drft["studentId"],courses=draft_course_array)
+                        draft_array.append(draft_object)
 
-                )
 
-                users.append(advisor)
+                    advisor = Advisor(user_id=data["lecturerId"],
+                                        field=data["field"],
+                                        name=data["Name"],
+                                        password=data["password"],
+                                        department=data["department"],
+                                        email=data["email"],
+                                        students= student_array,
+                                        drafts=draft_array
+
+                    )
+
+                    users.append(advisor)
 
 
 def get_courses_from_json():
@@ -294,7 +289,7 @@ def student_login():
         print_commands("1-> see transcript\n2-> register to a course\n3-> see current courses\n4-> exit")
         user_input = input("==> ")
 
-        while not user_input in ["1", "2", "3"]:
+        while not user_input in ["1", "2", "3","4"]:
             print_error("invalid input!")
             print_commands("1-> see transcript\n2-> register to a course\n3-> see current courses\n4-> exit")
             user_input = input("==> ")
@@ -376,9 +371,9 @@ def student_login():
             registered_courses = student.get_registered_courses(courses)
             if len(registered_courses) == 0:
                 print_error("no registered courses!")
-                return
-            for course in registered_courses:
-                print_info(course.get_course_code() + " " + course.get_course_name())
+            else:
+                for course in registered_courses:
+                    print_info(course.get_course_code() + " " + course.get_course_name())
             
 
         elif user_input == "4":
@@ -615,6 +610,10 @@ def draft_approval_process(advisor):
         print_info("Draft completed")
 
 
+get_users_from_json()
+get_courses_from_json()
+for user in users:
+    print(user)
 # MAIN PROCESS
 while True:
     print_title("BYS")
@@ -634,8 +633,9 @@ while True:
         system_exit()
 
 
+# add clears to draft
 # to_json ve from_json artik deprecated mi
 # initi nasil yapcaz
 # ozan ve ardayi bicaklasam mi acep
 # draft student string olarak mi tutuyor
-# 
+#  
