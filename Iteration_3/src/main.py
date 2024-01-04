@@ -166,26 +166,28 @@ def get_users_from_json():
                     studentJSON = data["students"]
                     student_array = []
 
+
                     for std in studentJSON:
                         student_object = Student(user_id=std)
-                        
+
                         student_array.append(student_object)
 
                     draftJSON = data["drafts"]
                     draft_array = []
 
                     for drft in draftJSON:
-                        draft_courseJSON = ["courseCode"]
+                        draft_courseJSON = drft["courseCode"]
                         draft_course_array = []
 
+
                         for dcj in draft_courseJSON:
-                            print(dcj)
                             draft_course_object = dcj
-                            
+
                             draft_course_array.append(draft_course_object)
-                        
+
                         draft_object = Draft(student=drft["studentId"],courses=draft_course_array)
                         draft_array.append(draft_object)
+
 
                     advisor = Advisor(user_id=data["lecturerId"],
                                         field=data["field"],
@@ -213,7 +215,7 @@ def get_courses_from_json():
                 prerequisites_array = []
 
                 for prerequisite in prerequisitesJSON:
-                    prerequisite_course = Course(course_code=prerequisite)
+                    prerequisite_course = prerequisite
                     prerequisites_array.append(prerequisite_course)
 
                 studentsJSON = data["students"]
@@ -347,10 +349,8 @@ def student_login():
                     if len(draft.get_courses()) == 0:
                         print_error("cannot send empty draft!")
                     else:
-                        if advisor.add_draft(draft):
-                            print_info("draft updated")
-                        else:
-                            print_info("draft sent for approval")
+                        advisor.add_draft(draft)
+                        print_info("draft sent for approval")
 
                 elif user_input[0] == "exit":
                     print_info("draft saved!")
@@ -582,36 +582,41 @@ def draft_approval_process(advisor):
 
     print_info("\nPlease proceed with this draft:\n")
 
-    for draft in advisor.get_drafts():
-        student = draft.get_student()
-        print(student.get_name() + "\n" + student.get_user_id() + "\n\nCourses:")
+    while len(advisor.get_drafts()) != 0:
+        for draft in advisor.get_drafts():
+            student = draft.get_student()
+            print(student.get_name() + "\n" + student.get_user_id() + "\n\nCourses:")
 
-        for course in draft.get_courses():
-            print(course.get_course_code() + " " + course.get_course_name())
-            advisor_input = input("Do you approve of this course? (yes/no): ")
+            for course in draft.get_courses():
+                print(course.get_course_code() + " " + course.get_course_name())
+                advisor_input = input("Do you approve of this course? (yes/no): ")
 
-            if advisor_input.lower() == "yes":
-                course.enroll_student(student)
-                print_info("student enrolled to course")
-            elif advisor_input.lower() == "no":
-                print_info("course rejected")
-            else:
-                print_error("Invalid input entered.")
-        print_info("Draft completed")
+                if advisor_input.lower() == "yes":
+                    course.enroll_student(student)
+                    print_info("student enrolled to course")
+                elif advisor_input.lower() == "no":
+                    print_info("course rejected")
+                else:
+                    print_error("Invalid input entered.")
+            draft.clear_draft()
+            advisor.remove_draft(draft)
+            print_info("Draft completed")
 
 
 def init():
     
     get_users_from_json()
-    print("TEST " + users[7].drafts[0].courses[0])
     get_courses_from_json()
     for user in users:
         if isinstance(user, Student):
             # initialize drafts
             user.set_draft(Draft(student=user))
+            for advisor in users:
+                if advisor.get_user_id() == user.get_advisor().get_user_id():
+                    user.set_advisor(advisor)
         elif isinstance(user, Advisor):
             #initialize drafts course to the correct object
-            drafts = user.drafts
+            drafts = user.get_drafts()
             for draft in drafts:
                 #initialize draft students
                 for student in users:
@@ -620,9 +625,9 @@ def init():
                 # initialize draft courses
                 draft_courses = []
                 for course in courses:
-                    for course_temp in draft.courses:
-                        print("is " + course.course_code + " = " + course_temp)                    
+                    for course_temp in draft.get_courses():
                         if course.get_course_code() == course_temp:
+                            # print("is " + course.course_code + " = " + course_temp)                    
                             draft_courses.append(course)
                 draft.set_courses(draft_courses)
                 # initialize advisor students
@@ -633,14 +638,31 @@ def init():
                             advisor_students.append(student)
                 user.set_students(advisor_students)
                 
-        # elif isinstance(user, Student_Affairs_Staff):
-        #     students = []
-        #     for student in users:
-        #         for sas_student in user.get_students():
-        #             if student.get_user_id() == sas_student.get_user_id():
-        #                 students.append(student)
-                    
+        elif isinstance(user, Student_Affairs_Staff):
+            # initialize students of student affairs staff
+            students = []
+            for student in users:
+                for sas_student in user.get_students():
+                    if student.get_user_id() == sas_student.get_user_id():
+                        students.append(student)
+            user.set_students(students)
+    
+    # initialize courses
+    for course in courses:
+        #initialize students
+        students = []
+        for temp_student in course.get_students():
+            for student in users:
+                if student.get_user_id() == temp_student.get_user_id():
+                    students.append(student)
+        course.set_students(students)
+        
+        #initialize lecturer
+        for lecturer in users:
+            if lecturer.get_user_id() == course.get_lecturer().get_user_id():
+                course.set_lecturer(lecturer)
                 
+ 
 
 # MAIN PROCESS
 init()
@@ -663,8 +685,3 @@ while True:
 
 
 # add clears to draft
-# to_json ve from_json artik deprecated mi
-# initi nasil yapcaz
-# ozan ve ardayi bicaklasam mi acep
-# draft student string olarak mi tutuyor
-#  

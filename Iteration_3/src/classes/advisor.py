@@ -22,6 +22,9 @@ class Advisor(Lecturer):
     def get_drafts(self):
         return self.drafts
     
+    def remove_draft(self, draft_to_remove):
+        self.drafts.remove(draft_to_remove)
+    
     def get_students(self):
         return self.students
 
@@ -31,13 +34,16 @@ class Advisor(Lecturer):
 
     # returns true if draft was appended
     def add_draft(self, draft_sent):
+            
+        found_draft = False
         for draft in self.drafts:
             if draft_sent.get_student() == draft.get_student():
                 draft = draft_sent
-                return True
-        self.drafts.append(draft_sent)
-        return False
-
+                found_draft = True
+                
+        if not found_draft:
+            self.drafts.append(draft_sent)
+            
     @staticmethod
     def get_list_info(list):
         if len(list) == 0:

@@ -105,10 +105,25 @@ class Course:
         return temp
 
     def to_json_file(self):
+        student_arr = [student.user_id for student in self.students]
+        prerequisite_arr = [prerequisite.course_code for prerequisite in self.prerequisites]
+        course_dict = {
+            "courseCode": self.course_code,
+            "courseName": self.course_name,
+            "courseLecturer": self.lecturer.user_id,
+            "students": student_arr,
+            "prerequisite": prerequisite_arr,
+            "credits": self.credits,
+            "year": self.year,
+        }
+
+        json_data = json.dumps(course_dict, indent=2)
+
         filename = f"database/courses/{self.course_code}.json"
-        with open(filename, "w") as json_file:
-            json.dump(self.get_info(), json_file, indent=2)
-        return filename
+
+
+        with open(filename, 'w') as json_file:
+            json_file.write(json_data)
 
     @classmethod
     def from_json_file(cls, user_id):

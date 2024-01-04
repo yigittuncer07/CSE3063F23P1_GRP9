@@ -3,10 +3,9 @@
     "credits": 2,
     "courseCode": "IAC",
     "prerequisite": [],
-    "students": [],
-
+    "students": ["150031", "150333"],
     "year": 0,
-    "courseLecturer": "160666"
+    "courseLecturer": "160111"
 }
 
 

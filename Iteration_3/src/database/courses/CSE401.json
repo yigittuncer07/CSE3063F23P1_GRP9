@@ -2,9 +2,9 @@
     "courseName": "Engineering Project",
     "credits": 10,
     "courseCode": "CSE401",
-    "prerequisite": ["CSE400"],
+    "prerequisite": ["CSE301"],
     "students": [],
 
     "year": 4,
-    "courseLecturer": "160666"
+    "courseLecturer": "160111"
 }

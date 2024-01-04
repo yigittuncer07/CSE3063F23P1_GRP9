@@ -30,10 +30,23 @@ class Lecturer(Staff):
         )
 
     def to_json_file(self):
+        
+        course_dict = {
+            "lecturerId": self.user_id,
+            "field": self.field,
+            "Name": self.name,
+            "password": self.password,
+            "department": self.department,
+            "email": self.email,
+        }
+
+        json_data = json.dumps(course_dict, indent=2)
+
         filename = f"database/lecturers/{self.user_id}.json"
-        with open(filename, "w") as json_file:
-            json.dump(self.get_info(), json_file, indent=2)
-        return filename
+
+
+        with open(filename, 'w') as json_file:
+            json_file.write(json_data)
 
     @classmethod
     def from_json_file(cls, user_id):

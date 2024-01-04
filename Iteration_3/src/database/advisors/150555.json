@@ -8,8 +8,12 @@
     "students": ["150031", "150111","150222","150333","150444"],
     "drafts": [
         {
-            "studentId": "150031",
-            "courseCode": ["CSE301", "CSE201", "CSE101"]
+            "studentId": "150333",
+            "courseCode": ["CSE101"]
+        },
+        {
+            "studentId": "150222",
+            "courseCode": ["CSE201"]
         }
     ]
 
