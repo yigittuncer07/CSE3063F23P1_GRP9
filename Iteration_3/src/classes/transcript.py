@@ -8,7 +8,7 @@ class Transcript:
 
     def add_grade(self, grade):
         self.grades.append(grade)
-        self.gano = grade.number_grade * 6 / 25
+        self.gano = int(grade.number_grade)* 6 / 25
 
     def get_completed_courses(self):
         completed_courses = []
