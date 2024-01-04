@@ -9,11 +9,7 @@
     "drafts": [
         {
             "studentId": "150031",
-            "courseCode": ["301", "CSE101"]
-        },
-        {
-            "studentId": "150025",
-            "courseCode": ["TEST1", "TEST2"]
+            "courseCode": ["CSE301"]
         }
     ]
 
