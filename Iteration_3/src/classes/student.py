@@ -144,7 +144,7 @@ class Student(User):
 
         json_data = json.dumps(course_dict, indent=2)
 
-        filename = f"database/{self.user_id}.json"
+        filename = f"database/students/{self.user_id}.json"
 
 
         with open(filename, 'w') as json_file:
