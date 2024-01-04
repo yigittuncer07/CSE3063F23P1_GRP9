@@ -21,6 +21,13 @@ class Course:
         self.credits = credits
         self.year = year
 
+
+    def set_students(self, new_students):
+        self.students = new_students
+    
+    def set_lecturer(self, new_lecturer):
+        self.lecturer = new_lecturer
+    
     def enroll_student(self, student):
         if student not in self.students:
             self.students.append(student)
@@ -106,7 +113,7 @@ class Course:
 
     def to_json_file(self):
         student_arr = [student.user_id for student in self.students]
-        prerequisite_arr = [prerequisite.course_code for prerequisite in self.prerequisites]
+        prerequisite_arr = [prerequisite for prerequisite in self.prerequisites]
         course_dict = {
             "courseCode": self.course_code,
             "courseName": self.course_name,
