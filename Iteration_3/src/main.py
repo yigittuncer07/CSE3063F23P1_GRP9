@@ -68,7 +68,6 @@ def get_user_with_id(id):
 
 
 def get_users_from_json():
-    print("get all from json called")
 
     #Students JSON
     for filename in os.listdir('database/students'):
@@ -91,9 +90,6 @@ def get_users_from_json():
                 #for draft_course in draftJSON:
                 #    draft_course_object = Course(course_code=draft_course)
                 #    draft_course_array.append(draft_course_object)
-
-
-
 
                 student = Student(user_id=data["studentId"],  
                                 advisor= Advisor(user_id=data["advisorId"]),
@@ -132,7 +128,7 @@ def get_users_from_json():
 
                 users.append(lecturer)
 
-    #StdAffStaff JSON
+    #Student_Affairs_Staff JSON
     for filename in os.listdir('database/student_affairs_staff'):
         if filename.endswith('.json'):
             file_path = os.path.join('database/student_affairs_staff', filename)
@@ -149,10 +145,6 @@ def get_users_from_json():
                     
                     student_array.append(student_object)
 
-
-                
-
-
                 student_affair_staff = Student_Affairs_Staff(user_id=data["lecturerId"],
                                     name=data["Name"],
                                     password=data["password"],
@@ -162,7 +154,6 @@ def get_users_from_json():
                 )
 
                 users.append(student_affair_staff)
-
 
     #Advisor JSON
     for filename in os.listdir('database/advisors'):
@@ -174,7 +165,6 @@ def get_users_from_json():
 
                     studentJSON = data["students"]
                     student_array = []
-
 
                     for std in studentJSON:
                         student_object = Student(user_id=std)
@@ -188,15 +178,14 @@ def get_users_from_json():
                         draft_courseJSON = ["courseCode"]
                         draft_course_array = []
 
-
                         for dcj in draft_courseJSON:
-                            draft_course_object = Course(course_code=dcj)
+                            print(dcj)
+                            draft_course_object = dcj
                             
                             draft_course_array.append(draft_course_object)
                         
                         draft_object = Draft(student=drft["studentId"],courses=draft_course_array)
                         draft_array.append(draft_object)
-
 
                     advisor = Advisor(user_id=data["lecturerId"],
                                         field=data["field"],
@@ -213,7 +202,6 @@ def get_users_from_json():
 
 
 def get_courses_from_json():
-    print("get all courses from json called")
     for filename in os.listdir('database/courses'):
         if filename.endswith('.json'):
             file_path = os.path.join('database/courses', filename)
@@ -224,7 +212,6 @@ def get_courses_from_json():
                 prerequisitesJSON = data["prerequisite"]
                 prerequisites_array = []
 
-
                 for prerequisite in prerequisitesJSON:
                     prerequisite_course = Course(course_code=prerequisite)
                     prerequisites_array.append(prerequisite_course)
@@ -234,9 +221,6 @@ def get_courses_from_json():
                 for student in studentsJSON:
                     course_student = Student(user_id=student)
                     student_array.append(course_student)
-
-
-
 
                 course = Course(
                     course_code=data["courseCode"],
@@ -603,7 +587,7 @@ def draft_approval_process(advisor):
         print(student.get_name() + "\n" + student.get_user_id() + "\n\nCourses:")
 
         for course in draft.get_courses():
-            print(course.course_name + " " + course.course_code)
+            print(course.get_course_code() + " " + course.get_course_name())
             advisor_input = input("Do you approve of this course? (yes/no): ")
 
             if advisor_input.lower() == "yes":
@@ -613,15 +597,53 @@ def draft_approval_process(advisor):
                 print_info("course rejected")
             else:
                 print_error("Invalid input entered.")
-
         print_info("Draft completed")
 
 
-get_users_from_json()
-get_courses_from_json()
-for user in users:
-    print(user)
+def init():
+    
+    get_users_from_json()
+    print("TEST " + users[7].drafts[0].courses[0])
+    get_courses_from_json()
+    for user in users:
+        if isinstance(user, Student):
+            # initialize drafts
+            user.set_draft(Draft(student=user))
+        elif isinstance(user, Advisor):
+            #initialize drafts course to the correct object
+            drafts = user.drafts
+            for draft in drafts:
+                #initialize draft students
+                for student in users:
+                    if student.get_user_id() == draft.get_student():
+                        draft.set_student(student=student)
+                # initialize draft courses
+                draft_courses = []
+                for course in courses:
+                    for course_temp in draft.courses:
+                        print("is " + course.course_code + " = " + course_temp)                    
+                        if course.get_course_code() == course_temp:
+                            draft_courses.append(course)
+                draft.set_courses(draft_courses)
+                # initialize advisor students
+                advisor_students = []
+                for student in users:
+                    for advisor_student in user.get_students():
+                        if student.get_user_id() == advisor_student.get_user_id():
+                            advisor_students.append(student)
+                user.set_students(advisor_students)
+                
+        # elif isinstance(user, Student_Affairs_Staff):
+        #     students = []
+        #     for student in users:
+        #         for sas_student in user.get_students():
+        #             if student.get_user_id() == sas_student.get_user_id():
+        #                 students.append(student)
+                    
+                
+
 # MAIN PROCESS
+init()
 while True:
     print_title("BYS")
     print_commands("1-> student login\n2-> staff login\n3-> exit")

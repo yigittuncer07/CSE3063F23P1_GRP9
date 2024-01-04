@@ -23,6 +23,13 @@ class Draft:
 
     def get_student(self):
         return self.student
+    
+    def set_student(self, student):
+        self.student = student
+        
+    def set_courses(self, courses):
+        self.courses.clear()
+        self.courses = courses
 
     @staticmethod
     def get_list_info(list):

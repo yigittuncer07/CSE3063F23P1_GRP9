@@ -21,6 +21,13 @@ class Advisor(Lecturer):
     
     def get_drafts(self):
         return self.drafts
+    
+    def get_students(self):
+        return self.students
+
+    def set_students(self, students):
+        self.students.clear()
+        self.students = students
 
     # returns true if draft was appended
     def add_draft(self, draft_sent):
