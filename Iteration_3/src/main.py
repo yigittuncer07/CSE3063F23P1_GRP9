@@ -119,6 +119,24 @@ def get_users_from_json():
 
                 users.append(student)
 
+    #Lecturer JSON
+    for filename in os.listdir('database/lecturers'):
+        if filename.endswith('.json'):
+            file_path = os.path.join('database/lecturers', filename)
+
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+
+                lecturer = Lecturer(user_id=data["lecturerId"],
+                                    field=data["field"],
+                                    name=data["Name"],
+                                    password=data["password"],
+                                    department=data["department"],
+                                    email=data["email"]
+                )
+
+                users.append(lecturer)
+
 
 
 
