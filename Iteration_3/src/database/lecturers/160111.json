@@ -1,1 +1,8 @@
-"user_id: 160111\nname: Talip Demirel\npassword: 111\nemail: talipdemirel@marun.edu.tr\ndepartment: science\nfield: applied mathematics"
+{
+    "lecturerId": "160555",
+    "field": "applied mathematics",
+    "Name": "Ayşe Deniz",
+    "password": "111111",
+    "department": "CSE",
+    "email": "aysedeniz@gmail.com"
+}
