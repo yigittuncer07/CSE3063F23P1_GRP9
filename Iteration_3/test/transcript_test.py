@@ -27,11 +27,11 @@ class TestTranscript(unittest.TestCase):
 
     def test_get_completed_courses(self):
         completed_courses = self.transcript.get_completed_courses()
-        result = ["CSE101", "CSE201", "CSE301"]
+        result = ["CSE101", "CSE201"]
         self.assertEqual(completed_courses, result)
 
     def test_get_info(self):
-        result = f"gano: 3.2\ngrades: {str(self.transcript.grades)}"
+        result = f"gano: 3.2\ngrades: {str(self.transcript.grades)}\nletter grade: {str(self.transcript.convert_gano_to_letter_grade(3.2))}"
         self.assertEqual(self.transcript.get_info(), result)
 
 
