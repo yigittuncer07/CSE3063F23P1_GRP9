@@ -1,10 +1,11 @@
 {
-    "courseName": "Engineering Project",
-    "credits": 10,
-    "courseCode": "CSE401",
-    "prerequisite": ["CSE400"],
-    "students": [],
-
-    "year": 4,
-    "courseLecturer": "160666"
+  "courseCode": "CSE401",
+  "courseName": "Engineering Project",
+  "courseLecturer": "160111",
+  "students": [],
+  "prerequisite": [
+    "CSE400"
+  ],
+  "credits": 10,
+  "year": 4
 }

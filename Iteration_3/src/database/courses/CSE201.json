@@ -1,10 +1,11 @@
 {
-    "courseName": "Data Structures",
-    "credits": 6,
-    "courseCode": "CSE102",
-    "prerequisite": ["CSE101"], 
-    "students": [],
-
-    "year": 2,
-    "courseLecturer": "160555"
+  "courseCode": "CSE201",
+  "courseName": "Data Structures",
+  "courseLecturer": "160111",
+  "students": [],
+  "prerequisite": [
+    "CSE101"
+  ],
+  "credits": 6,
+  "year": 2
 }

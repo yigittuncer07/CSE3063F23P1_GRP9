@@ -1,9 +1,9 @@
 {
-    "courseName": "Computer Programming",
-    "credits": 6,
-    "courseCode": "CSE101",
-    "prerequisite": [],
-    "students": [],
-    "year": 1,
-    "courseLecturer": "160555"
+  "courseCode": "CSE101",
+  "courseName": "Computer Programming",
+  "courseLecturer": "160111",
+  "students": [],
+  "prerequisite": [],
+  "credits": 6,
+  "year": 1
 }

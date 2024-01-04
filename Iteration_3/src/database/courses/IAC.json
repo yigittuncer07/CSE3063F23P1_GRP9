@@ -1,16 +1,9 @@
 {
-    "courseName": "Interior Architecture with AI",
-    "credits": 2,
-    "courseCode": "IAC",
-    "prerequisite": [],
-    "students": [],
-
-    "year": 0,
-    "courseLecturer": "160666"
+  "courseCode": "IAC",
+  "courseName": "Interior Architecture with AI",
+  "courseLecturer": "160111",
+  "students": [],
+  "prerequisite": [],
+  "credits": 2,
+  "year": 0
 }
-
-
-
-
-
-
