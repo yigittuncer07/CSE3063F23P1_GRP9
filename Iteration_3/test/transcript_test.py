@@ -1,6 +1,6 @@
 import unittest
-from src.classes.transcript import Transcript
-from src.classes.grade import Grade
+from transcript import Transcript
+from grade import Grade
 
 
 class TestTranscript(unittest.TestCase):
@@ -8,9 +8,9 @@ class TestTranscript(unittest.TestCase):
         self.transcript = Transcript(
             gano=3.2,
             grades=[
-                Grade(course_code="CSE101", number_grade=85),
-                Grade(course_code="CSE201", number_grade=92),
-                Grade(course_code="CSE301", number_grade=75),
+                Grade(course_code="CSE101", number_grade=85, is_passed=True),
+                Grade(course_code="CSE201", number_grade=74, is_passed=True),
+                Grade(course_code="CSE301", number_grade=20, is_passed=False),
             ],
         )
 
