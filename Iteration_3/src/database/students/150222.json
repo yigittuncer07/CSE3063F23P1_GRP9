@@ -2,10 +2,12 @@
 {
     "studentId": "150222",
     "Name": "Kerem Ozkan",
+    "advisorId": "150555",
+
     "password": "123456",
     "year": 1,
-    "transcript": [],
-
+    "grades": [],
+    "gano":2,
     "email": "kerem@gmail.com",
     "draft": []
 

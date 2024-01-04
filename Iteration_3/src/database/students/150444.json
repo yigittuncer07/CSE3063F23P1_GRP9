@@ -1,10 +1,13 @@
 
 {
     "studentId": "150444",
+    "advisorId": "150555",
+
     "Name": "Cem Kayan",
     "password": "1234567",
     "year": 4,
-    "transcript": [],
+    "gano":2,
+    "grades": [],
 
     "email": "kayan@gmail.com",
     "draft": []

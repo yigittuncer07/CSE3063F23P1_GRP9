@@ -1,10 +1,12 @@
 
 {
     "studentId": "150111",
+    "advisorId": "150555",
     "Name": "Ayse Durmaz",
     "password": "123456",
     "year": 3,
-    "transcript": [],
+    "grades": [],
+    "gano":2,
     "email": "ayse@gmail.com",
     "draft": []
 

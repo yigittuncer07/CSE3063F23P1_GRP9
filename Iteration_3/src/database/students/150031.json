@@ -6,19 +6,20 @@
     "password": "123456",
     "year": 3,
     "email": "hasanpekedis@gmail.com",
-    "transcript": [
+    "gano": 3.2,
+    "grades": [
         {
             "courseCode": "CSE101",
             "numberGrade": "85",
             "letterGrade": "BB",
-            "IsPassed": true
+            "isPassed": true
 
         },
         {
             "courseCode": "CSE201",
             "numberGrade": "95",
             "letterGrade": "AA",
-            "IsPassed": true
+            "isPassed": true
 
         }
 

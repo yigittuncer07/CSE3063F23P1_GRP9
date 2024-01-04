@@ -2,10 +2,12 @@
 {
     "studentId": "150333",
     "Name": "Ceren Ozge",
+    "advisorId": "150555",
+
     "password": "888888",
     "year": 2,
-    "transcript": [],
-
+    "grades": [],
+    "gano":2,
     "email": "herosluna@gmail.com",
     "draft": []
 
