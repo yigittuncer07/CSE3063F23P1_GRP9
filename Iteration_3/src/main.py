@@ -309,7 +309,14 @@ def student_login():
                 print_info(student.get_transcript().to_string())
         elif user_input == "2":
             print_title("COURSE REGISTRATION")
+
             eligable_courses = student.get_eligible_courses(courses)
+            registered_courses = student.get_registered_courses(courses)
+           #Elligable coursedan kayıtlı kursları çıkartır
+            for course in registered_courses:
+             if course in eligable_courses:
+                 eligable_courses.remove(course)
+
             draft = student.get_draft()
             advisor = student.get_advisor()
 
