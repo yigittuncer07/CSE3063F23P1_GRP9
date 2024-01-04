@@ -118,10 +118,38 @@ class Student(User):
         )
 
     def to_json_file(self):
-        filename = f"database/students/{self.user_id}.json"
-        with open(filename, "w") as json_file:
-            json.dump(self.get_info(), json_file, indent=2)
-        return filename
+        grades_array = []
+
+        for grade in self.transcript.grades:
+            grade_node = {
+                "courseCode": grade.course_code ,
+                "numberGrade": grade.number_grade,
+                "letterGrade": grade.letter_grade,
+                "isPassed": grade.is_passed
+            }
+            grades_array.append(grade_node)
+            
+        course_dict = {
+            "studentId": self.user_id,
+            "advisorId": self.advisor.user_id,
+            "Name": self.name,
+            "password": self.password,
+            "year": self.year,
+            "gano": self.transcript.gano,
+
+            "email": self.email,
+            "grades": grades_array,
+
+        }
+
+        json_data = json.dumps(course_dict, indent=2)
+
+        filename = f"database/{self.user_id}.json"
+
+
+        with open(filename, 'w') as json_file:
+            json_file.write(json_data)
+
 
     @classmethod
     def from_json_file(cls, user_id):
