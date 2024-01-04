@@ -1,6 +1,6 @@
 import unittest
-from transcript import Transcript
-from grade import Grade
+from src.classes.transcript import Transcript
+from src.classes.grade import Grade
 
 
 class TestTranscript(unittest.TestCase):
