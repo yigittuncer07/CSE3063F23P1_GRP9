@@ -43,10 +43,24 @@ class Student_Affairs_Staff(Staff):
         self.students = students        
 
     def to_json_file(self):
+        student_arr = [student.user_id for student in self.students]
+        
+        course_dict = {
+            "lecturerId": self.user_id,
+            "Name": self.name,
+            "password": self.password,
+            "department": self.department,
+            "email": self.email,
+            "students": student_arr,
+        }
+
+        json_data = json.dumps(course_dict, indent=2)
+
         filename = f"database/student_affairs_staff/{self.user_id}.json"
-        with open(filename, "w") as json_file:
-            json.dump(self.get_info(), json_file, indent=2)
-        return filename
+
+
+        with open(filename, 'w') as json_file:
+            json_file.write(json_data)
 
     @classmethod
     def from_json_file(cls, user_id):
