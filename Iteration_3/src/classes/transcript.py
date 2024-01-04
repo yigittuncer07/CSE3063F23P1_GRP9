@@ -8,7 +8,16 @@ class Transcript:
 
     def add_grade(self, grade):
         self.grades.append(grade)
-        self.gano = int(grade.number_grade)* 6 / 25
+        self.calculate_gano()
+
+
+    def calculate_gano(self):
+        sum = 0
+        for grade in self.grades:
+            sum = sum + int(grade.number_grade)
+        
+        self.gano = (sum * 1/25) / len(self.grades) 
+
 
     def get_completed_courses(self):
         completed_courses = []

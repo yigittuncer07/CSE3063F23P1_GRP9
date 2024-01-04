@@ -14,16 +14,7 @@ class Grade:
         return self.is_passed
 
     def convert_hundred_to_gano(self, hundred_not):
-        if int(hundred_not) < 0 or int(hundred_not) > 100:
-            raise ValueError("Grade must be between 0 and 100")
-
-        result = int(hundred_not) / 25
-
-        formatted_result = "{:.2f}".format(result)
-
-        gano = float(formatted_result.replace(",", "."))
-
-        return gano
+       return int(hundred_not) * 1 / 25 
 
     def convert_hundred_to_letter_grade(self, hundred):
         gano = self.convert_hundred_to_gano(hundred)
