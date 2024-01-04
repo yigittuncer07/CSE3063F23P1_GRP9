@@ -2,9 +2,9 @@
     "courseName": "Database Systems",
     "credits": 8,
     "courseCode": "CSE301",
-    "prerequisite": ["CSE300"],
+    "prerequisite": ["CSE201"],
     "students": [],
 
     "year": 3,
-    "courseLecturer": "160555"
+    "courseLecturer": "160111"
 }

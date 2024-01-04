@@ -37,6 +37,10 @@ class Student_Affairs_Staff(Staff):
         
     def get_students(self):
         return self.students
+    
+    def set_students(self, students):
+        self.students.clear()
+        self.students = students        
 
     def to_json_file(self):
         filename = f"database/student_affairs_staff/{self.user_id}.json"

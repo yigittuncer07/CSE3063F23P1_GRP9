@@ -29,6 +29,13 @@ class Course:
         if student in self.students:
             self.students.remove(student)
             
+    def set_students(self, students):
+        self.students.clear()
+        self.students = students
+        
+    def set_lecturer(self, lecturer):
+        self.lecturer = lecturer
+            
     def has_student(self, user_id):
         for student in self.students:
             if student.get_user_id() == user_id:
