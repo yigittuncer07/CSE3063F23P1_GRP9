@@ -373,7 +373,7 @@ def student_login():
                     print_error("Invalid Input!")
         elif user_input == "3":
             print_title("REGISTERED COURSES") 
-            registered_courses = student.get_registered_courses()
+            registered_courses = student.get_registered_courses(courses)
             if len(registered_courses) == 0:
                 print_error("no registered courses!")
                 return
@@ -637,3 +637,5 @@ while True:
 # to_json ve from_json artik deprecated mi
 # initi nasil yapcaz
 # ozan ve ardayi bicaklasam mi acep
+# draft student string olarak mi tutuyor
+# 
