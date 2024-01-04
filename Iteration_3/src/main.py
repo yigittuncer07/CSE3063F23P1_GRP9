@@ -27,8 +27,8 @@ logger.addHandler(file_handler)
 
 
 def system_exit():
-    # save_users_to_json()
-    # save_courses_to_json()
+    save_users_to_json()
+    save_courses_to_json()
     exit()
 
 
@@ -513,11 +513,15 @@ def staff_login():
                                         grade_input = input("Enter a grade between 0-100: ")
                                     
                                     grade = Grade(course_code=chosen_course.get_course_code(), number_grade=grade_input, is_passed=True)
+                                    grade.convert_hundred_to_letter_grade(grade_input)
                                     student.add_grade_to_transcript(grade)
                                     
                                     print_info(student.get_name() + "'s grade set to " + grade_input)
-                                    course.remove_student(student)
-                                    
+                                    chosen_course.remove_student(student)
+
+                                    print ("!!!!!!!!!!!!!!!!!!")
+                                    for cc in courses[2].students:
+                                        print(cc.user_id)
                             elif (user_input_2 == "2"):
                                 break
                 elif user_input == "3":
@@ -666,6 +670,8 @@ def init():
 
 # MAIN PROCESS
 init()
+
+
 while True:
     print_title("BYS")
     print_commands("1-> student login\n2-> staff login\n3-> exit")
