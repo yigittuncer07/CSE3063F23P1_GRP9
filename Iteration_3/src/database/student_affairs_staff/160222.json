@@ -1,1 +1,8 @@
-"user_id: 160222\nname: Hasan Pekedis\npassword: 111\nemail: hasanpekedis@marun.edu.tr\ndepartment: engineering\nstudents: [<classes.student.Student object at 0x000001C96C169F90>, <classes.student.Student object at 0x000001C96C16A590>, <classes.student.Student object at 0x000001C96C16A5C0>, <classes.student.Student object at 0x000001C96C16ADD0>]"
+{
+    "lecturerId": "160222",
+    "Name": "Mustafa Koseoglu",
+    "password": "111111",
+    "department": "CSE",
+    "email": "muskoseoglu@gmail.com",
+    "students": ["150031", "150111"]
+}
