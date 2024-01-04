@@ -662,8 +662,6 @@ def init():
             if lecturer.get_user_id() == course.get_lecturer().get_user_id():
                 course.set_lecturer(lecturer)
                 
-        print("\nFOR COURSE " + course.get_course_code() + " LECTURER IS \n" + course.get_lecturer().get_info())
-
  
 
 # MAIN PROCESS
