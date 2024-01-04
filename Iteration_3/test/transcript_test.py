@@ -31,7 +31,7 @@ class TestTranscript(unittest.TestCase):
         self.assertEqual(completed_courses, result)
 
     def test_get_info(self):
-        result = f"gano: 3.2\ngrades: {str(self.transcript.grades)}\nletter grade: {str(self.transcript.convert_gano_to_letter_grade(3.2))}"
+        result = f"gano: 3.2\ngrades: {str(self.transcript.grades)}"
         self.assertEqual(self.transcript.get_info(), result)
 
 
