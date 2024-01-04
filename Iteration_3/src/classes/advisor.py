@@ -66,10 +66,37 @@ class Advisor(Lecturer):
         )
 
     def to_json_file(self):
+        student_arr = [student.user_id for student in self.students]
+        drafts_array = []
+
+        for draft in self.drafts:
+            draft_courses = [course for course in draft.courses]
+
+            draft_node = {
+                "studentId": draft.student,
+                "courseCode": draft_courses,
+            }
+            drafts_array.append(draft_node)
+            
+        course_dict = {
+            "lecturerId": self.user_id,
+            "field": self.field,
+            "Name": self.name,
+            "password": self.password,
+            "department": self.department,
+            "email": self.email,
+            "students": student_arr,
+            "drafts": drafts_array,
+
+        }
+
+        json_data = json.dumps(course_dict, indent=2)
+
         filename = f"database/advisors/{self.user_id}.json"
-        with open(filename, "w") as json_file:
-            json.dump(self.get_info(), json_file, indent=2)
-        return filename
+
+
+        with open(filename, 'w') as json_file:
+            json_file.write(json_data)
 
     @classmethod
     def from_json_file(cls, user_id):
