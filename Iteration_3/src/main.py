@@ -137,6 +137,34 @@ def get_users_from_json():
 
                 users.append(lecturer)
 
+    for filename in os.listdir('database/student_affairs_staff'):
+        if filename.endswith('.json'):
+            file_path = os.path.join('database/student_affairs_staff', filename)
+
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+
+                studentJSON = data["students"]
+                student_array = []
+
+
+                for std in studentJSON:
+                    student_object = Student(user_id=std)
+                    
+                    student_array.append(student_object)
+
+
+
+                student_affair_staff = Student_Affairs_Staff(user_id=data["lecturerId"],
+                                    name=data["Name"],
+                                    password=data["password"],
+                                    department=data["department"],
+                                    email=data["email"],
+                                    students= student_array
+                )
+
+                users.append(student_affair_staff)
+
 
 
 
