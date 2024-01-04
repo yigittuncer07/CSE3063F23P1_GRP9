@@ -67,8 +67,58 @@ def get_user_with_id(id):
     return None
 
 
+
 def get_users_from_json():
     print("get all from json called")
+
+    #Students JSON
+    for filename in os.listdir('database/students'):
+        if filename.endswith('.json'):
+            file_path = os.path.join('database/students', filename)
+
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+
+                gradeJSON = data["grades"]
+                grade_array = []
+
+
+                for grade in gradeJSON:
+                    grade_object = Grade(course_code=grade["courseCode"],
+                                  number_grade=grade["numberGrade"],
+                                  letter_grade=grade["letterGrade"],
+                                  is_passed=grade["isPassed"])
+                    grade_array.append(grade_object)
+
+                draftJSON = data["draft"]
+                draft_course_array = []
+
+                for draft_course in draftJSON:
+                    draft_course_object = Course(course_code=draft_course)
+                    draft_course_array.append(draft_course_object)
+
+
+
+
+                student = Student(user_id=data["studentId"],  
+                                advisor= Advisor(user_id=data["advisorId"]),
+                                name=data["Name"],
+                                password=data["password"],
+                                year= data["year"],
+                                email= data["email"],
+                                transcript = Transcript(
+                                    gano=data["gano"],
+                                    grades= grade_array
+                                ),
+
+                                #draft = Draft(
+                                #    student=Student(user_id= data["studentId"],
+                                #            courses= draft_course_array)
+                                #)
+                )
+
+                users.append(student)
+
 
 
 
