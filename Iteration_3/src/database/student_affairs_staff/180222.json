@@ -1,0 +1,14 @@
+{
+  "lecturerId": "180222",
+  "Name": "Mustafa Koseoglu",
+  "password": "111111",
+  "department": "CSE",
+  "email": "muskoseoglu@gmail.com",
+  "students": [
+    "150031",
+    "150111",
+    "150222",
+    "150333",
+    "150444"
+  ]
+}
