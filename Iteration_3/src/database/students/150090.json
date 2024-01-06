@@ -1,10 +1,10 @@
 {
-    "studentId": "150090",
-    "advisorId": "160222",
-    "Name": "Ayse Kaya",
-    "password": "7321",
-    "year": 3,
-    "email": "aysek4y4@gmail.com",
-    "gano": 3.4,
-    "grades": []
+  "studentId": "150090",
+  "advisorId": "160222",
+  "Name": "Ayse Kaya",
+  "password": "7321",
+  "year": 3,
+  "gano": 3.4,
+  "email": "aysek4y4@gmail.com",
+  "grades": []
 }

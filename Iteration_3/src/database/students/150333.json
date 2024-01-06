@@ -1,14 +1,10 @@
-
 {
-    "studentId": "150333",
-    "Name": "Ceren Ozge",
-    "advisorId": "160333",
-
-    "password": "111111",
-    "year": 2,
-    "grades": [],
-    "gano":2,
-    "email": "herosluna@gmail.com"
-
+  "studentId": "150333",
+  "advisorId": "160333",
+  "Name": "Ceren Ozge",
+  "password": "111111",
+  "year": 2,
+  "gano": 2,
+  "email": "herosluna@gmail.com",
+  "grades": []
 }
-

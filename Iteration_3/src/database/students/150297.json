@@ -1,10 +1,10 @@
 {
-    "studentId": "150297",
-    "advisorId": "160111",
-    "Name": "Can Aydin",
-    "password": "5390",
-    "year": 2,
-    "email": "canaydn@gmail.com",
-    "gano": 3.8,
-    "grades": []
+  "studentId": "150297",
+  "advisorId": "160111",
+  "Name": "Can Aydin",
+  "password": "5390",
+  "year": 2,
+  "gano": 3.8,
+  "email": "canaydn@gmail.com",
+  "grades": []
 }

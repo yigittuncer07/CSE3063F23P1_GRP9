@@ -1,17 +1,10 @@
 {
-    "studentId": "150222",
-    "Name": "Kerem Ozkan",
-    "advisorId": "160333",
-    "password": "111111",
-    "year": 1,
-    "grades": [
-        {
-            "courseCode": "CSE101",
-            "numberGrade": "85",
-            "letterGrade": "BB",
-            "isPassed": true
-        }
-    ],
-    "gano": 2,
-    "email": "kerem@gmail.com"
+  "studentId": "150222",
+  "advisorId": "160333",
+  "Name": "Kerem Ozkan",
+  "password": "111111",
+  "year": 1,
+  "gano": 2,
+  "email": "kerem@gmail.com",
+  "grades": []
 }

@@ -1,10 +1,10 @@
 {
-    "studentId": "150545",
-    "Name": "Kamil Can",
-    "advisorId": "160444",
-    "password": "102938",
-    "year": 2,
-    "grades": [],
-    "gano": 3,
-    "email": "kmlc4nn@gmail.com"
+  "studentId": "150545",
+  "advisorId": "160444",
+  "Name": "Kamil Can",
+  "password": "102938",
+  "year": 2,
+  "gano": 3,
+  "email": "kmlc4nn@gmail.com",
+  "grades": []
 }

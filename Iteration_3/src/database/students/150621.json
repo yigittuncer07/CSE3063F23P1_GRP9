@@ -1,10 +1,10 @@
 {
-    "studentId": "150621",
-    "Name": "Melisa Erdem",
-    "advisorId": "160444",
-    "password": "19810",
-    "year": 1,
-    "grades": [],
-    "gano": 3.7,
-    "email": "erdmelis@gmail.com"
+  "studentId": "150621",
+  "advisorId": "160444",
+  "Name": "Melisa Erdem",
+  "password": "19810",
+  "year": 1,
+  "gano": 3.7,
+  "email": "erdmelis@gmail.com",
+  "grades": []
 }

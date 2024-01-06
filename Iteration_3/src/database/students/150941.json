@@ -1,10 +1,10 @@
 {
-    "studentId": "150941",
-    "advisorId": "160555",
-    "Name": "Ruzgar Sonmez",
-    "password": "7146",
-    "year": 2,
-    "email": "brkyilmaz@gmail.com",
-    "gano": 3.1,
-    "grades": []
+  "studentId": "150941",
+  "advisorId": "160555",
+  "Name": "Ruzgar Sonmez",
+  "password": "7146",
+  "year": 2,
+  "gano": 3.1,
+  "email": "brkyilmaz@gmail.com",
+  "grades": []
 }

@@ -1,10 +1,10 @@
 {
-    "studentId": "150512",
-    "advisorId": "160111",
-    "Name": "Berkay Ozdemir",
-    "password": "7854",
-    "year": 1,
-    "email": "brkyozdmr@gmail.com",
-    "gano": 2,
-    "grades": []
+  "studentId": "150512",
+  "advisorId": "160111",
+  "Name": "Berkay Ozdemir",
+  "password": "7854",
+  "year": 1,
+  "gano": 2,
+  "email": "brkyozdmr@gmail.com",
+  "grades": []
 }

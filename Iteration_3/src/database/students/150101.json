@@ -1,10 +1,10 @@
 {
-    "studentId": "150101",
-    "advisorId": "160333",
-    "Name": "Emre Gunes",
-    "password": "1956",
-    "year": 1,
-    "email": "emregun@gmail.com",
-    "gano": 2.9,
-    "grades": []
+  "studentId": "150101",
+  "advisorId": "160333",
+  "Name": "Emre Gunes",
+  "password": "1956",
+  "year": 1,
+  "gano": 2.9,
+  "email": "emregun@gmail.com",
+  "grades": []
 }

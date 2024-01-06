@@ -1,10 +1,10 @@
 {
-    "studentId": "150310",
-    "advisorId": "160111",
-    "Name": "Melis Korkmaz",
-    "password": "1245",
-    "year": 2,
-    "email": "melkorkmaz@gmail.com",
-    "gano": 2.3,
-    "grades": []
+  "studentId": "150310",
+  "advisorId": "160111",
+  "Name": "Melis Korkmaz",
+  "password": "1245",
+  "year": 2,
+  "gano": 2.3,
+  "email": "melkorkmaz@gmail.com",
+  "grades": []
 }

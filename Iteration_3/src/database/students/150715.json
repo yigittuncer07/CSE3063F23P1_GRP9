@@ -1,10 +1,10 @@
 {
-    "studentId": "150715",
-    "Name": "Kerem Bakkal",
-    "advisorId": "160444",
-    "password": "98765",
-    "year": 1,
-    "grades": [],
-    "gano": 3.5,
-    "email": "k2r2mb4kk4l@gmail.com"
+  "studentId": "150715",
+  "advisorId": "160444",
+  "Name": "Kerem Bakkal",
+  "password": "98765",
+  "year": 1,
+  "gano": 3.5,
+  "email": "k2r2mb4kk4l@gmail.com",
+  "grades": []
 }

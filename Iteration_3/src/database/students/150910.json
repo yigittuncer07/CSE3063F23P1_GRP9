@@ -1,10 +1,10 @@
 {
-    "studentId": "150910",
-    "Name": "Ulas Donmez",
-    "advisorId": "160555",
-    "password": "757575",
-    "year": 2,
-    "grades": [],
-    "gano": 3.1,
-    "email": "ulas662@gmail.com"
+  "studentId": "150910",
+  "advisorId": "160555",
+  "Name": "Ulas Donmez",
+  "password": "757575",
+  "year": 2,
+  "gano": 3.1,
+  "email": "ulas662@gmail.com",
+  "grades": []
 }

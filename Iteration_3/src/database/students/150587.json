@@ -1,10 +1,10 @@
 {
-    "studentId": "150587",
-    "Name": "Aysenur Gencer",
-    "advisorId": "160444",
-    "password": "25501",
-    "year": 2,
-    "grades": [],
-    "gano": 2.4,
-    "email": "aygencr@gmail.com"
+  "studentId": "150587",
+  "advisorId": "160444",
+  "Name": "Aysenur Gencer",
+  "password": "25501",
+  "year": 2,
+  "gano": 2.4,
+  "email": "aygencr@gmail.com",
+  "grades": []
 }

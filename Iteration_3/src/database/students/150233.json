@@ -1,10 +1,10 @@
 {
-    "studentId": "150233",
-    "advisorId": "160111",
-    "Name": "Elif Celik",
-    "password": "8710",
-    "year": 2,
-    "email": "elifclk@gmail.com",
-    "gano": 3.9,
-    "grades": []
+  "studentId": "150233",
+  "advisorId": "160111",
+  "Name": "Elif Celik",
+  "password": "8710",
+  "year": 2,
+  "gano": 3.9,
+  "email": "elifclk@gmail.com",
+  "grades": []
 }

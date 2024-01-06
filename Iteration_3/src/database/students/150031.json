@@ -1,27 +1,10 @@
-
 {
-    "studentId": "150031",
-    "advisorId": "160333",
-    "Name": "Hasan Pekedis",
-    "password": "111",
-    "year": 3,
-    "email": "hasanpekedis@gmail.com",
-    "gano": 3.2,
-    "grades": [
-        {
-            "courseCode": "CSE101",
-            "numberGrade": "85",
-            "letterGrade": "BB",
-            "isPassed": true
-
-        },
-        {
-            "courseCode": "CSE201",
-            "numberGrade": "95",
-            "letterGrade": "AA",
-            "isPassed": true
-
-        }
-    ]
+  "studentId": "150031",
+  "advisorId": "160333",
+  "Name": "Hasan Pekedis",
+  "password": "111",
+  "year": 3,
+  "gano": 3.2,
+  "email": "hasanpekedis@gmail.com",
+  "grades": []
 }
-

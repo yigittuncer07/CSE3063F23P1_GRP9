@@ -1,10 +1,10 @@
 {
-    "studentId": "150920",
-    "Name": "Erdem Akar",
-    "advisorId": "160555",
-    "password": "431431",
-    "year": 2,
-    "grades": [],
-    "gano": 2.6,
-    "email": "erdemkr@gmail.com"
+  "studentId": "150920",
+  "advisorId": "160555",
+  "Name": "Erdem Akar",
+  "password": "431431",
+  "year": 2,
+  "gano": 2.6,
+  "email": "erdemkr@gmail.com",
+  "grades": []
 }
