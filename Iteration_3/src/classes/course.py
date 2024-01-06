@@ -81,9 +81,7 @@ class Course:
         for item in self.prerequisites:
             temp += (
                 "\n              -> course_code: "
-                + item.get_course_code()
-                + " course_name: "
-                + item.get_course_name()
+                + item
             )
         # Basic lecturer information
         temp += (
