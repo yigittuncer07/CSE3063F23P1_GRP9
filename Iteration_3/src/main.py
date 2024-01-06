@@ -519,9 +519,7 @@ def staff_login():
                                     print_info(student.get_name() + "'s grade set to " + grade_input)
                                     chosen_course.remove_student(student)
 
-                                    print ("!!!!!!!!!!!!!!!!!!")
-                                    for cc in courses[2].students:
-                                        print(cc.user_id)
+                                 
                             elif (user_input_2 == "2"):
                                 break
                 elif user_input == "3":
