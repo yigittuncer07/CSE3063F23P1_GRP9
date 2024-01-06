@@ -1,10 +1,11 @@
 {
-    "courseName": "Database Systems",
-    "credits": 8,
-    "courseCode": "CSE301",
-    "prerequisite": ["CSE201"],
-    "students": [],
-
-    "year": 3,
-    "courseLecturer": "160111"
+  "courseCode": "CSE301",
+  "courseName": "Database Systems",
+  "courseLecturer": "160111",
+  "students": [],
+  "prerequisite": [
+    "CSE201"
+  ],
+  "credits": 8,
+  "year": 3
 }
